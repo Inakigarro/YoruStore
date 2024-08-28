@@ -1,0 +1,52 @@
+@if (!toolbarConfig.isSecondaryToolbar) {
+	<mat-toolbar [id]="id">
+		@if (mainButton) {
+			<app-button
+				[type]="mainButton.type"
+				[label]="mainButton.label"
+				[icon]="mainButton.icon"
+				[action]="mainButton.action"
+				(actionEmmiter)="this.actionEmitter.emit($event)"
+			/>
+		}
+		@if (toolbarConfig.isTitleSeparete) {
+			<span class="spacer"></span>
+		}
+		@if (title) {
+			<strong>{{ title }}</strong>
+		}
+		@if (toolbarConfig.isTitleSeparete) {
+			<span class="spacer"></span>
+		} @else {
+			<span class="secondary-spacer"></span>
+		}
+		@if (secondaryButtons) {
+			@for (button of secondaryButtons; track $index) {
+				<app-button
+					[type]="button.type"
+					[label]="button.label"
+					[icon]="button.icon"
+					[action]="button.action"
+					(actionEmmiter)="this.actionEmitter.emit($event)"
+				/>
+			}
+		}
+	</mat-toolbar>
+} @else {
+	<mat-toolbar
+		[id]="id"
+		class="secondary-toolbar"
+	>
+		@if (secondaryButtons) {
+			@for (button of secondaryButtons; track $index) {
+				<app-button
+					[type]="button.type"
+					[label]="button.label"
+					[icon]="button.icon"
+					[action]="button.action"
+					(actionEmmiter)="this.actionEmitter.emit($event)"
+				/>
+			}
+		}
+	</mat-toolbar>
+}

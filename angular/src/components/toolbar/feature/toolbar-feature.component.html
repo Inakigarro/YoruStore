@@ -1,0 +1,8 @@
+<app-toolbar
+	[id]="toolbar.id"
+	[mainButton]="toolbar.mainButton"
+	[title]="toolbar.title"
+	[secondaryButtons]="toolbar.secondaryButton"
+	[toolbarConfig]="toolbar.toolbarConfig"
+	(actionEmitter)="this.dispatch($event)"
+/>

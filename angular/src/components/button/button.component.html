@@ -1,0 +1,61 @@
+@switch (type) {
+	@case ("raised") {
+		<button
+			mat-raised-button
+			(click)="this.actionEmmiter.emit(this.action)"
+		>
+			@if (label) {
+				<span>{{ label }}</span>
+			}
+			@if (icon) {
+				<mat-icon>{{ icon }}</mat-icon>
+			}
+		</button>
+	}
+	@case ("flat") {
+		<button
+			mat-flat-button
+			(click)="this.actionEmmiter.emit(this.action)"
+		>
+			@if (label) {
+				<span>{{ label }}</span>
+			}
+			@if (icon) {
+				<mat-icon>{{ icon }}</mat-icon>
+			}
+		</button>
+	}
+	@case ("icon") {
+		<button
+			mat-icon-button
+			(click)="this.actionEmmiter.emit(this.action)"
+		>
+			@if (icon) {
+				<mat-icon>{{ icon }}</mat-icon>
+			}
+		</button>
+	}
+	@case ("fab") {
+		<button
+			mat-fab
+			(click)="this.actionEmmiter.emit(this.action)"
+		>
+			@if (icon) {
+				<mat-icon>{{ icon }}</mat-icon>
+			}
+		</button>
+	}
+	@default {
+		<button
+			mat-button
+			(click)="this.actionEmmiter.emit(this.action)"
+		>
+			@if (label) {
+				<span>{{ label }}</span>
+			}
+			@if (icon) {
+				<mat-icon>{{ icon }}</mat-icon>
+			}
+		</button>
+	}
+}

@@ -1,0 +1,711 @@
+{
+    "pipes": [],
+    "interfaces": [
+        {
+            "name": "Button",
+            "id": "interface-Button-cce0b0d22254781d0570d2ae77d3573bf82b96c5d81b2937d60c2e10ffd937a5442024445a39af04f75cddc5285b959fa991a80570217b09b38c645fee3b21a5",
+            "file": "src/components/models.ts",
+            "deprecated": false,
+            "deprecationMessage": "",
+            "type": "interface",
+            "sourceCode": "import { Action } from \"@ngrx/store\";\r\n\r\nexport interface Button {\r\n    type: 'basic' | 'raised' | 'fab' | 'icon';\r\n    label: string;\r\n    icon: string;\r\n    action: Action;\r\n}\r\n\r\nexport interface Toolbar {\r\n    mainButton: Button;\r\n    title: string;\r\n    secondaryButton: Button[];\r\n}\r\n\r\nexport interface ToolbarConfig {\r\n    isTitleSeparete: boolean;\r\n    isSecondaryToolbar: boolean;\r\n}",
+            "properties": [
+                {
+                    "name": "action",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Action",
+                    "optional": false,
+                    "description": "",
+                    "line": 7
+                },
+                {
+                    "name": "icon",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 6
+                },
+                {
+                    "name": "label",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 5
+                },
+                {
+                    "name": "type",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "\"basic\" | \"raised\" | \"fab\" | \"icon\"",
+                    "optional": false,
+                    "description": "",
+                    "line": 4
+                }
+            ],
+            "indexSignatures": [],
+            "kind": 171,
+            "methods": [],
+            "extends": []
+        },
+        {
+            "name": "Toolbar",
+            "id": "interface-Toolbar-cce0b0d22254781d0570d2ae77d3573bf82b96c5d81b2937d60c2e10ffd937a5442024445a39af04f75cddc5285b959fa991a80570217b09b38c645fee3b21a5",
+            "file": "src/components/models.ts",
+            "deprecated": false,
+            "deprecationMessage": "",
+            "type": "interface",
+            "sourceCode": "import { Action } from \"@ngrx/store\";\r\n\r\nexport interface Button {\r\n    type: 'basic' | 'raised' | 'fab' | 'icon';\r\n    label: string;\r\n    icon: string;\r\n    action: Action;\r\n}\r\n\r\nexport interface Toolbar {\r\n    mainButton: Button;\r\n    title: string;\r\n    secondaryButton: Button[];\r\n}\r\n\r\nexport interface ToolbarConfig {\r\n    isTitleSeparete: boolean;\r\n    isSecondaryToolbar: boolean;\r\n}",
+            "properties": [
+                {
+                    "name": "mainButton",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Button",
+                    "optional": false,
+                    "description": "",
+                    "line": 11
+                },
+                {
+                    "name": "secondaryButton",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Button[]",
+                    "optional": false,
+                    "description": "",
+                    "line": 13
+                },
+                {
+                    "name": "title",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 12
+                }
+            ],
+            "indexSignatures": [],
+            "kind": 171,
+            "methods": [],
+            "extends": []
+        },
+        {
+            "name": "ToolbarConfig",
+            "id": "interface-ToolbarConfig-cce0b0d22254781d0570d2ae77d3573bf82b96c5d81b2937d60c2e10ffd937a5442024445a39af04f75cddc5285b959fa991a80570217b09b38c645fee3b21a5",
+            "file": "src/components/models.ts",
+            "deprecated": false,
+            "deprecationMessage": "",
+            "type": "interface",
+            "sourceCode": "import { Action } from \"@ngrx/store\";\r\n\r\nexport interface Button {\r\n    type: 'basic' | 'raised' | 'fab' | 'icon';\r\n    label: string;\r\n    icon: string;\r\n    action: Action;\r\n}\r\n\r\nexport interface Toolbar {\r\n    mainButton: Button;\r\n    title: string;\r\n    secondaryButton: Button[];\r\n}\r\n\r\nexport interface ToolbarConfig {\r\n    isTitleSeparete: boolean;\r\n    isSecondaryToolbar: boolean;\r\n}",
+            "properties": [
+                {
+                    "name": "isSecondaryToolbar",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "boolean",
+                    "optional": false,
+                    "description": "",
+                    "line": 18
+                },
+                {
+                    "name": "isTitleSeparete",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "boolean",
+                    "optional": false,
+                    "description": "",
+                    "line": 17
+                }
+            ],
+            "indexSignatures": [],
+            "kind": 171,
+            "methods": [],
+            "extends": []
+        }
+    ],
+    "injectables": [
+        {
+            "name": "AppService",
+            "id": "injectable-AppService-016a4ecceb49606d1ab2c51d203789ea54bb72b74bba98ddb11c599266950a8cca86fbde6fc078f1261ee79838749863be384c4f8b7f762c429ba49154ff3476",
+            "file": "src/app/app.service.ts",
+            "properties": [],
+            "methods": [
+                {
+                    "name": "dispatch",
+                    "args": [
+                        {
+                            "name": "action",
+                            "type": "Action",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 10,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        125
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "action",
+                            "type": "Action",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "description": "",
+            "rawdescription": "\n",
+            "sourceCode": "import { Injectable } from \"@angular/core\";\r\nimport { Action, Store } from \"@ngrx/store\";\r\n\r\n@Injectable({\r\n    providedIn: 'root'\r\n})\r\nexport class AppService {\r\n    constructor(private store: Store){}\r\n\r\n    public dispatch(action: Action){\r\n        this.store.dispatch(action);\r\n    }\r\n}",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "args": [
+                    {
+                        "name": "store",
+                        "type": "Store",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    }
+                ],
+                "line": 7,
+                "jsdoctags": [
+                    {
+                        "name": "store",
+                        "type": "Store",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            "extends": [],
+            "type": "injectable"
+        }
+    ],
+    "guards": [],
+    "interceptors": [],
+    "classes": [],
+    "directives": [],
+    "components": [
+        {
+            "name": "AppComponent",
+            "id": "component-AppComponent-19e1bfcac33a02e810a825a806012fd3f9aa4977b9d7d6375ddff2fb0ebd11913c6be45c14ed03c46c12f6ffa3088a9162d6748fb62af3dc3ac5766fbbfb6824",
+            "file": "src/app/app.component.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "app-root",
+            "styleUrls": [],
+            "styles": [],
+            "templateUrl": [
+                "./app.component.html"
+            ],
+            "viewProviders": [],
+            "hostDirectives": [],
+            "inputsClass": [],
+            "outputsClass": [],
+            "propertiesClass": [
+                {
+                    "name": "title",
+                    "defaultValue": "'angular'",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 11
+                }
+            ],
+            "methodsClass": [],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "hostBindings": [],
+            "hostListeners": [],
+            "standalone": false,
+            "imports": [],
+            "description": "",
+            "rawdescription": "\n",
+            "type": "component",
+            "sourceCode": "import { Component } from '@angular/core';\r\nimport { AppService } from './app.service';\r\n\r\n@Component({\r\n  selector: 'app-root',\r\n  templateUrl: './app.component.html',\r\n  styleUrl: './app.component.scss'\r\n})\r\nexport class AppComponent {\r\n  constructor(private service: AppService) {}\r\n  title = 'angular';\r\n}\r\n",
+            "styleUrl": "./app.component.scss",
+            "assetsDirs": [],
+            "styleUrlsData": "",
+            "stylesData": "",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "args": [
+                    {
+                        "name": "service",
+                        "type": "AppService",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    }
+                ],
+                "line": 9,
+                "jsdoctags": [
+                    {
+                        "name": "service",
+                        "type": "AppService",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            "extends": [],
+            "templateData": ""
+        },
+        {
+            "name": "AppToolbarComponent",
+            "id": "component-AppToolbarComponent-48a389b7215639be871ed507b5441dbb9613b563587a8ec9f5ed0441c4f976c88f115a9a632eebcf836312f1b50bcd0231d98a9cbc7ce24783ae8cfb1b09b41b",
+            "file": "src/components/toolbar/ui/toolbar.component.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "app-toolbar",
+            "styleUrls": [],
+            "styles": [],
+            "templateUrl": [
+                "./toolbar.component.html"
+            ],
+            "viewProviders": [],
+            "hostDirectives": [],
+            "inputsClass": [
+                {
+                    "name": "mainButton",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 12,
+                    "type": "Button",
+                    "decorators": []
+                },
+                {
+                    "name": "secondaryButtons",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 18,
+                    "type": "Button[]",
+                    "decorators": []
+                },
+                {
+                    "name": "title",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 15,
+                    "type": "string",
+                    "decorators": []
+                },
+                {
+                    "name": "toolbarConfig",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 21,
+                    "type": "ToolbarConfig",
+                    "decorators": []
+                }
+            ],
+            "outputsClass": [
+                {
+                    "name": "actionEmitter",
+                    "defaultValue": "new EventEmitter<Action>()",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 24,
+                    "type": "EventEmitter"
+                }
+            ],
+            "propertiesClass": [],
+            "methodsClass": [],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "hostBindings": [],
+            "hostListeners": [],
+            "standalone": false,
+            "imports": [],
+            "description": "",
+            "rawdescription": "\n",
+            "type": "component",
+            "sourceCode": "import { Component, EventEmitter, Input, Output } from \"@angular/core\";\r\nimport { Action } from \"@ngrx/store\";\r\nimport { Button, ToolbarConfig } from \"@root/components/models\";\r\n\r\n@Component({\r\n    selector: 'app-toolbar',\r\n    templateUrl: './toolbar.component.html',\r\n    styleUrl: './toolbar.component.scss'\r\n})\r\nexport class AppToolbarComponent {\r\n    @Input()\r\n    public mainButton: Button;\r\n\r\n    @Input()\r\n    public title: string;\r\n\r\n    @Input()\r\n    public secondaryButtons: Button[];\r\n\r\n    @Input()\r\n    public toolbarConfig: ToolbarConfig;\r\n\r\n    @Output()\r\n    public actionEmitter = new EventEmitter<Action>();\r\n}",
+            "styleUrl": "./toolbar.component.scss",
+            "assetsDirs": [],
+            "styleUrlsData": "",
+            "stylesData": "",
+            "extends": [],
+            "templateData": "@if (toolbarConfig.isSecondaryToolbar) {\r\n\t<mat-toolbar>\r\n\t\t@if (mainButton) {\r\n\t\t\t<app-button\r\n\t\t\t\t[type]=\"mainButton.type\"\r\n\t\t\t\t[label]=\"mainButton.label\"\r\n\t\t\t\t[icon]=\"mainButton.icon\"\r\n\t\t\t\t[action]=\"mainButton.action\"\r\n\t\t\t\t(actionEmmiter)=\"this.actionEmitter.emit($event)\"\r\n\t\t\t/>\r\n\t\t}\r\n\t\t@if (toolbarConfig.isTitleSeparete) {\r\n\t\t\t<span class=\"spacer\"></span>\r\n\t\t}\r\n\t\t@if (title) {\r\n\t\t\t<strong>{{ title }}</strong>\r\n\t\t}\r\n\t\t@if (toolbarConfig.isTitleSeparete) {\r\n\t\t\t<span class=\"spacer\"></span>\r\n\t\t} @else {\r\n\t\t\t<span class=\"secondary-spacer\"></span>\r\n\t\t}\r\n\t\t@if (secondaryButtons) {\r\n\t\t\t@for (button of secondaryButtons; track $index) {\r\n\t\t\t\t<app-button\r\n\t\t\t\t\t[type]=\"button.type\"\r\n\t\t\t\t\t[label]=\"button.label\"\r\n\t\t\t\t\t[icon]=\"button.icon\"\r\n\t\t\t\t\t[action]=\"button.action\"\r\n\t\t\t\t\t(actionEmmiter)=\"this.actionEmitter.emit($event)\"\r\n\t\t\t\t/>\r\n\t\t\t}\r\n\t\t}\r\n\t</mat-toolbar>\r\n} @else {\r\n\t<mat-toolbar class=\"secondary-toolbar\">\r\n\t\t@if (secondaryButtons) {\r\n\t\t\t@for (button of secondaryButtons; track $index) {\r\n\t\t\t\t<app-button\r\n\t\t\t\t\t[type]=\"button.type\"\r\n\t\t\t\t\t[label]=\"button.label\"\r\n\t\t\t\t\t[icon]=\"button.icon\"\r\n\t\t\t\t\t[action]=\"button.action\"\r\n\t\t\t\t/>\r\n\t\t\t}\r\n\t\t}\r\n\t</mat-toolbar>\r\n}\r\n"
+        },
+        {
+            "name": "ButtonComponent",
+            "id": "component-ButtonComponent-5a8e096b3b55cf2464d25bb4749954b70248ff4e92c8188bd7fee1865dc8e8fc752f896bbbde72b8a0488bdb0a6b3ab01efd180b4d59642911c900820c4ff05a",
+            "file": "src/components/button/button.component.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "app-button",
+            "styleUrls": [],
+            "styles": [],
+            "templateUrl": [
+                "./button.component.html"
+            ],
+            "viewProviders": [],
+            "hostDirectives": [],
+            "inputsClass": [
+                {
+                    "name": "action",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 21,
+                    "type": "Action",
+                    "decorators": []
+                },
+                {
+                    "name": "icon",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 18,
+                    "type": "string",
+                    "decorators": []
+                },
+                {
+                    "name": "label",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 15,
+                    "type": "string",
+                    "decorators": []
+                },
+                {
+                    "name": "type",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 12,
+                    "type": "\"basic\" | \"raised\" | \"icon\" | \"fab\"",
+                    "decorators": []
+                }
+            ],
+            "outputsClass": [
+                {
+                    "name": "actionEmmiter",
+                    "defaultValue": "new EventEmitter<Action>()",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 24,
+                    "type": "EventEmitter"
+                }
+            ],
+            "propertiesClass": [],
+            "methodsClass": [],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "hostBindings": [],
+            "hostListeners": [],
+            "standalone": false,
+            "imports": [],
+            "description": "",
+            "rawdescription": "\n",
+            "type": "component",
+            "sourceCode": "import { Component, EventEmitter, Input, Output } from \"@angular/core\";\r\nimport { Action } from \"@ngrx/store\";\r\n\r\n@Component({\r\n    selector: \"app-button\",\r\n    templateUrl: \"./button.component.html\",\r\n    styleUrl: \"./button.component.scss\"\r\n})\r\nexport class ButtonComponent\r\n{\r\n    @Input()\r\n    public type: \"basic\" | \"raised\" | \"icon\" | \"fab\";\r\n\r\n    @Input()\r\n    public label: string;\r\n\r\n    @Input()\r\n    public icon: string;\r\n\r\n    @Input()\r\n    public action: Action;\r\n\r\n    @Output()\r\n    public actionEmmiter = new EventEmitter<Action>()\r\n}",
+            "styleUrl": "./button.component.scss",
+            "assetsDirs": [],
+            "styleUrlsData": "",
+            "stylesData": "",
+            "extends": [],
+            "templateData": "@switch (type) {\r\n\t@case (\"raised\") {\r\n\t\t<button\r\n\t\t\tmat-raised-button\r\n\t\t\t(click)=\"this.actionEmmiter.emit(this.action)\"\r\n\t\t>\r\n\t\t\t@if (label) {\r\n\t\t\t\t<span>{{ label }}</span>\r\n\t\t\t}\r\n\t\t\t@if (icon) {\r\n\t\t\t\t<mat-icon>{{ icon }}</mat-icon>\r\n\t\t\t}\r\n\t\t</button>\r\n\t}\r\n\t@case (\"icon\") {\r\n\t\t<button\r\n\t\t\tmat-icon-button\r\n\t\t\t(click)=\"this.actionEmmiter.emit(this.action)\"\r\n\t\t>\r\n\t\t\t@if (icon) {\r\n\t\t\t\t<mat-icon>{{ icon }}</mat-icon>\r\n\t\t\t}\r\n\t\t</button>\r\n\t}\r\n\t@case (\"fab\") {\r\n\t\t<button\r\n\t\t\tmat-fab\r\n\t\t\t(click)=\"this.actionEmmiter.emit(this.action)\"\r\n\t\t>\r\n\t\t\t@if (icon) {\r\n\t\t\t\t<mat-icon>{{ icon }}</mat-icon>\r\n\t\t\t}\r\n\t\t</button>\r\n\t}\r\n\t@default {\r\n\t\t<button\r\n\t\t\tmat-button\r\n\t\t\t(click)=\"this.actionEmmiter.emit(this.action)\"\r\n\t\t>\r\n\t\t\t@if (label) {\r\n\t\t\t\t<span>{{ label }}</span>\r\n\t\t\t}\r\n\t\t\t@if (icon) {\r\n\t\t\t\t<mat-icon>{{ icon }}</mat-icon>\r\n\t\t\t}\r\n\t\t</button>\r\n\t}\r\n}\r\n"
+        }
+    ],
+    "modules": [
+        {
+            "name": "AppButtonModule",
+            "id": "module-AppButtonModule-3bd588ef00bd7c71bfef8d9a1890a19ed129cd2552804fda0eda8bf0528b88281256f5d1b5619e2cc080259873e39aeaa9a76049652e280cadccf756f496e164",
+            "description": "",
+            "deprecationMessage": "",
+            "deprecated": false,
+            "file": "src/components/button/button.module.ts",
+            "methods": [],
+            "sourceCode": "import { NgModule } from \"@angular/core\";\r\nimport { ButtonComponent } from \"./button.component\";\r\nimport { CommonModule } from \"@angular/common\";\r\nimport { MatButtonModule } from \"@angular/material/button\";\r\nimport { MatIconModule } from \"@angular/material/icon\";\r\n\r\n@NgModule({\r\n    declarations: [ButtonComponent],\r\n    imports: [\r\n        CommonModule,\r\n        MatButtonModule,\r\n        MatIconModule,\r\n    ],\r\n    exports: [ButtonComponent]\r\n})\r\nexport class AppButtonModule {}",
+            "children": [
+                {
+                    "type": "providers",
+                    "elements": []
+                },
+                {
+                    "type": "declarations",
+                    "elements": [
+                        {
+                            "name": "ButtonComponent"
+                        }
+                    ]
+                },
+                {
+                    "type": "imports",
+                    "elements": []
+                },
+                {
+                    "type": "exports",
+                    "elements": [
+                        {
+                            "name": "ButtonComponent"
+                        }
+                    ]
+                },
+                {
+                    "type": "bootstrap",
+                    "elements": []
+                },
+                {
+                    "type": "classes",
+                    "elements": []
+                }
+            ]
+        },
+        {
+            "name": "AppModule",
+            "id": "module-AppModule-e649a6368cdf840663ab0e4c381e1a41443d738adb1b48b8e5ef8ff4a2fc6622299b30e171c4181fd81f1087ea40a2e97730c6b53d9059e43fd15d8b0d41108d",
+            "description": "",
+            "deprecationMessage": "",
+            "deprecated": false,
+            "file": "src/app/app.module.ts",
+            "methods": [],
+            "sourceCode": "import { NgModule } from \"@angular/core\";\r\nimport { AppComponent } from \"./app.component\";\r\nimport { CommonModule } from \"@angular/common\";\r\nimport { provideAnimationsAsync } from \"@angular/platform-browser/animations/async\";\r\nimport { AppRoutingModule } from \"./app-routing.module\";\r\nimport { RouterOutlet } from \"@angular/router\";\r\nimport { BrowserModule } from \"@angular/platform-browser\";\nimport { StoreModule } from '@ngrx/store';\nimport { EffectsModule } from '@ngrx/effects';\nimport { StoreRouterConnectingModule } from '@ngrx/router-store';\r\n\r\n@NgModule({\r\n    declarations: [AppComponent],\r\n    imports: [\r\n        CommonModule,\r\n        BrowserModule,\r\n        AppRoutingModule,\r\n        RouterOutlet,\r\n        StoreModule.forRoot({}, {}),\r\n        EffectsModule.forRoot([]),\r\n        StoreRouterConnectingModule.forRoot()],\r\n    bootstrap: [AppComponent],\r\n    providers: [\r\n        provideAnimationsAsync(),\r\n    ]\r\n})\r\nexport class AppModule {}",
+            "children": [
+                {
+                    "type": "providers",
+                    "elements": []
+                },
+                {
+                    "type": "declarations",
+                    "elements": [
+                        {
+                            "name": "AppComponent"
+                        }
+                    ]
+                },
+                {
+                    "type": "imports",
+                    "elements": [
+                        {
+                            "name": "AppRoutingModule"
+                        },
+                        {
+                            "name": "RouterOutlet"
+                        }
+                    ]
+                },
+                {
+                    "type": "exports",
+                    "elements": []
+                },
+                {
+                    "type": "bootstrap",
+                    "elements": [
+                        {
+                            "name": "AppComponent"
+                        }
+                    ]
+                },
+                {
+                    "type": "classes",
+                    "elements": []
+                }
+            ]
+        },
+        {
+            "name": "AppRoutingModule",
+            "id": "module-AppRoutingModule-d7b12e7a805a455916e422fdd78f01b961884cb5df6a2e0a165b7dcaf74d083e75df48d3a740b95c61db1de879c62ef2121534b6e68cc02291d8e443f7857a81",
+            "description": "",
+            "deprecationMessage": "",
+            "deprecated": false,
+            "file": "src/app/app-routing.module.ts",
+            "methods": [],
+            "sourceCode": "import { NgModule } from \"@angular/core\";\r\nimport { RouterModule, Routes } from \"@angular/router\";\r\n\r\nexport const routes : Routes = [];\r\n\r\n@NgModule({\r\n    imports: [RouterModule.forRoot(routes)],\r\n    exports: [RouterModule],\r\n})\r\nexport class AppRoutingModule {}",
+            "children": [
+                {
+                    "type": "providers",
+                    "elements": []
+                },
+                {
+                    "type": "declarations",
+                    "elements": []
+                },
+                {
+                    "type": "imports",
+                    "elements": []
+                },
+                {
+                    "type": "exports",
+                    "elements": []
+                },
+                {
+                    "type": "bootstrap",
+                    "elements": []
+                },
+                {
+                    "type": "classes",
+                    "elements": []
+                }
+            ]
+        },
+        {
+            "name": "AppToolbarModule",
+            "id": "module-AppToolbarModule-502658206ed1b44506a0619018a99dabe17db79688ffb31f130153acbc90da748e235e21cacd470534a8e42ee10017a297ae27d41907095e18a89971ff4cc94f",
+            "description": "",
+            "deprecationMessage": "",
+            "deprecated": false,
+            "file": "src/components/toolbar/toolbar.module.ts",
+            "methods": [],
+            "sourceCode": "import { CommonModule } from \"@angular/common\";\r\nimport { NgModule } from \"@angular/core\";\r\nimport { MatToolbarModule } from \"@angular/material/toolbar\";\r\nimport { AppButtonModule } from \"../button/button.module\";\r\nimport { AppToolbarComponent } from \"./ui/toolbar.component\";\r\n\r\n@NgModule({\r\n    declarations: [AppToolbarComponent],\r\n    imports: [\r\n        CommonModule,\r\n        MatToolbarModule,\r\n        AppButtonModule,\r\n    ],\r\n    exports: [AppToolbarComponent]\r\n})\r\nexport class AppToolbarModule {}",
+            "children": [
+                {
+                    "type": "providers",
+                    "elements": []
+                },
+                {
+                    "type": "declarations",
+                    "elements": [
+                        {
+                            "name": "AppToolbarComponent"
+                        }
+                    ]
+                },
+                {
+                    "type": "imports",
+                    "elements": [
+                        {
+                            "name": "AppButtonModule"
+                        }
+                    ]
+                },
+                {
+                    "type": "exports",
+                    "elements": [
+                        {
+                            "name": "AppToolbarComponent"
+                        }
+                    ]
+                },
+                {
+                    "type": "bootstrap",
+                    "elements": []
+                },
+                {
+                    "type": "classes",
+                    "elements": []
+                }
+            ]
+        }
+    ],
+    "miscellaneous": [],
+    "routes": {
+        "name": "<root>",
+        "kind": "module",
+        "className": "AppModule",
+        "children": [
+            {
+                "name": "routes",
+                "filename": "src/app/app-routing.module.ts",
+                "module": "AppRoutingModule",
+                "children": [],
+                "kind": "module"
+            }
+        ]
+    },
+    "coverage": {
+        "count": 0,
+        "status": "low",
+        "files": [
+            {
+                "filePath": "src/app/app.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "AppComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/3",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/app.service.ts",
+                "type": "injectable",
+                "linktype": "injectable",
+                "name": "AppService",
+                "coveragePercent": 0,
+                "coverageCount": "0/3",
+                "status": "low"
+            },
+            {
+                "filePath": "src/components/button/button.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "ButtonComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/6",
+                "status": "low"
+            },
+            {
+                "filePath": "src/components/models.ts",
+                "type": "interface",
+                "linktype": "interface",
+                "name": "Button",
+                "coveragePercent": 0,
+                "coverageCount": "0/5",
+                "status": "low"
+            },
+            {
+                "filePath": "src/components/models.ts",
+                "type": "interface",
+                "linktype": "interface",
+                "name": "Toolbar",
+                "coveragePercent": 0,
+                "coverageCount": "0/4",
+                "status": "low"
+            },
+            {
+                "filePath": "src/components/models.ts",
+                "type": "interface",
+                "linktype": "interface",
+                "name": "ToolbarConfig",
+                "coveragePercent": 0,
+                "coverageCount": "0/3",
+                "status": "low"
+            },
+            {
+                "filePath": "src/components/toolbar/ui/toolbar.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "AppToolbarComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/6",
+                "status": "low"
+            }
+        ]
+    }
+}
