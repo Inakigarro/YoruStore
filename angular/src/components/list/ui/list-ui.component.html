@@ -1,0 +1,16 @@
+@if (title) {
+	<h2>{{ title }}</h2>
+}
+
+@if (data$ | async; as data) {
+	<mat-list>
+		@for (item of data; track $index) {
+			<app-card-ui
+				[id]="item.id"
+				[titulo]="item.titulo"
+				[descripcion]="item.descripcion"
+				[precio]="item.precio"
+			/>
+		}
+	</mat-list>
+}

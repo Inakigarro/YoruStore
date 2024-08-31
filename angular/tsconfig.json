@@ -25,6 +25,7 @@
     ],
     "paths": {
       "@root/*": ["./src/*"],
+      "@public/*": ["./public/*"],
       "@components/*": ["./src/components/*"]
     },
     "strictPropertyInitialization": false,

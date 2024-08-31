@@ -1,22 +1,10 @@
-import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
-import { MatToolbarModule } from "@angular/material/toolbar";
-import { AppButtonModule } from "../button/button.module";
-import { AppToolbarComponent } from "./ui/toolbar.component";
-import { StoreModule } from "@ngrx/store";
-import { TOOLBAR_FEATURE_KEY, toolbarReducer } from "./state/toolbar.reducer";
-import { AppToolbarFeatureComponent } from "./feature/toolbar-feature.component";
+import { ToolbarFeatureModule } from "./feature/toolbar-feature.module";
 
 @NgModule({
-    declarations: [
-        AppToolbarComponent,
-        AppToolbarFeatureComponent],
     imports: [
-        CommonModule,
-        MatToolbarModule,
-        AppButtonModule,
-        StoreModule.forFeature(TOOLBAR_FEATURE_KEY, toolbarReducer),
+        ToolbarFeatureModule
     ],
-    exports: [AppToolbarComponent, AppToolbarFeatureComponent]
+    exports: [ToolbarFeatureModule]
 })
 export class AppToolbarModule {}

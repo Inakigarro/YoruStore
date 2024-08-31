@@ -3,11 +3,11 @@ import { Action } from "@ngrx/store";
 import { Button, ToolbarConfig } from "@root/components/models";
 
 @Component({
-    selector: 'app-toolbar',
+    selector: 'app-toolbar-ui',
     templateUrl: './toolbar.component.html',
     styleUrl: './toolbar.component.scss'
 })
-export class AppToolbarComponent {
+export class AppToolbarUiComponent {
     @Input()
     public id: string;
     

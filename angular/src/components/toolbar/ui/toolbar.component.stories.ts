@@ -1,25 +1,25 @@
 import { Meta, moduleMetadata, StoryObj } from "@storybook/angular";
-import { AppToolbarComponent } from "./toolbar.component";
-import { AppToolbarModule } from "../toolbar.module";
+import { AppToolbarUiComponent } from "./toolbar.component";
 import { createAction } from "@ngrx/store";
+import { ToolbarUiModule } from "./toolbar-ui.module";
 
 const mockMainButtonAction = createAction('[Storybook] - Toolbar main button clicked');
 const mockProfileButtonAction = createAction('[Storybook] - Toolbar profile button clicked');
 const mockSearchButtonAction = createAction('[Storybook] - Toolbar search button clicked');
 
-const toolbar: Meta<AppToolbarComponent> = {
+const toolbar: Meta<AppToolbarUiComponent> = {
     title: 'custom-component/toolbar',
-    component: AppToolbarComponent,
+    component: AppToolbarUiComponent,
     decorators: [
         moduleMetadata({
-            imports: [AppToolbarModule]
+            imports: [ToolbarUiModule],
         })
     ]
 };
 
 export default toolbar;
 
-export type ToolbarStory = StoryObj<AppToolbarComponent>;
+export type ToolbarStory = StoryObj<AppToolbarUiComponent>;
 
 export const BasicToolbarWithMainButtonAndTitle: ToolbarStory = {
     args: {

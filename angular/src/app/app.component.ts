@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { AppService } from './app.service';
 import { RegisterToolbar } from '@root/components/toolbar/state/toolbar.actions';
 import { menuButtonClicked, pantsButtonClicked, profileButtonClicked, searchButtonClicked, shoppingCartButtonClicked, tShirtsButtonClicked } from './state/app.actions';
-import { Observable } from 'rxjs';
-import { Toolbar } from '@root/components/models';
+import { Observable, of } from 'rxjs';
+import { Item, Toolbar } from '@root/components/models';
 
 const MAIN_TOOLBAR_ID = 'app-main-toolbar';
 const SECONDARY_TOOLBAR_ID = 'app-secondary-toolbar';
@@ -17,6 +17,20 @@ export class AppComponent {
   public mainToolbar$: Observable<Toolbar | undefined>;
   public secondaryToolbar$: Observable<Toolbar | undefined>;
   public isMenuOpened$: Observable<boolean>;
+
+  public data$: Observable<Item[]> = of([
+    {
+      id: '1',
+      titulo: 'Medias Negras Vlack',
+      descripcion: 'Unas medias buenisimas para jugar al hockey',
+      precio: 10000
+    },
+    {
+      id: '2',
+      titulo: 'Medias Negras Vlack',
+      descripcion: 'Unas medias buenisimas para jugar al hockey',
+      precio: 10000
+    }])
 
   constructor(private service: AppService) {
     this.service.dispatch(RegisterToolbar({

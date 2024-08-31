@@ -2,13 +2,64 @@
     "pipes": [],
     "interfaces": [
         {
+            "name": "AppPartialState",
+            "id": "interface-AppPartialState-68e3178a5407b0409c19ec393b8619504fc9a3d081edc8c680a62b4ab7d334e8c4d1c839a4a52797bb20f4789b6b64902d5353ea285228131d448f60d523407c",
+            "file": "src/app/state/app.reducer.ts",
+            "deprecated": false,
+            "deprecationMessage": "",
+            "type": "interface",
+            "sourceCode": "import { Action, createReducer, on } from '@ngrx/store';\r\nimport { menuButtonClicked } from './app.actions';\r\n\r\nexport const APP_STATE_KEY = 'app-state';\r\n\r\nexport interface AppState {\r\n    isMenuOpened: boolean\r\n}\r\n\r\nexport interface AppPartialState {\r\n    readonly [APP_STATE_KEY]: AppState\r\n}\r\n\r\nconst initialState: AppState = {\r\n    isMenuOpened: true,\r\n};\r\n\r\nexport const appReducer = createReducer(\r\n    initialState,\r\n    on(menuButtonClicked, state => ({\r\n        ...state,\r\n        isMenuOpened: !state.isMenuOpened\r\n    })),\r\n);\r\n\r\nexport function reducer(state: AppState, action: Action) {\r\n    return appReducer(state, action);\r\n}",
+            "properties": [
+                {
+                    "name": "APP_STATE_KEY",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "AppState",
+                    "optional": false,
+                    "description": "",
+                    "line": 11,
+                    "modifierKind": [
+                        148
+                    ]
+                }
+            ],
+            "indexSignatures": [],
+            "kind": 171,
+            "methods": [],
+            "extends": []
+        },
+        {
+            "name": "AppState",
+            "id": "interface-AppState-68e3178a5407b0409c19ec393b8619504fc9a3d081edc8c680a62b4ab7d334e8c4d1c839a4a52797bb20f4789b6b64902d5353ea285228131d448f60d523407c",
+            "file": "src/app/state/app.reducer.ts",
+            "deprecated": false,
+            "deprecationMessage": "",
+            "type": "interface",
+            "sourceCode": "import { Action, createReducer, on } from '@ngrx/store';\r\nimport { menuButtonClicked } from './app.actions';\r\n\r\nexport const APP_STATE_KEY = 'app-state';\r\n\r\nexport interface AppState {\r\n    isMenuOpened: boolean\r\n}\r\n\r\nexport interface AppPartialState {\r\n    readonly [APP_STATE_KEY]: AppState\r\n}\r\n\r\nconst initialState: AppState = {\r\n    isMenuOpened: true,\r\n};\r\n\r\nexport const appReducer = createReducer(\r\n    initialState,\r\n    on(menuButtonClicked, state => ({\r\n        ...state,\r\n        isMenuOpened: !state.isMenuOpened\r\n    })),\r\n);\r\n\r\nexport function reducer(state: AppState, action: Action) {\r\n    return appReducer(state, action);\r\n}",
+            "properties": [
+                {
+                    "name": "isMenuOpened",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "boolean",
+                    "optional": false,
+                    "description": "",
+                    "line": 7
+                }
+            ],
+            "indexSignatures": [],
+            "kind": 171,
+            "methods": [],
+            "extends": []
+        },
+        {
             "name": "Button",
-            "id": "interface-Button-cce0b0d22254781d0570d2ae77d3573bf82b96c5d81b2937d60c2e10ffd937a5442024445a39af04f75cddc5285b959fa991a80570217b09b38c645fee3b21a5",
+            "id": "interface-Button-e7088f7cc3925b95194d214d62b094ecc23a55bb63784694a08c046e42c457dae1043039158eb85cbebeb5332aa0d33c534f184a50ee2d417747f7b22d857dbd",
             "file": "src/components/models.ts",
             "deprecated": false,
             "deprecationMessage": "",
             "type": "interface",
-            "sourceCode": "import { Action } from \"@ngrx/store\";\r\n\r\nexport interface Button {\r\n    type: 'basic' | 'raised' | 'fab' | 'icon';\r\n    label: string;\r\n    icon: string;\r\n    action: Action;\r\n}\r\n\r\nexport interface Toolbar {\r\n    mainButton: Button;\r\n    title: string;\r\n    secondaryButton: Button[];\r\n}\r\n\r\nexport interface ToolbarConfig {\r\n    isTitleSeparete: boolean;\r\n    isSecondaryToolbar: boolean;\r\n}",
+            "sourceCode": "import { Action } from \"@ngrx/store\";\r\n\r\nexport interface Button {\r\n    type: 'basic' | 'raised' | 'fab' | 'icon' | 'flat';\r\n    label: string;\r\n    icon: string;\r\n    action: Action;\r\n}\r\n\r\nexport interface Toolbar {\r\n    id: string;\r\n    mainButton?: Button;\r\n    title?: string;\r\n    secondaryButton?: Button[];\r\n    toolbarConfig: ToolbarConfig;\r\n}\r\n\r\nexport interface ToolbarConfig {\r\n    isTitleSeparete: boolean;\r\n    isSecondaryToolbar: boolean;\r\n}",
             "properties": [
                 {
                     "name": "action",
@@ -41,7 +92,7 @@
                     "name": "type",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "type": "\"basic\" | \"raised\" | \"fab\" | \"icon\"",
+                    "type": "\"basic\" | \"raised\" | \"fab\" | \"icon\" | \"flat\"",
                     "optional": false,
                     "description": "",
                     "line": 4
@@ -54,39 +105,57 @@
         },
         {
             "name": "Toolbar",
-            "id": "interface-Toolbar-cce0b0d22254781d0570d2ae77d3573bf82b96c5d81b2937d60c2e10ffd937a5442024445a39af04f75cddc5285b959fa991a80570217b09b38c645fee3b21a5",
+            "id": "interface-Toolbar-e7088f7cc3925b95194d214d62b094ecc23a55bb63784694a08c046e42c457dae1043039158eb85cbebeb5332aa0d33c534f184a50ee2d417747f7b22d857dbd",
             "file": "src/components/models.ts",
             "deprecated": false,
             "deprecationMessage": "",
             "type": "interface",
-            "sourceCode": "import { Action } from \"@ngrx/store\";\r\n\r\nexport interface Button {\r\n    type: 'basic' | 'raised' | 'fab' | 'icon';\r\n    label: string;\r\n    icon: string;\r\n    action: Action;\r\n}\r\n\r\nexport interface Toolbar {\r\n    mainButton: Button;\r\n    title: string;\r\n    secondaryButton: Button[];\r\n}\r\n\r\nexport interface ToolbarConfig {\r\n    isTitleSeparete: boolean;\r\n    isSecondaryToolbar: boolean;\r\n}",
+            "sourceCode": "import { Action } from \"@ngrx/store\";\r\n\r\nexport interface Button {\r\n    type: 'basic' | 'raised' | 'fab' | 'icon' | 'flat';\r\n    label: string;\r\n    icon: string;\r\n    action: Action;\r\n}\r\n\r\nexport interface Toolbar {\r\n    id: string;\r\n    mainButton?: Button;\r\n    title?: string;\r\n    secondaryButton?: Button[];\r\n    toolbarConfig: ToolbarConfig;\r\n}\r\n\r\nexport interface ToolbarConfig {\r\n    isTitleSeparete: boolean;\r\n    isSecondaryToolbar: boolean;\r\n}",
             "properties": [
+                {
+                    "name": "id",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 11
+                },
                 {
                     "name": "mainButton",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Button",
-                    "optional": false,
+                    "optional": true,
                     "description": "",
-                    "line": 11
+                    "line": 12
                 },
                 {
                     "name": "secondaryButton",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Button[]",
-                    "optional": false,
+                    "optional": true,
                     "description": "",
-                    "line": 13
+                    "line": 14
                 },
                 {
                     "name": "title",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "string",
+                    "optional": true,
+                    "description": "",
+                    "line": 13
+                },
+                {
+                    "name": "toolbarConfig",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "ToolbarConfig",
                     "optional": false,
                     "description": "",
-                    "line": 12
+                    "line": 15
                 }
             ],
             "indexSignatures": [],
@@ -96,12 +165,12 @@
         },
         {
             "name": "ToolbarConfig",
-            "id": "interface-ToolbarConfig-cce0b0d22254781d0570d2ae77d3573bf82b96c5d81b2937d60c2e10ffd937a5442024445a39af04f75cddc5285b959fa991a80570217b09b38c645fee3b21a5",
+            "id": "interface-ToolbarConfig-e7088f7cc3925b95194d214d62b094ecc23a55bb63784694a08c046e42c457dae1043039158eb85cbebeb5332aa0d33c534f184a50ee2d417747f7b22d857dbd",
             "file": "src/components/models.ts",
             "deprecated": false,
             "deprecationMessage": "",
             "type": "interface",
-            "sourceCode": "import { Action } from \"@ngrx/store\";\r\n\r\nexport interface Button {\r\n    type: 'basic' | 'raised' | 'fab' | 'icon';\r\n    label: string;\r\n    icon: string;\r\n    action: Action;\r\n}\r\n\r\nexport interface Toolbar {\r\n    mainButton: Button;\r\n    title: string;\r\n    secondaryButton: Button[];\r\n}\r\n\r\nexport interface ToolbarConfig {\r\n    isTitleSeparete: boolean;\r\n    isSecondaryToolbar: boolean;\r\n}",
+            "sourceCode": "import { Action } from \"@ngrx/store\";\r\n\r\nexport interface Button {\r\n    type: 'basic' | 'raised' | 'fab' | 'icon' | 'flat';\r\n    label: string;\r\n    icon: string;\r\n    action: Action;\r\n}\r\n\r\nexport interface Toolbar {\r\n    id: string;\r\n    mainButton?: Button;\r\n    title?: string;\r\n    secondaryButton?: Button[];\r\n    toolbarConfig: ToolbarConfig;\r\n}\r\n\r\nexport interface ToolbarConfig {\r\n    isTitleSeparete: boolean;\r\n    isSecondaryToolbar: boolean;\r\n}",
             "properties": [
                 {
                     "name": "isSecondaryToolbar",
@@ -110,7 +179,7 @@
                     "type": "boolean",
                     "optional": false,
                     "description": "",
-                    "line": 18
+                    "line": 20
                 },
                 {
                     "name": "isTitleSeparete",
@@ -119,21 +188,76 @@
                     "type": "boolean",
                     "optional": false,
                     "description": "",
-                    "line": 17
+                    "line": 19
                 }
             ],
             "indexSignatures": [],
             "kind": 171,
             "methods": [],
             "extends": []
+        },
+        {
+            "name": "ToolbarPartialState",
+            "id": "interface-ToolbarPartialState-aee381ac6501482b4afd8730db5fa21320c8437367c8b52d416747c140ef3f5b8b8eef7d48b8209d873d184bb6f40e8c63c66be10f988af43dc677c7c7723b5e",
+            "file": "src/components/toolbar/state/toolbar.reducer.ts",
+            "deprecated": false,
+            "deprecationMessage": "",
+            "type": "interface",
+            "sourceCode": "import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';\r\nimport { Action, createReducer, on } from '@ngrx/store';\r\nimport { Toolbar } from '@root/components/models';\r\nimport { RegisterToolbar } from './toolbar.actions';\r\n\r\nexport const TOOLBAR_FEATURE_KEY = 'toolbars';\r\n\r\nexport interface ToolbarState extends EntityState<Toolbar> {\r\n    \r\n}\r\n\r\nexport function selectById(a: Toolbar): string {\r\n    return a.id;\r\n}\r\n\r\nexport function sortById(a: Toolbar, b: Toolbar): number {\r\n    return a.id.localeCompare(b.id);\r\n}\r\n\r\nexport const toolbarAdapter: EntityAdapter<Toolbar> = createEntityAdapter<Toolbar> ({\r\n    selectId: selectById,\r\n    sortComparer: sortById\r\n});\r\n\r\nexport interface ToolbarPartialState {\r\n    readonly [TOOLBAR_FEATURE_KEY]: ToolbarState\r\n}\r\n\r\nexport const initialState = toolbarAdapter.getInitialState();\r\n\r\nconst reducer = createReducer(\r\n    initialState,\r\n    on(RegisterToolbar, (state, action) => ({\r\n        ...toolbarAdapter.addOne(action.toolbar, state)\r\n    }))\r\n);\r\n\r\nexport function toolbarReducer(state: ToolbarState, action: Action){\r\n    return reducer(state, action);\r\n}",
+            "properties": [
+                {
+                    "name": "TOOLBAR_FEATURE_KEY",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "ToolbarState",
+                    "optional": false,
+                    "description": "",
+                    "line": 26,
+                    "modifierKind": [
+                        148
+                    ]
+                }
+            ],
+            "indexSignatures": [],
+            "kind": 171,
+            "methods": [],
+            "extends": []
+        },
+        {
+            "name": "ToolbarState",
+            "id": "interface-ToolbarState-aee381ac6501482b4afd8730db5fa21320c8437367c8b52d416747c140ef3f5b8b8eef7d48b8209d873d184bb6f40e8c63c66be10f988af43dc677c7c7723b5e",
+            "file": "src/components/toolbar/state/toolbar.reducer.ts",
+            "deprecated": false,
+            "deprecationMessage": "",
+            "type": "interface",
+            "sourceCode": "import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';\r\nimport { Action, createReducer, on } from '@ngrx/store';\r\nimport { Toolbar } from '@root/components/models';\r\nimport { RegisterToolbar } from './toolbar.actions';\r\n\r\nexport const TOOLBAR_FEATURE_KEY = 'toolbars';\r\n\r\nexport interface ToolbarState extends EntityState<Toolbar> {\r\n    \r\n}\r\n\r\nexport function selectById(a: Toolbar): string {\r\n    return a.id;\r\n}\r\n\r\nexport function sortById(a: Toolbar, b: Toolbar): number {\r\n    return a.id.localeCompare(b.id);\r\n}\r\n\r\nexport const toolbarAdapter: EntityAdapter<Toolbar> = createEntityAdapter<Toolbar> ({\r\n    selectId: selectById,\r\n    sortComparer: sortById\r\n});\r\n\r\nexport interface ToolbarPartialState {\r\n    readonly [TOOLBAR_FEATURE_KEY]: ToolbarState\r\n}\r\n\r\nexport const initialState = toolbarAdapter.getInitialState();\r\n\r\nconst reducer = createReducer(\r\n    initialState,\r\n    on(RegisterToolbar, (state, action) => ({\r\n        ...toolbarAdapter.addOne(action.toolbar, state)\r\n    }))\r\n);\r\n\r\nexport function toolbarReducer(state: ToolbarState, action: Action){\r\n    return reducer(state, action);\r\n}",
+            "properties": [],
+            "indexSignatures": [],
+            "methods": [],
+            "extends": [
+                "EntityState"
+            ]
         }
     ],
     "injectables": [
         {
             "name": "AppService",
-            "id": "injectable-AppService-016a4ecceb49606d1ab2c51d203789ea54bb72b74bba98ddb11c599266950a8cca86fbde6fc078f1261ee79838749863be384c4f8b7f762c429ba49154ff3476",
+            "id": "injectable-AppService-219f9ca9e4d49fba31a6b1d54ca705bb88339b34829b4c8261d080c3255ea7ab7f037562757cea602ff8047776c3d4d0e67b9c9423d857a248712a8f12f454f3",
             "file": "src/app/app.service.ts",
-            "properties": [],
+            "properties": [
+                {
+                    "name": "isMenuOpened$",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Observable<boolean>",
+                    "optional": false,
+                    "description": "",
+                    "line": 11,
+                    "modifierKind": [
+                        125
+                    ]
+                }
+            ],
             "methods": [
                 {
                     "name": "dispatch",
@@ -148,7 +272,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 10,
+                    "line": 16,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "modifierKind": [
@@ -165,13 +289,44 @@
                             }
                         }
                     ]
+                },
+                {
+                    "name": "getToolbarById",
+                    "args": [
+                        {
+                            "name": "id",
+                            "type": "string",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "any",
+                    "typeParameters": [],
+                    "line": 20,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        125
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "id",
+                            "type": "string",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
                 }
             ],
             "deprecated": false,
             "deprecationMessage": "",
             "description": "",
             "rawdescription": "\n",
-            "sourceCode": "import { Injectable } from \"@angular/core\";\r\nimport { Action, Store } from \"@ngrx/store\";\r\n\r\n@Injectable({\r\n    providedIn: 'root'\r\n})\r\nexport class AppService {\r\n    constructor(private store: Store){}\r\n\r\n    public dispatch(action: Action){\r\n        this.store.dispatch(action);\r\n    }\r\n}",
+            "sourceCode": "import { Injectable } from \"@angular/core\";\r\nimport { Action, Store } from \"@ngrx/store\";\r\nimport { selectAllToolbars } from \"@root/components/toolbar/state/toolbar.selectors\";\r\nimport { map, Observable } from \"rxjs\";\r\nimport { getMenuOpened } from \"./state/app.selectors\";\r\n\r\n@Injectable({\r\n    providedIn: 'root'\r\n})\r\nexport class AppService {\r\n    public isMenuOpened$: Observable<boolean>;\r\n    constructor(private store: Store){\r\n        this.isMenuOpened$ = this.store.select(getMenuOpened);\r\n    }\r\n\r\n    public dispatch(action: Action){\r\n        this.store.dispatch(action);\r\n    }\r\n\r\n    public getToolbarById(id: string) {\r\n        return this.store.select(selectAllToolbars).pipe(\r\n            map(toolbars => toolbars.find(t => t.id == id))\r\n        )\r\n    }\r\n}",
             "constructorObj": {
                 "name": "constructor",
                 "description": "",
@@ -185,7 +340,7 @@
                         "deprecationMessage": ""
                     }
                 ],
-                "line": 7,
+                "line": 11,
                 "jsdoctags": [
                     {
                         "name": "store",
@@ -209,7 +364,7 @@
     "components": [
         {
             "name": "AppComponent",
-            "id": "component-AppComponent-19e1bfcac33a02e810a825a806012fd3f9aa4977b9d7d6375ddff2fb0ebd11913c6be45c14ed03c46c12f6ffa3088a9162d6748fb62af3dc3ac5766fbbfb6824",
+            "id": "component-AppComponent-2436852211601761058367d76e5652577764eeac479d924f4df39227c1832f5189e3aac847a8c3044af108e1d217bf3fcfcbd8ae7849aa0ce14e0f4fab2a9d4d",
             "file": "src/app/app.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -228,6 +383,55 @@
             "outputsClass": [],
             "propertiesClass": [
                 {
+                    "name": "data$",
+                    "defaultValue": "of([\r\n    {\r\n      id: 1,\r\n      descripcion: 'Sarasa'\r\n    },\r\n    {\r\n      id: 2,\r\n      descripcion: 'Firulete'\r\n    }])",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Observable<literal type[]>",
+                    "optional": false,
+                    "description": "",
+                    "line": 21,
+                    "modifierKind": [
+                        125
+                    ]
+                },
+                {
+                    "name": "isMenuOpened$",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Observable<boolean>",
+                    "optional": false,
+                    "description": "",
+                    "line": 19,
+                    "modifierKind": [
+                        125
+                    ]
+                },
+                {
+                    "name": "mainToolbar$",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Observable<Toolbar | undefined>",
+                    "optional": false,
+                    "description": "",
+                    "line": 17,
+                    "modifierKind": [
+                        125
+                    ]
+                },
+                {
+                    "name": "secondaryToolbar$",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Observable<Toolbar | undefined>",
+                    "optional": false,
+                    "description": "",
+                    "line": 18,
+                    "modifierKind": [
+                        125
+                    ]
+                },
+                {
                     "name": "title",
                     "defaultValue": "'angular'",
                     "deprecated": false,
@@ -235,7 +439,7 @@
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 11
+                    "line": 95
                 }
             ],
             "methodsClass": [],
@@ -248,7 +452,7 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { Component } from '@angular/core';\r\nimport { AppService } from './app.service';\r\n\r\n@Component({\r\n  selector: 'app-root',\r\n  templateUrl: './app.component.html',\r\n  styleUrl: './app.component.scss'\r\n})\r\nexport class AppComponent {\r\n  constructor(private service: AppService) {}\r\n  title = 'angular';\r\n}\r\n",
+            "sourceCode": "import { Component } from '@angular/core';\r\nimport { AppService } from './app.service';\r\nimport { RegisterToolbar } from '@root/components/toolbar/state/toolbar.actions';\r\nimport { menuButtonClicked, pantsButtonClicked, profileButtonClicked, searchButtonClicked, shoppingCartButtonClicked, tShirtsButtonClicked } from './state/app.actions';\r\nimport { Observable, of } from 'rxjs';\r\nimport { Toolbar } from '@root/components/models';\r\n\r\nconst MAIN_TOOLBAR_ID = 'app-main-toolbar';\r\nconst SECONDARY_TOOLBAR_ID = 'app-secondary-toolbar';\r\n\r\n@Component({\r\n  selector: 'app-root',\r\n  templateUrl: './app.component.html',\r\n  styleUrl: './app.component.scss'\r\n})\r\nexport class AppComponent {\r\n  public mainToolbar$: Observable<Toolbar | undefined>;\r\n  public secondaryToolbar$: Observable<Toolbar | undefined>;\r\n  public isMenuOpened$: Observable<boolean>;\r\n\r\n  public data$: Observable<{id: number, descripcion: string}[]> = of([\r\n    {\r\n      id: 1,\r\n      descripcion: 'Sarasa'\r\n    },\r\n    {\r\n      id: 2,\r\n      descripcion: 'Firulete'\r\n    }])\r\n\r\n  constructor(private service: AppService) {\r\n    this.service.dispatch(RegisterToolbar({\r\n      toolbar: {\r\n        id: MAIN_TOOLBAR_ID,\r\n        mainButton: {\r\n          type: 'icon',\r\n          icon: 'menu',\r\n          label: '',\r\n          action:  menuButtonClicked()\r\n        },\r\n        title: 'Yoru Store',\r\n        secondaryButton: [\r\n          {\r\n            type: 'basic',\r\n            icon: 'search',\r\n            label: 'Buscar',\r\n            action: searchButtonClicked()\r\n          },\r\n          {\r\n            type: 'icon',\r\n            icon: 'shopping_cart',\r\n            label: '',\r\n            action: shoppingCartButtonClicked()\r\n          },\r\n          {\r\n            type: 'icon',\r\n            icon: 'account_circle',\r\n            label: '',\r\n            action: profileButtonClicked()\r\n          }\r\n        ],\r\n        toolbarConfig: {\r\n          isTitleSeparete: true,\r\n          isSecondaryToolbar: false\r\n        }\r\n      }\r\n    }));\r\n    this.service.dispatch(RegisterToolbar({\r\n      toolbar: {\r\n        id: SECONDARY_TOOLBAR_ID,\r\n        secondaryButton: [\r\n          {\r\n            type: 'flat',\r\n            label: 'Pantalones',\r\n            icon: '',\r\n            action: pantsButtonClicked()\r\n          },\r\n          {\r\n            type: 'flat',\r\n            label: 'Remeras',\r\n            icon: '',\r\n            action: tShirtsButtonClicked()\r\n          }\r\n        ],\r\n        toolbarConfig:{\r\n          isSecondaryToolbar:true,\r\n          isTitleSeparete: false\r\n        }\r\n      }\r\n    }))\r\n    this.mainToolbar$ = this.service.getToolbarById(MAIN_TOOLBAR_ID);\r\n    this.secondaryToolbar$ = this.service.getToolbarById(SECONDARY_TOOLBAR_ID);\r\n    this.isMenuOpened$ = this.service.isMenuOpened$;\r\n  }\r\n  title = 'angular';\r\n}\r\n",
             "styleUrl": "./app.component.scss",
             "assetsDirs": [],
             "styleUrlsData": "",
@@ -266,7 +470,7 @@
                         "deprecationMessage": ""
                     }
                 ],
-                "line": 9,
+                "line": 29,
                 "jsdoctags": [
                     {
                         "name": "service",
@@ -280,18 +484,184 @@
                 ]
             },
             "extends": [],
-            "templateData": ""
+            "templateData": "<header>\r\n\t@if (mainToolbar$ | async; as mainToolbar) {\r\n\t\t<app-toolbar-feature [toolbar]=\"mainToolbar\" />\r\n\t}\r\n\t@if (isMenuOpened$ | async) {\r\n\t\t@if (secondaryToolbar$ | async; as secondaryToolbar) {\r\n\t\t\t<app-toolbar-feature [toolbar]=\"secondaryToolbar\" />\r\n\t\t}\r\n\t}\r\n</header>\r\n<main>\r\n\t<app-list\r\n\t\t[id]=\"'app-list'\"\r\n\t\t[title]=\"'Pantalones'\"\r\n\t\t[data$]=\"data$\"\r\n\t/>\r\n</main>\r\n"
         },
         {
-            "name": "AppToolbarComponent",
-            "id": "component-AppToolbarComponent-48a389b7215639be871ed507b5441dbb9613b563587a8ec9f5ed0441c4f976c88f115a9a632eebcf836312f1b50bcd0231d98a9cbc7ce24783ae8cfb1b09b41b",
+            "name": "AppListUiComponent",
+            "id": "component-AppListUiComponent-276377a6405165ebbc3e5ab1df73fcbd5472e1aafa1cf61e192703f4b2c70745b76728e7c72f2c5667b2593a4b5d75616d06ebecdcac07a117f751dac36ed58c",
+            "file": "src/components/list/ui/list-ui.component.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "app-list",
+            "styleUrls": [],
+            "styles": [],
+            "templateUrl": [
+                "./list-ui.component.html"
+            ],
+            "viewProviders": [],
+            "hostDirectives": [],
+            "inputsClass": [
+                {
+                    "name": "data$",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 16,
+                    "type": "Observable<TItem[]>",
+                    "decorators": []
+                },
+                {
+                    "name": "id",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 10,
+                    "type": "string",
+                    "decorators": []
+                },
+                {
+                    "name": "title",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 13,
+                    "type": "string",
+                    "decorators": []
+                }
+            ],
+            "outputsClass": [],
+            "propertiesClass": [],
+            "methodsClass": [],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "hostBindings": [],
+            "hostListeners": [],
+            "standalone": false,
+            "imports": [],
+            "description": "",
+            "rawdescription": "\n",
+            "type": "component",
+            "sourceCode": "import { Component, Input } from \"@angular/core\";\r\nimport { Observable } from \"rxjs\";\r\n\r\n@Component({\r\n    selector: 'app-list',\r\n    templateUrl: './list-ui.component.html'\r\n})\r\nexport class AppListUiComponent<TItem> {\r\n    @Input()\r\n    public id: string;\r\n\r\n    @Input()\r\n    public title: string;\r\n\r\n    @Input()\r\n    public data$: Observable<TItem[]>;\r\n}",
+            "assetsDirs": [],
+            "styleUrlsData": "",
+            "stylesData": "",
+            "extends": [],
+            "templateData": "@if (title) {\r\n\t<h2>{{ title }}</h2>\r\n}\r\n\r\n@if (data$ | async; as data) {\r\n\t<mat-list>\r\n\t\t@for (item of data; track $index) {\r\n\t\t\t{{ item | json }}\r\n\t\t}\r\n\t</mat-list>\r\n}\r\n"
+        },
+        {
+            "name": "AppToolbarFeatureComponent",
+            "id": "component-AppToolbarFeatureComponent-d208544d7fe9659546a1bdc9e0273967b527227b76878c86699c94ec1f22557d4bf34fd0a1955677e67627a688d027a46c4d0625c3820b65a95c952ac5753cb2",
+            "file": "src/components/toolbar/feature/toolbar-feature.component.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "app-toolbar-feature",
+            "styleUrls": [],
+            "styles": [],
+            "templateUrl": [
+                "./toolbar-feature.component.html"
+            ],
+            "viewProviders": [],
+            "hostDirectives": [],
+            "inputsClass": [
+                {
+                    "name": "toolbar",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 11,
+                    "type": "Toolbar",
+                    "decorators": []
+                }
+            ],
+            "outputsClass": [],
+            "propertiesClass": [],
+            "methodsClass": [
+                {
+                    "name": "dispatch",
+                    "args": [
+                        {
+                            "name": "action",
+                            "type": "Action",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 15,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        125
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "action",
+                            "type": "Action",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "hostBindings": [],
+            "hostListeners": [],
+            "standalone": false,
+            "imports": [],
+            "description": "",
+            "rawdescription": "\n",
+            "type": "component",
+            "sourceCode": "import { Component, Input } from \"@angular/core\";\r\nimport { Action, Store } from \"@ngrx/store\";\r\nimport { Toolbar } from \"@root/components/models\";\r\n\r\n@Component({\r\n    selector: 'app-toolbar-feature',\r\n    templateUrl: './toolbar-feature.component.html'\r\n})\r\nexport class AppToolbarFeatureComponent {\r\n    @Input()\r\n    public toolbar: Toolbar;\r\n\r\n    constructor(private store: Store) {}\r\n\r\n    public dispatch(action: Action) {\r\n        this.store.dispatch(action);\r\n    }\r\n}",
+            "assetsDirs": [],
+            "styleUrlsData": "",
+            "stylesData": "",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "args": [
+                    {
+                        "name": "store",
+                        "type": "Store",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    }
+                ],
+                "line": 11,
+                "jsdoctags": [
+                    {
+                        "name": "store",
+                        "type": "Store",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            "extends": [],
+            "templateData": "<app-toolbar-ui\r\n\t[id]=\"toolbar.id\"\r\n\t[mainButton]=\"toolbar.mainButton\"\r\n\t[title]=\"toolbar.title\"\r\n\t[secondaryButtons]=\"toolbar.secondaryButton\"\r\n\t[toolbarConfig]=\"toolbar.toolbarConfig\"\r\n\t(actionEmitter)=\"this.dispatch($event)\"\r\n/>\r\n"
+        },
+        {
+            "name": "AppToolbarUiComponent",
+            "id": "component-AppToolbarUiComponent-21849854cebfb0228a50f51e466fb04d4487845968b6a9b8d90a5f8ce1a76dd2c45fe8cdf8ea2c3c79d383d993f9244ca31fbbc8dee3a3e208633899624ebe66",
             "file": "src/components/toolbar/ui/toolbar.component.ts",
             "encapsulation": [],
             "entryComponents": [],
             "inputs": [],
             "outputs": [],
             "providers": [],
-            "selector": "app-toolbar",
+            "selector": "app-toolbar-ui",
             "styleUrls": [],
             "styles": [],
             "templateUrl": [
@@ -301,34 +671,42 @@
             "hostDirectives": [],
             "inputsClass": [
                 {
-                    "name": "mainButton",
+                    "name": "id",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "line": 12,
-                    "type": "Button",
+                    "type": "string",
+                    "decorators": []
+                },
+                {
+                    "name": "mainButton",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 15,
+                    "type": "Button | undefined",
                     "decorators": []
                 },
                 {
                     "name": "secondaryButtons",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 18,
-                    "type": "Button[]",
+                    "line": 21,
+                    "type": "Button[] | undefined",
                     "decorators": []
                 },
                 {
                     "name": "title",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 15,
-                    "type": "string",
+                    "line": 18,
+                    "type": "string | undefined",
                     "decorators": []
                 },
                 {
                     "name": "toolbarConfig",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 21,
+                    "line": 24,
                     "type": "ToolbarConfig",
                     "decorators": []
                 }
@@ -339,7 +717,7 @@
                     "defaultValue": "new EventEmitter<Action>()",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 24,
+                    "line": 27,
                     "type": "EventEmitter"
                 }
             ],
@@ -354,17 +732,17 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { Component, EventEmitter, Input, Output } from \"@angular/core\";\r\nimport { Action } from \"@ngrx/store\";\r\nimport { Button, ToolbarConfig } from \"@root/components/models\";\r\n\r\n@Component({\r\n    selector: 'app-toolbar',\r\n    templateUrl: './toolbar.component.html',\r\n    styleUrl: './toolbar.component.scss'\r\n})\r\nexport class AppToolbarComponent {\r\n    @Input()\r\n    public mainButton: Button;\r\n\r\n    @Input()\r\n    public title: string;\r\n\r\n    @Input()\r\n    public secondaryButtons: Button[];\r\n\r\n    @Input()\r\n    public toolbarConfig: ToolbarConfig;\r\n\r\n    @Output()\r\n    public actionEmitter = new EventEmitter<Action>();\r\n}",
+            "sourceCode": "import { Component, EventEmitter, Input, Output } from \"@angular/core\";\r\nimport { Action } from \"@ngrx/store\";\r\nimport { Button, ToolbarConfig } from \"@root/components/models\";\r\n\r\n@Component({\r\n    selector: 'app-toolbar-ui',\r\n    templateUrl: './toolbar.component.html',\r\n    styleUrl: './toolbar.component.scss'\r\n})\r\nexport class AppToolbarUiComponent {\r\n    @Input()\r\n    public id: string;\r\n    \r\n    @Input()\r\n    public mainButton: Button | undefined;\r\n\r\n    @Input()\r\n    public title: string | undefined;\r\n\r\n    @Input()\r\n    public secondaryButtons: Button[] | undefined;\r\n\r\n    @Input()\r\n    public toolbarConfig: ToolbarConfig;\r\n\r\n    @Output()\r\n    public actionEmitter = new EventEmitter<Action>();\r\n}",
             "styleUrl": "./toolbar.component.scss",
             "assetsDirs": [],
             "styleUrlsData": "",
             "stylesData": "",
             "extends": [],
-            "templateData": "@if (toolbarConfig.isSecondaryToolbar) {\r\n\t<mat-toolbar>\r\n\t\t@if (mainButton) {\r\n\t\t\t<app-button\r\n\t\t\t\t[type]=\"mainButton.type\"\r\n\t\t\t\t[label]=\"mainButton.label\"\r\n\t\t\t\t[icon]=\"mainButton.icon\"\r\n\t\t\t\t[action]=\"mainButton.action\"\r\n\t\t\t\t(actionEmmiter)=\"this.actionEmitter.emit($event)\"\r\n\t\t\t/>\r\n\t\t}\r\n\t\t@if (toolbarConfig.isTitleSeparete) {\r\n\t\t\t<span class=\"spacer\"></span>\r\n\t\t}\r\n\t\t@if (title) {\r\n\t\t\t<strong>{{ title }}</strong>\r\n\t\t}\r\n\t\t@if (toolbarConfig.isTitleSeparete) {\r\n\t\t\t<span class=\"spacer\"></span>\r\n\t\t} @else {\r\n\t\t\t<span class=\"secondary-spacer\"></span>\r\n\t\t}\r\n\t\t@if (secondaryButtons) {\r\n\t\t\t@for (button of secondaryButtons; track $index) {\r\n\t\t\t\t<app-button\r\n\t\t\t\t\t[type]=\"button.type\"\r\n\t\t\t\t\t[label]=\"button.label\"\r\n\t\t\t\t\t[icon]=\"button.icon\"\r\n\t\t\t\t\t[action]=\"button.action\"\r\n\t\t\t\t\t(actionEmmiter)=\"this.actionEmitter.emit($event)\"\r\n\t\t\t\t/>\r\n\t\t\t}\r\n\t\t}\r\n\t</mat-toolbar>\r\n} @else {\r\n\t<mat-toolbar class=\"secondary-toolbar\">\r\n\t\t@if (secondaryButtons) {\r\n\t\t\t@for (button of secondaryButtons; track $index) {\r\n\t\t\t\t<app-button\r\n\t\t\t\t\t[type]=\"button.type\"\r\n\t\t\t\t\t[label]=\"button.label\"\r\n\t\t\t\t\t[icon]=\"button.icon\"\r\n\t\t\t\t\t[action]=\"button.action\"\r\n\t\t\t\t/>\r\n\t\t\t}\r\n\t\t}\r\n\t</mat-toolbar>\r\n}\r\n"
+            "templateData": "@if (!toolbarConfig.isSecondaryToolbar) {\r\n\t<mat-toolbar [id]=\"id\">\r\n\t\t@if (mainButton) {\r\n\t\t\t<app-button\r\n\t\t\t\t[type]=\"mainButton.type\"\r\n\t\t\t\t[label]=\"mainButton.label\"\r\n\t\t\t\t[icon]=\"mainButton.icon\"\r\n\t\t\t\t[action]=\"mainButton.action\"\r\n\t\t\t\t(actionEmmiter)=\"this.actionEmitter.emit($event)\"\r\n\t\t\t/>\r\n\t\t}\r\n\t\t@if (toolbarConfig.isTitleSeparete) {\r\n\t\t\t<span class=\"spacer\"></span>\r\n\t\t}\r\n\t\t@if (title) {\r\n\t\t\t<strong>{{ title }}</strong>\r\n\t\t}\r\n\t\t@if (toolbarConfig.isTitleSeparete) {\r\n\t\t\t<span class=\"spacer\"></span>\r\n\t\t} @else {\r\n\t\t\t<span class=\"secondary-spacer\"></span>\r\n\t\t}\r\n\t\t@if (secondaryButtons) {\r\n\t\t\t@for (button of secondaryButtons; track $index) {\r\n\t\t\t\t<app-button\r\n\t\t\t\t\t[type]=\"button.type\"\r\n\t\t\t\t\t[label]=\"button.label\"\r\n\t\t\t\t\t[icon]=\"button.icon\"\r\n\t\t\t\t\t[action]=\"button.action\"\r\n\t\t\t\t\t(actionEmmiter)=\"this.actionEmitter.emit($event)\"\r\n\t\t\t\t/>\r\n\t\t\t}\r\n\t\t}\r\n\t</mat-toolbar>\r\n} @else {\r\n\t<mat-toolbar\r\n\t\t[id]=\"id\"\r\n\t\tclass=\"secondary-toolbar\"\r\n\t>\r\n\t\t@if (secondaryButtons) {\r\n\t\t\t@for (button of secondaryButtons; track $index) {\r\n\t\t\t\t<app-button\r\n\t\t\t\t\t[type]=\"button.type\"\r\n\t\t\t\t\t[label]=\"button.label\"\r\n\t\t\t\t\t[icon]=\"button.icon\"\r\n\t\t\t\t\t[action]=\"button.action\"\r\n\t\t\t\t\t(actionEmmiter)=\"this.actionEmitter.emit($event)\"\r\n\t\t\t\t/>\r\n\t\t\t}\r\n\t\t}\r\n\t</mat-toolbar>\r\n}\r\n"
         },
         {
             "name": "ButtonComponent",
-            "id": "component-ButtonComponent-5a8e096b3b55cf2464d25bb4749954b70248ff4e92c8188bd7fee1865dc8e8fc752f896bbbde72b8a0488bdb0a6b3ab01efd180b4d59642911c900820c4ff05a",
+            "id": "component-ButtonComponent-05d82a417ec74999e9d35237e4270556e941d9cff36caa6b849a4514a129e7275f3df7c234358e413215aa5a9393218028038de0731df09cbe14e43b9a891c58",
             "file": "src/components/button/button.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -409,7 +787,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "line": 12,
-                    "type": "\"basic\" | \"raised\" | \"icon\" | \"fab\"",
+                    "type": "\"basic\" | \"raised\" | \"icon\" | \"fab\" | \"flat\"",
                     "decorators": []
                 }
             ],
@@ -434,13 +812,51 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { Component, EventEmitter, Input, Output } from \"@angular/core\";\r\nimport { Action } from \"@ngrx/store\";\r\n\r\n@Component({\r\n    selector: \"app-button\",\r\n    templateUrl: \"./button.component.html\",\r\n    styleUrl: \"./button.component.scss\"\r\n})\r\nexport class ButtonComponent\r\n{\r\n    @Input()\r\n    public type: \"basic\" | \"raised\" | \"icon\" | \"fab\";\r\n\r\n    @Input()\r\n    public label: string;\r\n\r\n    @Input()\r\n    public icon: string;\r\n\r\n    @Input()\r\n    public action: Action;\r\n\r\n    @Output()\r\n    public actionEmmiter = new EventEmitter<Action>()\r\n}",
+            "sourceCode": "import { Component, EventEmitter, Input, Output } from \"@angular/core\";\r\nimport { Action } from \"@ngrx/store\";\r\n\r\n@Component({\r\n    selector: \"app-button\",\r\n    templateUrl: \"./button.component.html\",\r\n    styleUrl: \"./button.component.scss\"\r\n})\r\nexport class ButtonComponent\r\n{\r\n    @Input()\r\n    public type: \"basic\" | \"raised\" | \"icon\" | \"fab\" | \"flat\";\r\n\r\n    @Input()\r\n    public label: string;\r\n\r\n    @Input()\r\n    public icon: string;\r\n\r\n    @Input()\r\n    public action: Action;\r\n\r\n    @Output()\r\n    public actionEmmiter = new EventEmitter<Action>()\r\n}",
             "styleUrl": "./button.component.scss",
             "assetsDirs": [],
             "styleUrlsData": "",
             "stylesData": "",
             "extends": [],
-            "templateData": "@switch (type) {\r\n\t@case (\"raised\") {\r\n\t\t<button\r\n\t\t\tmat-raised-button\r\n\t\t\t(click)=\"this.actionEmmiter.emit(this.action)\"\r\n\t\t>\r\n\t\t\t@if (label) {\r\n\t\t\t\t<span>{{ label }}</span>\r\n\t\t\t}\r\n\t\t\t@if (icon) {\r\n\t\t\t\t<mat-icon>{{ icon }}</mat-icon>\r\n\t\t\t}\r\n\t\t</button>\r\n\t}\r\n\t@case (\"icon\") {\r\n\t\t<button\r\n\t\t\tmat-icon-button\r\n\t\t\t(click)=\"this.actionEmmiter.emit(this.action)\"\r\n\t\t>\r\n\t\t\t@if (icon) {\r\n\t\t\t\t<mat-icon>{{ icon }}</mat-icon>\r\n\t\t\t}\r\n\t\t</button>\r\n\t}\r\n\t@case (\"fab\") {\r\n\t\t<button\r\n\t\t\tmat-fab\r\n\t\t\t(click)=\"this.actionEmmiter.emit(this.action)\"\r\n\t\t>\r\n\t\t\t@if (icon) {\r\n\t\t\t\t<mat-icon>{{ icon }}</mat-icon>\r\n\t\t\t}\r\n\t\t</button>\r\n\t}\r\n\t@default {\r\n\t\t<button\r\n\t\t\tmat-button\r\n\t\t\t(click)=\"this.actionEmmiter.emit(this.action)\"\r\n\t\t>\r\n\t\t\t@if (label) {\r\n\t\t\t\t<span>{{ label }}</span>\r\n\t\t\t}\r\n\t\t\t@if (icon) {\r\n\t\t\t\t<mat-icon>{{ icon }}</mat-icon>\r\n\t\t\t}\r\n\t\t</button>\r\n\t}\r\n}\r\n"
+            "templateData": "@switch (type) {\r\n\t@case (\"raised\") {\r\n\t\t<button\r\n\t\t\tmat-raised-button\r\n\t\t\t(click)=\"this.actionEmmiter.emit(this.action)\"\r\n\t\t>\r\n\t\t\t@if (label) {\r\n\t\t\t\t<span>{{ label }}</span>\r\n\t\t\t}\r\n\t\t\t@if (icon) {\r\n\t\t\t\t<mat-icon>{{ icon }}</mat-icon>\r\n\t\t\t}\r\n\t\t</button>\r\n\t}\r\n\t@case (\"flat\") {\r\n\t\t<button\r\n\t\t\tmat-flat-button\r\n\t\t\t(click)=\"this.actionEmmiter.emit(this.action)\"\r\n\t\t>\r\n\t\t\t@if (label) {\r\n\t\t\t\t<span>{{ label }}</span>\r\n\t\t\t}\r\n\t\t\t@if (icon) {\r\n\t\t\t\t<mat-icon>{{ icon }}</mat-icon>\r\n\t\t\t}\r\n\t\t</button>\r\n\t}\r\n\t@case (\"icon\") {\r\n\t\t<button\r\n\t\t\tmat-icon-button\r\n\t\t\t(click)=\"this.actionEmmiter.emit(this.action)\"\r\n\t\t>\r\n\t\t\t@if (icon) {\r\n\t\t\t\t<mat-icon>{{ icon }}</mat-icon>\r\n\t\t\t}\r\n\t\t</button>\r\n\t}\r\n\t@case (\"fab\") {\r\n\t\t<button\r\n\t\t\tmat-fab\r\n\t\t\t(click)=\"this.actionEmmiter.emit(this.action)\"\r\n\t\t>\r\n\t\t\t@if (icon) {\r\n\t\t\t\t<mat-icon>{{ icon }}</mat-icon>\r\n\t\t\t}\r\n\t\t</button>\r\n\t}\r\n\t@default {\r\n\t\t<button\r\n\t\t\tmat-button\r\n\t\t\t(click)=\"this.actionEmmiter.emit(this.action)\"\r\n\t\t>\r\n\t\t\t@if (label) {\r\n\t\t\t\t<span>{{ label }}</span>\r\n\t\t\t}\r\n\t\t\t@if (icon) {\r\n\t\t\t\t<mat-icon>{{ icon }}</mat-icon>\r\n\t\t\t}\r\n\t\t</button>\r\n\t}\r\n}\r\n"
+        },
+        {
+            "name": "CardUiComponent",
+            "id": "component-CardUiComponent-a85aeeab1fc54ad0be2260a4b13ba0e66ed728b667f240ec33568922aa728e28c2544bffd0d09672be446be63ebd37c39a0d7d003a6a10af8009918b25a99d43",
+            "file": "src/components/card/ui/card-ui.component.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "app-card-ui",
+            "styleUrls": [],
+            "styles": [],
+            "templateUrl": [
+                "./card-ui.component.html"
+            ],
+            "viewProviders": [],
+            "hostDirectives": [],
+            "inputsClass": [],
+            "outputsClass": [],
+            "propertiesClass": [],
+            "methodsClass": [],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "hostBindings": [],
+            "hostListeners": [],
+            "standalone": false,
+            "imports": [],
+            "description": "",
+            "rawdescription": "\n",
+            "type": "component",
+            "sourceCode": "import { Component } from '@angular/core';\r\n\r\n@Component({\r\n    selector: 'app-card-ui',\r\n    templateUrl: './card-ui.component.html',\r\n    styleUrl: './card-ui.component.scss'\r\n})\r\nexport class CardUiComponent {\r\n}",
+            "styleUrl": "./card-ui.component.scss",
+            "assetsDirs": [],
+            "styleUrlsData": "",
+            "stylesData": "",
+            "extends": [],
+            "templateData": "<mat-card>\r\n\t<mat-card-header>\r\n\t\t<mat-card-title-group>\r\n\t\t\t<img\r\n\t\t\t\tsrc=\"../../../../public/assets/medias/medias-negras-vlack.webp\"\r\n\t\t\t\talt=\"medias vlack\"\r\n\t\t\t/>\r\n\t\t</mat-card-title-group>\r\n\t</mat-card-header>\r\n\t<mat-card-content> Content goes here... </mat-card-content>\r\n\t<mat-card-actions>\r\n\t\t<button mat-button>Button 1</button>\r\n\t\t<button mat-button>Button 2</button>\r\n\t</mat-card-actions>\r\n</mat-card>\r\n"
         }
     ],
     "modules": [
@@ -489,14 +905,58 @@
             ]
         },
         {
+            "name": "AppListModule",
+            "id": "module-AppListModule-5fa475ac3432ca9fc527508e2900382107672188fa29f9407cdc224600f488da42b68e509e2a9ec3be0edd2a082a33e5088079e888c9732e1dc660e84f27b800",
+            "description": "",
+            "deprecationMessage": "",
+            "deprecated": false,
+            "file": "src/components/list/list.module.ts",
+            "methods": [],
+            "sourceCode": "import { CommonModule } from \"@angular/common\";\r\nimport { NgModule } from \"@angular/core\";\r\nimport { MatListModule } from \"@angular/material/list\"\r\nimport { AppListUiComponent } from \"./ui/list-ui.component\";\r\n\r\n@NgModule({\r\n    declarations: [AppListUiComponent],\r\n    imports: [\r\n        CommonModule,\r\n        MatListModule\r\n    ],\r\n    exports: [AppListUiComponent]\r\n})\r\nexport class AppListModule {}",
+            "children": [
+                {
+                    "type": "providers",
+                    "elements": []
+                },
+                {
+                    "type": "declarations",
+                    "elements": [
+                        {
+                            "name": "AppListUiComponent"
+                        }
+                    ]
+                },
+                {
+                    "type": "imports",
+                    "elements": []
+                },
+                {
+                    "type": "exports",
+                    "elements": [
+                        {
+                            "name": "AppListUiComponent"
+                        }
+                    ]
+                },
+                {
+                    "type": "bootstrap",
+                    "elements": []
+                },
+                {
+                    "type": "classes",
+                    "elements": []
+                }
+            ]
+        },
+        {
             "name": "AppModule",
-            "id": "module-AppModule-e649a6368cdf840663ab0e4c381e1a41443d738adb1b48b8e5ef8ff4a2fc6622299b30e171c4181fd81f1087ea40a2e97730c6b53d9059e43fd15d8b0d41108d",
+            "id": "module-AppModule-3d5bfea2c70c019c47677fc0cea8e1ff9808e4e22c311715815be59b2771490880651701b10979b16a798e55e295929472b9be1d9fb7580a70c3b1b0c3ae1ca3",
             "description": "",
             "deprecationMessage": "",
             "deprecated": false,
             "file": "src/app/app.module.ts",
             "methods": [],
-            "sourceCode": "import { NgModule } from \"@angular/core\";\r\nimport { AppComponent } from \"./app.component\";\r\nimport { CommonModule } from \"@angular/common\";\r\nimport { provideAnimationsAsync } from \"@angular/platform-browser/animations/async\";\r\nimport { AppRoutingModule } from \"./app-routing.module\";\r\nimport { RouterOutlet } from \"@angular/router\";\r\nimport { BrowserModule } from \"@angular/platform-browser\";\nimport { StoreModule } from '@ngrx/store';\nimport { EffectsModule } from '@ngrx/effects';\nimport { StoreRouterConnectingModule } from '@ngrx/router-store';\r\n\r\n@NgModule({\r\n    declarations: [AppComponent],\r\n    imports: [\r\n        CommonModule,\r\n        BrowserModule,\r\n        AppRoutingModule,\r\n        RouterOutlet,\r\n        StoreModule.forRoot({}, {}),\r\n        EffectsModule.forRoot([]),\r\n        StoreRouterConnectingModule.forRoot()],\r\n    bootstrap: [AppComponent],\r\n    providers: [\r\n        provideAnimationsAsync(),\r\n    ]\r\n})\r\nexport class AppModule {}",
+            "sourceCode": "import { NgModule, isDevMode } from \"@angular/core\";\r\nimport { AppComponent } from \"./app.component\";\r\nimport { CommonModule } from \"@angular/common\";\r\nimport { provideAnimationsAsync } from \"@angular/platform-browser/animations/async\";\r\nimport { AppRoutingModule } from \"./app-routing.module\";\r\nimport { RouterOutlet } from \"@angular/router\";\r\nimport { BrowserModule } from \"@angular/platform-browser\";\r\nimport { StoreModule } from '@ngrx/store';\r\nimport { EffectsModule } from '@ngrx/effects';\r\nimport { StoreRouterConnectingModule } from '@ngrx/router-store';\r\nimport { AppToolbarModule } from \"@root/components\";\r\nimport { StoreDevtoolsModule } from '@ngrx/store-devtools';\r\nimport { appReducer } from \"./state/app.reducer\";\r\nimport { AppListModule } from \"../components/list/list.module\";\r\n\r\n@NgModule({\r\n    declarations: [AppComponent],\r\n    imports: [\r\n    CommonModule,\r\n    BrowserModule,\r\n    AppRoutingModule,\r\n    RouterOutlet,\r\n    AppToolbarModule,\r\n    AppListModule,\r\n    StoreModule.forRoot({ 'app-state': appReducer }, {}),\r\n    EffectsModule.forRoot([]),\r\n    StoreRouterConnectingModule.forRoot(),\r\n    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),\r\n],\r\n    bootstrap: [AppComponent],\r\n    providers: [\r\n        provideAnimationsAsync(),\r\n    ]\r\n})\r\nexport class AppModule {}",
             "children": [
                 {
                     "type": "providers",
@@ -514,7 +974,13 @@
                     "type": "imports",
                     "elements": [
                         {
+                            "name": "AppListModule"
+                        },
+                        {
                             "name": "AppRoutingModule"
+                        },
+                        {
+                            "name": "AppToolbarModule"
                         },
                         {
                             "name": "RouterOutlet"
@@ -577,13 +1043,57 @@
         },
         {
             "name": "AppToolbarModule",
-            "id": "module-AppToolbarModule-502658206ed1b44506a0619018a99dabe17db79688ffb31f130153acbc90da748e235e21cacd470534a8e42ee10017a297ae27d41907095e18a89971ff4cc94f",
+            "id": "module-AppToolbarModule-97beabf334aa95b4afee3ab80ef3221e4b1478082d474ec4a4141a4c4f1a71dfa18f65f25f745b58e2457eb3b0db51000de20aa4d8a4edc9e5364b20a6eeba66",
             "description": "",
             "deprecationMessage": "",
             "deprecated": false,
             "file": "src/components/toolbar/toolbar.module.ts",
             "methods": [],
-            "sourceCode": "import { CommonModule } from \"@angular/common\";\r\nimport { NgModule } from \"@angular/core\";\r\nimport { MatToolbarModule } from \"@angular/material/toolbar\";\r\nimport { AppButtonModule } from \"../button/button.module\";\r\nimport { AppToolbarComponent } from \"./ui/toolbar.component\";\r\n\r\n@NgModule({\r\n    declarations: [AppToolbarComponent],\r\n    imports: [\r\n        CommonModule,\r\n        MatToolbarModule,\r\n        AppButtonModule,\r\n    ],\r\n    exports: [AppToolbarComponent]\r\n})\r\nexport class AppToolbarModule {}",
+            "sourceCode": "import { NgModule } from \"@angular/core\";\r\nimport { ToolbarFeatureModule } from \"./feature/toolbar-feature.module\";\r\n\r\n@NgModule({\r\n    imports: [\r\n        ToolbarFeatureModule\r\n    ],\r\n    exports: [ToolbarFeatureModule]\r\n})\r\nexport class AppToolbarModule {}",
+            "children": [
+                {
+                    "type": "providers",
+                    "elements": []
+                },
+                {
+                    "type": "declarations",
+                    "elements": []
+                },
+                {
+                    "type": "imports",
+                    "elements": [
+                        {
+                            "name": "ToolbarFeatureModule"
+                        }
+                    ]
+                },
+                {
+                    "type": "exports",
+                    "elements": [
+                        {
+                            "name": "ToolbarFeatureModule"
+                        }
+                    ]
+                },
+                {
+                    "type": "bootstrap",
+                    "elements": []
+                },
+                {
+                    "type": "classes",
+                    "elements": []
+                }
+            ]
+        },
+        {
+            "name": "CardUiModule",
+            "id": "module-CardUiModule-229ccd52791c2500b2cd2a9bce117a0534fd0dc965ca44a3b32c43d1c4c448123307e8ffa0e3bb46684aa02b9139714a8b8883cc64e5493ad96409389125c339",
+            "description": "",
+            "deprecationMessage": "",
+            "deprecated": false,
+            "file": "src/components/card/ui/card-ui.module.ts",
+            "methods": [],
+            "sourceCode": "import { NgModule } from '@angular/core';\r\nimport { CommonModule } from '@angular/common';\r\nimport { MatCardModule } from '@angular/material/card';\r\nimport { AppButtonModule } from '@root/components/button/button.module';\r\nimport { CardUiComponent } from './card-ui.component';\r\n\r\n@NgModule({\r\n    declarations: [CardUiComponent],\r\n    imports: [\r\n        CommonModule,\r\n        MatCardModule,\r\n        AppButtonModule\r\n    ],\r\n    exports: [CardUiComponent]\r\n})\r\nexport class CardUiModule { }",
             "children": [
                 {
                     "type": "providers",
@@ -593,7 +1103,7 @@
                     "type": "declarations",
                     "elements": [
                         {
-                            "name": "AppToolbarComponent"
+                            "name": "CardUiComponent"
                         }
                     ]
                 },
@@ -609,7 +1119,103 @@
                     "type": "exports",
                     "elements": [
                         {
-                            "name": "AppToolbarComponent"
+                            "name": "CardUiComponent"
+                        }
+                    ]
+                },
+                {
+                    "type": "bootstrap",
+                    "elements": []
+                },
+                {
+                    "type": "classes",
+                    "elements": []
+                }
+            ]
+        },
+        {
+            "name": "ToolbarFeatureModule",
+            "id": "module-ToolbarFeatureModule-c9601032bf981e63ce18a4963767d1d924f8a77395e05f952cd41e0b1beb51b13451530dd48309a49f4614161e33cd11cff641732fe175923638b26200813af1",
+            "description": "",
+            "deprecationMessage": "",
+            "deprecated": false,
+            "file": "src/components/toolbar/feature/toolbar-feature.module.ts",
+            "methods": [],
+            "sourceCode": "import { NgModule } from \"@angular/core\";\r\nimport { AppToolbarFeatureComponent } from \"./toolbar-feature.component\";\r\nimport { CommonModule } from \"@angular/common\";\r\nimport { ToolbarUiModule } from \"../ui/toolbar-ui.module\";\r\nimport { TOOLBAR_FEATURE_KEY, toolbarReducer } from \"../state/toolbar.reducer\";\r\nimport { StoreModule } from \"@ngrx/store\";\r\n\r\n@NgModule({\r\n    declarations: [AppToolbarFeatureComponent],\r\n    imports: [\r\n        CommonModule,\r\n        ToolbarUiModule,\r\n        StoreModule.forFeature(TOOLBAR_FEATURE_KEY, toolbarReducer),\r\n    ],\r\n    exports: [AppToolbarFeatureComponent]\r\n})\r\nexport class ToolbarFeatureModule {}",
+            "children": [
+                {
+                    "type": "providers",
+                    "elements": []
+                },
+                {
+                    "type": "declarations",
+                    "elements": [
+                        {
+                            "name": "AppToolbarFeatureComponent"
+                        }
+                    ]
+                },
+                {
+                    "type": "imports",
+                    "elements": [
+                        {
+                            "name": "ToolbarUiModule"
+                        }
+                    ]
+                },
+                {
+                    "type": "exports",
+                    "elements": [
+                        {
+                            "name": "AppToolbarFeatureComponent"
+                        }
+                    ]
+                },
+                {
+                    "type": "bootstrap",
+                    "elements": []
+                },
+                {
+                    "type": "classes",
+                    "elements": []
+                }
+            ]
+        },
+        {
+            "name": "ToolbarUiModule",
+            "id": "module-ToolbarUiModule-62154d11b2b8dd4c3f8f38028504dd798fc8371889d2738321db3a04f6655eb62694a7f06e53840d0ae4f749c6db51fc8906d6dec4fc598e61ccaff26ab158ea",
+            "description": "",
+            "deprecationMessage": "",
+            "deprecated": false,
+            "file": "src/components/toolbar/ui/toolbar-ui.module.ts",
+            "methods": [],
+            "sourceCode": "import { NgModule } from \"@angular/core\";\r\nimport { AppToolbarUiComponent } from \"./toolbar.component\";\r\nimport { CommonModule } from \"@angular/common\";\r\nimport { MatToolbarModule } from \"@angular/material/toolbar\";\r\nimport { AppButtonModule } from \"@root/components/button/button.module\";\r\n\r\n@NgModule({\r\n    declarations: [AppToolbarUiComponent],\r\n    imports: [\r\n        CommonModule,\r\n        MatToolbarModule,\r\n        AppButtonModule\r\n    ],\r\n    exports: [AppToolbarUiComponent]\r\n})\r\nexport class ToolbarUiModule {}",
+            "children": [
+                {
+                    "type": "providers",
+                    "elements": []
+                },
+                {
+                    "type": "declarations",
+                    "elements": [
+                        {
+                            "name": "AppToolbarUiComponent"
+                        }
+                    ]
+                },
+                {
+                    "type": "imports",
+                    "elements": [
+                        {
+                            "name": "AppButtonModule"
+                        }
+                    ]
+                },
+                {
+                    "type": "exports",
+                    "elements": [
+                        {
+                            "name": "AppToolbarUiComponent"
                         }
                     ]
                 },
@@ -624,7 +1230,816 @@
             ]
         }
     ],
-    "miscellaneous": [],
+    "miscellaneous": {
+        "variables": [
+            {
+                "name": "APP_STATE_KEY",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/state/app.reducer.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "string",
+                "defaultValue": "'app-state'"
+            },
+            {
+                "name": "appReducer",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/state/app.reducer.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "createReducer(\r\n    initialState,\r\n    on(menuButtonClicked, state => ({\r\n        ...state,\r\n        isMenuOpened: !state.isMenuOpened\r\n    })),\r\n)"
+            },
+            {
+                "name": "getAppState",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/state/app.selectors.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "createFeatureSelector<AppState>(APP_STATE_KEY)"
+            },
+            {
+                "name": "getMenuOpened",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/state/app.selectors.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "createSelector(\r\n    getAppState,\r\n    state => state.isMenuOpened\r\n)"
+            },
+            {
+                "name": "initialState",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/state/app.reducer.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "AppState",
+                "defaultValue": "{\r\n    isMenuOpened: true,\r\n}"
+            },
+            {
+                "name": "initialState",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/components/toolbar/state/toolbar.reducer.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "toolbarAdapter.getInitialState()"
+            },
+            {
+                "name": "MAIN_TOOLBAR_ID",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/app.component.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "string",
+                "defaultValue": "'app-main-toolbar'"
+            },
+            {
+                "name": "menuButtonClicked",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/state/app.actions.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "createAction(\r\n    '[Main Toolbar] - Menu button clicked'\r\n)"
+            },
+            {
+                "name": "pantsButtonClicked",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/state/app.actions.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "createAction(\r\n    '[Secondary toolbar] - Pants button clicked'\r\n)"
+            },
+            {
+                "name": "profileButtonClicked",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/state/app.actions.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "createAction(\r\n    '[Main Toolbar] - Profile button clicked'\r\n)"
+            },
+            {
+                "name": "reducer",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/components/toolbar/state/toolbar.reducer.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "createReducer(\r\n    initialState,\r\n    on(RegisterToolbar, (state, action) => ({\r\n        ...toolbarAdapter.addOne(action.toolbar, state)\r\n    }))\r\n)"
+            },
+            {
+                "name": "RegisterToolbar",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/components/toolbar/state/toolbar.actions.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "createAction(\r\n    '[Toolbar] - Register toolbar',\r\n    props<{toolbar: Toolbar}>()\r\n)"
+            },
+            {
+                "name": "searchButtonClicked",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/state/app.actions.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "createAction(\r\n    '[Main Toolbar] - Search button clicked'\r\n)"
+            },
+            {
+                "name": "SECONDARY_TOOLBAR_ID",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/app.component.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "string",
+                "defaultValue": "'app-secondary-toolbar'"
+            },
+            {
+                "name": "selectAllToolbars",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/components/toolbar/state/toolbar.selectors.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "createSelector(\r\n    toolbarState,\r\n    toolbarAdapterSelectors.selectAll\r\n)"
+            },
+            {
+                "name": "selectToolbarEntities",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/components/toolbar/state/toolbar.selectors.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "createSelector(\r\n    toolbarState,\r\n    toolbarAdapterSelectors.selectEntities\r\n)"
+            },
+            {
+                "name": "selectToolbarIds",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/components/toolbar/state/toolbar.selectors.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "createSelector(\r\n    toolbarState,\r\n    toolbarAdapterSelectors.selectIds\r\n)"
+            },
+            {
+                "name": "shoppingCartButtonClicked",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/state/app.actions.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "createAction(\r\n    '[Main Toolbar] - Shopping cart button clicked'\r\n)"
+            },
+            {
+                "name": "TOOLBAR_FEATURE_KEY",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/components/toolbar/state/toolbar.reducer.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "string",
+                "defaultValue": "'toolbars'"
+            },
+            {
+                "name": "toolbarAdapter",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/components/toolbar/state/toolbar.reducer.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "EntityAdapter<Toolbar>",
+                "defaultValue": "createEntityAdapter<Toolbar> ({\r\n    selectId: selectById,\r\n    sortComparer: sortById\r\n})"
+            },
+            {
+                "name": "toolbarAdapterSelectors",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/components/toolbar/state/toolbar.selectors.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "toolbarAdapter.getSelectors()"
+            },
+            {
+                "name": "toolbarState",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/components/toolbar/state/toolbar.selectors.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "createFeatureSelector<ToolbarState>(TOOLBAR_FEATURE_KEY)"
+            },
+            {
+                "name": "tShirtsButtonClicked",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/state/app.actions.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "createAction(\r\n    '[Secondary toolbar] - T-Shirts button clicked'\r\n)"
+            }
+        ],
+        "functions": [
+            {
+                "name": "reducer",
+                "file": "src/app/state/app.reducer.ts",
+                "ctype": "miscellaneous",
+                "subtype": "function",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "args": [
+                    {
+                        "name": "state",
+                        "type": "AppState",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    },
+                    {
+                        "name": "action",
+                        "type": "Action",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    }
+                ],
+                "jsdoctags": [
+                    {
+                        "name": "state",
+                        "type": "AppState",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    },
+                    {
+                        "name": "action",
+                        "type": "Action",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            {
+                "name": "selectById",
+                "file": "src/components/toolbar/state/toolbar.reducer.ts",
+                "ctype": "miscellaneous",
+                "subtype": "function",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "args": [
+                    {
+                        "name": "a",
+                        "type": "Toolbar",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    }
+                ],
+                "returnType": "string",
+                "jsdoctags": [
+                    {
+                        "name": "a",
+                        "type": "Toolbar",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            {
+                "name": "sortById",
+                "file": "src/components/toolbar/state/toolbar.reducer.ts",
+                "ctype": "miscellaneous",
+                "subtype": "function",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "args": [
+                    {
+                        "name": "a",
+                        "type": "Toolbar",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    },
+                    {
+                        "name": "b",
+                        "type": "Toolbar",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    }
+                ],
+                "returnType": "number",
+                "jsdoctags": [
+                    {
+                        "name": "a",
+                        "type": "Toolbar",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    },
+                    {
+                        "name": "b",
+                        "type": "Toolbar",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            {
+                "name": "toolbarReducer",
+                "file": "src/components/toolbar/state/toolbar.reducer.ts",
+                "ctype": "miscellaneous",
+                "subtype": "function",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "args": [
+                    {
+                        "name": "state",
+                        "type": "ToolbarState",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    },
+                    {
+                        "name": "action",
+                        "type": "Action",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    }
+                ],
+                "jsdoctags": [
+                    {
+                        "name": "state",
+                        "type": "ToolbarState",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    },
+                    {
+                        "name": "action",
+                        "type": "Action",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            }
+        ],
+        "typealiases": [],
+        "enumerations": [],
+        "groupedVariables": {
+            "src/app/state/app.reducer.ts": [
+                {
+                    "name": "APP_STATE_KEY",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/state/app.reducer.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "defaultValue": "'app-state'"
+                },
+                {
+                    "name": "appReducer",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/state/app.reducer.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "createReducer(\r\n    initialState,\r\n    on(menuButtonClicked, state => ({\r\n        ...state,\r\n        isMenuOpened: !state.isMenuOpened\r\n    })),\r\n)"
+                },
+                {
+                    "name": "initialState",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/state/app.reducer.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "AppState",
+                    "defaultValue": "{\r\n    isMenuOpened: true,\r\n}"
+                }
+            ],
+            "src/app/state/app.selectors.ts": [
+                {
+                    "name": "getAppState",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/state/app.selectors.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "createFeatureSelector<AppState>(APP_STATE_KEY)"
+                },
+                {
+                    "name": "getMenuOpened",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/state/app.selectors.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "createSelector(\r\n    getAppState,\r\n    state => state.isMenuOpened\r\n)"
+                }
+            ],
+            "src/components/toolbar/state/toolbar.reducer.ts": [
+                {
+                    "name": "initialState",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/components/toolbar/state/toolbar.reducer.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "toolbarAdapter.getInitialState()"
+                },
+                {
+                    "name": "reducer",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/components/toolbar/state/toolbar.reducer.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "createReducer(\r\n    initialState,\r\n    on(RegisterToolbar, (state, action) => ({\r\n        ...toolbarAdapter.addOne(action.toolbar, state)\r\n    }))\r\n)"
+                },
+                {
+                    "name": "TOOLBAR_FEATURE_KEY",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/components/toolbar/state/toolbar.reducer.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "defaultValue": "'toolbars'"
+                },
+                {
+                    "name": "toolbarAdapter",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/components/toolbar/state/toolbar.reducer.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "EntityAdapter<Toolbar>",
+                    "defaultValue": "createEntityAdapter<Toolbar> ({\r\n    selectId: selectById,\r\n    sortComparer: sortById\r\n})"
+                }
+            ],
+            "src/app/app.component.ts": [
+                {
+                    "name": "MAIN_TOOLBAR_ID",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/app.component.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "defaultValue": "'app-main-toolbar'"
+                },
+                {
+                    "name": "SECONDARY_TOOLBAR_ID",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/app.component.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "defaultValue": "'app-secondary-toolbar'"
+                }
+            ],
+            "src/app/state/app.actions.ts": [
+                {
+                    "name": "menuButtonClicked",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/state/app.actions.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "createAction(\r\n    '[Main Toolbar] - Menu button clicked'\r\n)"
+                },
+                {
+                    "name": "pantsButtonClicked",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/state/app.actions.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "createAction(\r\n    '[Secondary toolbar] - Pants button clicked'\r\n)"
+                },
+                {
+                    "name": "profileButtonClicked",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/state/app.actions.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "createAction(\r\n    '[Main Toolbar] - Profile button clicked'\r\n)"
+                },
+                {
+                    "name": "searchButtonClicked",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/state/app.actions.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "createAction(\r\n    '[Main Toolbar] - Search button clicked'\r\n)"
+                },
+                {
+                    "name": "shoppingCartButtonClicked",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/state/app.actions.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "createAction(\r\n    '[Main Toolbar] - Shopping cart button clicked'\r\n)"
+                },
+                {
+                    "name": "tShirtsButtonClicked",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/state/app.actions.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "createAction(\r\n    '[Secondary toolbar] - T-Shirts button clicked'\r\n)"
+                }
+            ],
+            "src/components/toolbar/state/toolbar.actions.ts": [
+                {
+                    "name": "RegisterToolbar",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/components/toolbar/state/toolbar.actions.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "createAction(\r\n    '[Toolbar] - Register toolbar',\r\n    props<{toolbar: Toolbar}>()\r\n)"
+                }
+            ],
+            "src/components/toolbar/state/toolbar.selectors.ts": [
+                {
+                    "name": "selectAllToolbars",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/components/toolbar/state/toolbar.selectors.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "createSelector(\r\n    toolbarState,\r\n    toolbarAdapterSelectors.selectAll\r\n)"
+                },
+                {
+                    "name": "selectToolbarEntities",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/components/toolbar/state/toolbar.selectors.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "createSelector(\r\n    toolbarState,\r\n    toolbarAdapterSelectors.selectEntities\r\n)"
+                },
+                {
+                    "name": "selectToolbarIds",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/components/toolbar/state/toolbar.selectors.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "createSelector(\r\n    toolbarState,\r\n    toolbarAdapterSelectors.selectIds\r\n)"
+                },
+                {
+                    "name": "toolbarAdapterSelectors",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/components/toolbar/state/toolbar.selectors.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "toolbarAdapter.getSelectors()"
+                },
+                {
+                    "name": "toolbarState",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/components/toolbar/state/toolbar.selectors.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "createFeatureSelector<ToolbarState>(TOOLBAR_FEATURE_KEY)"
+                }
+            ]
+        },
+        "groupedFunctions": {
+            "src/app/state/app.reducer.ts": [
+                {
+                    "name": "reducer",
+                    "file": "src/app/state/app.reducer.ts",
+                    "ctype": "miscellaneous",
+                    "subtype": "function",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "args": [
+                        {
+                            "name": "state",
+                            "type": "AppState",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        },
+                        {
+                            "name": "action",
+                            "type": "Action",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "state",
+                            "type": "AppState",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "action",
+                            "type": "Action",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "src/components/toolbar/state/toolbar.reducer.ts": [
+                {
+                    "name": "selectById",
+                    "file": "src/components/toolbar/state/toolbar.reducer.ts",
+                    "ctype": "miscellaneous",
+                    "subtype": "function",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "args": [
+                        {
+                            "name": "a",
+                            "type": "Toolbar",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "returnType": "string",
+                    "jsdoctags": [
+                        {
+                            "name": "a",
+                            "type": "Toolbar",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "sortById",
+                    "file": "src/components/toolbar/state/toolbar.reducer.ts",
+                    "ctype": "miscellaneous",
+                    "subtype": "function",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "args": [
+                        {
+                            "name": "a",
+                            "type": "Toolbar",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        },
+                        {
+                            "name": "b",
+                            "type": "Toolbar",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "returnType": "number",
+                    "jsdoctags": [
+                        {
+                            "name": "a",
+                            "type": "Toolbar",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "b",
+                            "type": "Toolbar",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "toolbarReducer",
+                    "file": "src/components/toolbar/state/toolbar.reducer.ts",
+                    "ctype": "miscellaneous",
+                    "subtype": "function",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "args": [
+                        {
+                            "name": "state",
+                            "type": "ToolbarState",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        },
+                        {
+                            "name": "action",
+                            "type": "Action",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "state",
+                            "type": "ToolbarState",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "action",
+                            "type": "Action",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        "groupedEnumerations": {},
+        "groupedTypeAliases": {}
+    },
     "routes": {
         "name": "<root>",
         "kind": "module",
@@ -649,7 +2064,27 @@
                 "linktype": "component",
                 "name": "AppComponent",
                 "coveragePercent": 0,
-                "coverageCount": "0/3",
+                "coverageCount": "0/7",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/app.component.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "MAIN_TOOLBAR_ID",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/app.component.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "SECONDARY_TOOLBAR_ID",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
                 "status": "low"
             },
             {
@@ -658,7 +2093,145 @@
                 "linktype": "injectable",
                 "name": "AppService",
                 "coveragePercent": 0,
-                "coverageCount": "0/3",
+                "coverageCount": "0/5",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/state/app.actions.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "menuButtonClicked",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/state/app.actions.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "pantsButtonClicked",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/state/app.actions.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "profileButtonClicked",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/state/app.actions.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "searchButtonClicked",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/state/app.actions.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "shoppingCartButtonClicked",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/state/app.actions.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "tShirtsButtonClicked",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/state/app.reducer.ts",
+                "type": "interface",
+                "linktype": "interface",
+                "name": "AppPartialState",
+                "coveragePercent": 0,
+                "coverageCount": "0/2",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/state/app.reducer.ts",
+                "type": "interface",
+                "linktype": "interface",
+                "name": "AppState",
+                "coveragePercent": 0,
+                "coverageCount": "0/2",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/state/app.reducer.ts",
+                "type": "function",
+                "linktype": "miscellaneous",
+                "linksubtype": "function",
+                "name": "reducer",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/state/app.reducer.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "APP_STATE_KEY",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/state/app.reducer.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "appReducer",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/state/app.reducer.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "initialState",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/state/app.selectors.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "getAppState",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/state/app.selectors.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "getMenuOpened",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
                 "status": "low"
             },
             {
@@ -668,6 +2241,24 @@
                 "name": "ButtonComponent",
                 "coveragePercent": 0,
                 "coverageCount": "0/6",
+                "status": "low"
+            },
+            {
+                "filePath": "src/components/card/ui/card-ui.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "CardUiComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/components/list/ui/list-ui.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "AppListUiComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/4",
                 "status": "low"
             },
             {
@@ -685,7 +2276,7 @@
                 "linktype": "interface",
                 "name": "Toolbar",
                 "coveragePercent": 0,
-                "coverageCount": "0/4",
+                "coverageCount": "0/6",
                 "status": "low"
             },
             {
@@ -698,12 +2289,169 @@
                 "status": "low"
             },
             {
+                "filePath": "src/components/toolbar/feature/toolbar-feature.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "AppToolbarFeatureComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/4",
+                "status": "low"
+            },
+            {
+                "filePath": "src/components/toolbar/state/toolbar.actions.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "RegisterToolbar",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/components/toolbar/state/toolbar.reducer.ts",
+                "type": "interface",
+                "linktype": "interface",
+                "name": "ToolbarPartialState",
+                "coveragePercent": 0,
+                "coverageCount": "0/2",
+                "status": "low"
+            },
+            {
+                "filePath": "src/components/toolbar/state/toolbar.reducer.ts",
+                "type": "interface",
+                "linktype": "interface",
+                "name": "ToolbarState",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/components/toolbar/state/toolbar.reducer.ts",
+                "type": "function",
+                "linktype": "miscellaneous",
+                "linksubtype": "function",
+                "name": "selectById",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/components/toolbar/state/toolbar.reducer.ts",
+                "type": "function",
+                "linktype": "miscellaneous",
+                "linksubtype": "function",
+                "name": "sortById",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/components/toolbar/state/toolbar.reducer.ts",
+                "type": "function",
+                "linktype": "miscellaneous",
+                "linksubtype": "function",
+                "name": "toolbarReducer",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/components/toolbar/state/toolbar.reducer.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "initialState",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/components/toolbar/state/toolbar.reducer.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "reducer",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/components/toolbar/state/toolbar.reducer.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "TOOLBAR_FEATURE_KEY",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/components/toolbar/state/toolbar.reducer.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "toolbarAdapter",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/components/toolbar/state/toolbar.selectors.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "selectAllToolbars",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/components/toolbar/state/toolbar.selectors.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "selectToolbarEntities",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/components/toolbar/state/toolbar.selectors.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "selectToolbarIds",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/components/toolbar/state/toolbar.selectors.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "toolbarAdapterSelectors",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/components/toolbar/state/toolbar.selectors.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "toolbarState",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
                 "filePath": "src/components/toolbar/ui/toolbar.component.ts",
                 "type": "component",
                 "linktype": "component",
-                "name": "AppToolbarComponent",
+                "name": "AppToolbarUiComponent",
                 "coveragePercent": 0,
-                "coverageCount": "0/6",
+                "coverageCount": "0/7",
                 "status": "low"
             }
         ]

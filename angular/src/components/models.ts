@@ -19,3 +19,10 @@ export interface ToolbarConfig {
     isTitleSeparete: boolean;
     isSecondaryToolbar: boolean;
 }
+
+export interface Item {
+    id: string;
+    titulo: string;
+    descripcion: string;
+    precio: number;
+}

@@ -10,20 +10,23 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { AppToolbarModule } from "@root/components";
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { APP_STATE_KEY, appReducer } from "./state/app.reducer";
+import { appReducer } from "./state/app.reducer";
+import { AppListModule } from "../components/list/list.module";
 
 @NgModule({
     declarations: [AppComponent],
     imports: [
-        CommonModule,
-        BrowserModule,
-        AppRoutingModule,
-        RouterOutlet,
-        AppToolbarModule,
-        StoreModule.forRoot({'app-state': appReducer}, {}),
-        EffectsModule.forRoot([]),
-        StoreRouterConnectingModule.forRoot(),
-        StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() })],
+    CommonModule,
+    BrowserModule,
+    AppRoutingModule,
+    RouterOutlet,
+    AppToolbarModule,
+    AppListModule,
+    StoreModule.forRoot({ 'app-state': appReducer }, {}),
+    EffectsModule.forRoot([]),
+    StoreRouterConnectingModule.forRoot(),
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
+],
     bootstrap: [AppComponent],
     providers: [
         provideAnimationsAsync(),
