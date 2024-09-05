@@ -1,0 +1,7 @@
+<app-card-ui
+	[id]="item.id"
+	[titulo]="item.titulo"
+	[descripcion]="item.descripcion"
+	[precio]="item.precio"
+	(actionEmitter)="this.dispatch($event)"
+/>

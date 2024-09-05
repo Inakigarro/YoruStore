@@ -1,5 +1,8 @@
 @if (!toolbarConfig.isSecondaryToolbar) {
-	<mat-toolbar [id]="id">
+	<mat-toolbar
+		[id]="id"
+		class="toolbar"
+	>
 		@if (mainButton) {
 			<app-button
 				[type]="mainButton.type"
@@ -35,7 +38,7 @@
 } @else {
 	<mat-toolbar
 		[id]="id"
-		class="secondary-toolbar"
+		class="toolbar secondary-toolbar"
 	>
 		@if (secondaryButtons) {
 			@for (button of secondaryButtons; track $index) {

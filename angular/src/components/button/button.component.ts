@@ -20,6 +20,9 @@ export class ButtonComponent
     @Input()
     public action: Action;
 
+    @Input()
+    public color: 'primary' | 'secondary' | 'tertiary' = 'primary';
+
     @Output()
     public actionEmmiter = new EventEmitter<Action>()
 }

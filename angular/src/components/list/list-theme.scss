@@ -1,0 +1,11 @@
+@use '@angular/material' as mat;
+
+@mixin color($theme) {
+    $theme-type: mat.get-theme-type($theme);
+}
+
+@mixin theme($theme) {
+    @if mat.theme-has($theme, color) {
+        @include color($theme);
+    }
+}

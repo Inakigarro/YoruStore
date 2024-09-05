@@ -30,6 +30,29 @@ export class AppComponent {
       titulo: 'Medias Negras Vlack',
       descripcion: 'Unas medias buenisimas para jugar al hockey',
       precio: 10000
+    },
+    {
+      id: '2',
+      titulo: 'Medias Negras Vlack',
+      descripcion: 'Unas medias buenisimas para jugar al hockey',
+      precio: 10000
+    },
+    {
+      id: '2',
+      titulo: 'Medias Negras Vlack',
+      descripcion: 'Unas medias buenisimas para jugar al hockey',
+      precio: 10000
+    },
+    {
+      id: '2',
+      titulo: 'Medias Negras Vlack',
+      descripcion: 'Unas medias buenisimas para jugar al hockey',
+      precio: 10000
+    }, {
+      id: '2',
+      titulo: 'Medias Negras Vlack',
+      descripcion: 'Unas medias buenisimas para jugar al hockey',
+      precio: 10000
     }])
 
   constructor(private service: AppService) {
@@ -74,13 +97,13 @@ export class AppComponent {
         id: SECONDARY_TOOLBAR_ID,
         secondaryButton: [
           {
-            type: 'flat',
+            type: 'fab',
             label: 'Pantalones',
             icon: '',
             action: pantsButtonClicked()
           },
           {
-            type: 'flat',
+            type: 'fab',
             label: 'Remeras',
             icon: '',
             action: tShirtsButtonClicked()

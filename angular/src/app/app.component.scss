@@ -1,0 +1,11 @@
+$header-min-height: 64px;
+$header-max-heigth: 128px;
+$main-height: calc(100% - $header-max-heigth);
+
+header {
+    min-height: $header-min-height;
+    max-height: $header-max-heigth;
+}
+main {
+    height: $main-height;
+}

@@ -1,4 +1,90 @@
 /* You can add global styles to this file, and also import other style files */
+@use '@angular/material' as mat;
+@use './components/list/list-theme.scss' as list;
+@use './components/toolbar/toolbar-theme.scss' as toolbar;
+@use './components/button/button-theme.scss' as button;
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+@include mat.core();
+
+:root,:host{
+    --sys-background:#0e1415;
+    --sys-on-background:#dde4e3;
+    --sys-surface:#0e1415;
+    --sys-surface-dim:#0e1415;
+    --sys-surface-bright:#343a3b;
+    --sys-surface-container-lowest:#090f10;
+    --sys-surface-container-low:#161d1d;
+    --sys-surface-container:#1a2121;
+    --sys-surface-container-high:#252b2b;
+    --sys-surface-container-highest:#303636;
+    --sys-on-surface:#dde4e3;
+    --sys-surface-variant:#3f4949;
+    --sys-on-surface-variant:#bec8c8;
+    --sys-inverse-surface:#dde4e3;
+    --sys-inverse-on-surface:#2b3232;
+    --sys-outline:#899393;
+    --sys-outline-variant:#3f4949;
+    --sys-shadow:#000000;
+    --sys-scrim:#000000;
+    --sys-surface-tint:#80d5d4;
+    --sys-primary:#80d5d4;
+    --sys-on-primary:#003737;
+    --sys-primary-container:#004f4f;
+    --sys-on-primary-container:#9cf1f0;
+    --sys-inverse-primary:#006a6a;
+    --sys-secondary:#cfbdfe;
+    --sys-on-secondary:#35275d;
+    --sys-secondary-container:#4c3d75;
+    --sys-on-secondary-container:#e9ddff;
+    --sys-tertiary:#cfbdfe;
+    --sys-on-tertiary:#36275d;
+    --sys-tertiary-container:#4d3d75;
+    --sys-on-tertiary-container:#e9ddff;
+    --sys-error:#ffb4ab;
+    --sys-on-error:#561e19;
+    --sys-error-container:#73342d;
+    --sys-on-error-container:#ffdad5;
+    --sys-neutral:#727878;
+    --sys-neutral-variant:#6f7979;
+    --sys-primary-fixed:#9cf1f0;
+    --sys-primary-fixed-dim:#80d5d4;
+    --sys-on-primary-fixed:#002020;
+    --sys-on-primary-fixed-variant:#004f4f;
+    --sys-secondary-fixed:#e9ddff;
+    --sys-secondary-fixed-dim:#cfbdfe;
+    --sys-on-secondary-fixed:#201047;
+    --sys-on-secondary-fixed-variant:#4c3d75;
+    --sys-tertiary-fixed:#e9ddff;
+    --sys-tertiary-fixed-dim:#cfbdfe;
+    --sys-on-tertiary-fixed:#201047;
+    --sys-on-tertiary-fixed-variant:#4d3d75;
+    --sys-inverse-secondary:#65558f;
+    --sys-inverse-tertiary:#65558f;
+    --sys-inverse-error:#904a43;
+    --sys-error-fixed:#ffdad5;
+    --sys-error-fixed-dim:#ffb4ab;
+    --sys-on-error-fixed:#3b0907;
+    --sys-on-error-fixed-variant:#73342d;
+}
+
+$dark-theme: mat.define-theme((
+    color: (
+        use-system-variables: true,
+    ),
+    typography: (
+        use-system-variables: true,
+    )
+));
+
+html, body { 
+    height: 100%;
+}
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    color:cyan;
+    @include mat.all-component-themes($dark-theme);
+    @include toolbar.theme($dark-theme);
+    @include list.theme($dark-theme);
+    @include button.theme($dark-theme);
+}

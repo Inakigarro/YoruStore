@@ -2,6 +2,7 @@
 	@case ("raised") {
 		<button
 			mat-raised-button
+			class="raised-button"
 			(click)="this.actionEmmiter.emit(this.action)"
 		>
 			@if (label) {
@@ -38,16 +39,20 @@
 	@case ("fab") {
 		<button
 			mat-fab
+			extended="true"
 			(click)="this.actionEmmiter.emit(this.action)"
+			color="primary"
 		>
 			@if (icon) {
 				<mat-icon>{{ icon }}</mat-icon>
 			}
+			<span>{{ label }}</span>
 		</button>
 	}
 	@default {
 		<button
 			mat-button
+			class="basic-button"
 			(click)="this.actionEmmiter.emit(this.action)"
 		>
 			@if (label) {

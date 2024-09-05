@@ -1,9 +1,9 @@
-@if (title) {
-	<h2>{{ title }}</h2>
-}
-
+<h2 class="list-title">{{ title }}</h2>
 @if (data$ | async; as data) {
-	<mat-list>
+	<mat-grid-list
+		cols="5"
+		rowHeight="4:3"
+	>
 		@for (item of data; track $index) {
 			<app-card-ui
 				[id]="item.id"
@@ -12,5 +12,5 @@
 				[precio]="item.precio"
 			/>
 		}
-	</mat-list>
+	</mat-grid-list>
 }

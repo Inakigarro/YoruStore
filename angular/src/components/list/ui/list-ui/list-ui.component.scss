@@ -1,0 +1,12 @@
+app-card-ui {
+    display: inline-block;
+    width: max-content;
+}
+.list {
+    padding: 0;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 100%;
+    overflow: scroll;
+}

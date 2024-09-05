@@ -1,0 +1,20 @@
+@use '@angular/material' as mat;
+
+@mixin color($theme) {
+    $theme-type: mat.get-theme-type($theme);
+
+    button.raised-button {
+        color: black !important;
+        background-color: mat.get-theme-color($theme, primary) !important;
+    }
+    button.basic-button {
+        color: black !important;
+        background-color: mat.get-theme-color($theme, tertiary, 50);
+    }
+}
+
+@mixin theme($theme) {
+    @if mat.theme-has($theme, color) {
+        @include color($theme);
+    }
+}

@@ -3,10 +3,11 @@ import { Item } from "@root/components/models";
 import { Observable } from "rxjs";
 
 @Component({
-    selector: 'app-list',
-    templateUrl: './list-ui.component.html'
+    selector: 'list-ui',
+    templateUrl: './list-ui.component.html',
+    styleUrl: './list-ui.component.scss',
 })
-export class AppListUiComponent {
+export class ListUiComponent {
     @Input()
     public id: string;
 

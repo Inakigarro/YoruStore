@@ -1,0 +1,36 @@
+<mat-card>
+	<mat-card-header>
+		<mat-card-title-group class="card-title-group">
+			<img
+				mat-card-image
+				ngSrc="assets\medias\medias-negras-vlack.jpg"
+				width="250"
+				height="300"
+				priority
+				alt="medias vlack"
+			/>
+			<mat-card-title>
+				{{ titulo }}
+			</mat-card-title>
+		</mat-card-title-group>
+	</mat-card-header>
+	<mat-card-content>
+		<p>{{ descripcion }}</p>
+	</mat-card-content>
+	<mat-card-actions>
+		<app-button
+			[type]="shoppingCartButton.type"
+			[label]="shoppingCartButton.label"
+			[icon]="shoppingCartButton.icon"
+			[action]="shoppingCartButton.action"
+			(actionEmmiter)="this.actionEmitter.emit($event)"
+		/>
+		<app-button
+			[type]="detailsButton.type"
+			[label]="detailsButton.label"
+			[icon]="detailsButton.icon"
+			[action]="detailsButton.action"
+			(actionEmmiter)="this.actionEmitter.emit($event)"
+		/>
+	</mat-card-actions>
+</mat-card>
