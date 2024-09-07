@@ -1,16 +1,19 @@
 <h2 class="list-title">{{ title }}</h2>
 @if (data$ | async; as data) {
 	<mat-grid-list
-		cols="5"
-		rowHeight="4:3"
+		grid-cols
+		gutterSize="5px"
+		rowHeight="465px"
 	>
 		@for (item of data; track $index) {
-			<app-card-ui
-				[id]="item.id"
-				[titulo]="item.titulo"
-				[descripcion]="item.descripcion"
-				[precio]="item.precio"
-			/>
+			<mat-grid-tile>
+				<app-card-ui
+					[id]="item.id"
+					[titulo]="item.titulo"
+					[descripcion]="item.descripcion"
+					[precio]="item.precio"
+				/>
+			</mat-grid-tile>
 		}
 	</mat-grid-list>
 }

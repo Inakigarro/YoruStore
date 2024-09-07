@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, Output, output } from '@angular/core';
 import { Button } from '@components/models';
 import { DetailsButtonClicked, ShoppingCartButtonClicked } from '../../state/card.actions';
 import { Action } from '@ngrx/store';
+
 @Component({
     selector: 'app-card-ui',
     templateUrl: './card-ui.component.html',
