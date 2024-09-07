@@ -1,17 +1,17 @@
 <header>
 	@if (mainToolbar$ | async; as mainToolbar) {
-		<app-toolbar-feature [toolbar]="mainToolbar" />
+		<toolbar-feature [toolbar]="mainToolbar" />
 	}
 	@if (isMenuOpened$ | async) {
 		@if (secondaryToolbar$ | async; as secondaryToolbar) {
-			<app-toolbar-feature [toolbar]="secondaryToolbar" />
+			<toolbar-feature [toolbar]="secondaryToolbar" />
 		}
 	}
 </header>
 <main>
 	<list-feature
 		[id]="'app-list'"
-		[title]="'Pantalones'"
+		[titulo]="'Medias'"
 		[data$]="data$"
 	/>
 </main>

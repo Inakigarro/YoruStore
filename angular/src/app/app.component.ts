@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { AppService } from './app.service';
 import { RegisterToolbar } from '@root/components/toolbar/state/toolbar.actions';
-import { menuButtonClicked, pantsButtonClicked, profileButtonClicked, searchButtonClicked, shoppingCartButtonClicked, tShirtsButtonClicked } from './state/app.actions';
+import { menuButtonClicked, pantsButtonClicked, profileButtonClicked, searchButtonClicked, SecondaryToolbarActions, shoppingCartButtonClicked, tShirtsButtonClicked } from './state/app.actions';
 import { Observable, of } from 'rxjs';
 import { Item, Toolbar } from '@root/components/models';
 
@@ -98,15 +98,21 @@ export class AppComponent {
         secondaryButton: [
           {
             type: 'fab',
+            label: 'Medias',
+            icon: '',
+            action: SecondaryToolbarActions.buttonClicked({categoria: 'Medias'}),
+          },
+          {
+            type: 'fab',
             label: 'Pantalones',
             icon: '',
-            action: pantsButtonClicked()
+            action: SecondaryToolbarActions.buttonClicked({categoria: 'pantalones'}),
           },
           {
             type: 'fab',
             label: 'Remeras',
             icon: '',
-            action: tShirtsButtonClicked()
+            action: SecondaryToolbarActions.buttonClicked({categoria: 'Remeras'}),
           }
         ],
         toolbarConfig:{

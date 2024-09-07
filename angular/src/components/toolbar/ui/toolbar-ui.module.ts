@@ -1,16 +1,16 @@
 import { NgModule } from "@angular/core";
-import { AppToolbarUiComponent } from "./toolbar.component";
+import { ToolbarUiComponent } from "./toolbar-ui/toolbar-ui.component";
 import { CommonModule } from "@angular/common";
 import { MatToolbarModule } from "@angular/material/toolbar";
-import { AppButtonModule } from "@root/components/button/button.module";
+import { AppButtonModule } from "@components/button/button.module";
 
 @NgModule({
-    declarations: [AppToolbarUiComponent],
+    declarations: [ToolbarUiComponent],
     imports: [
         CommonModule,
         MatToolbarModule,
         AppButtonModule
     ],
-    exports: [AppToolbarUiComponent]
+    exports: [ToolbarUiComponent]
 })
 export class ToolbarUiModule {}

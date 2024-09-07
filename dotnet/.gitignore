@@ -1,0 +1,15 @@
+# Carpeta de salida de compilación
+bin/
+obj/
+
+# Archivos de configuración
+*.suo
+*.user
+*.sln.docstates
+
+# Dependencias de NuGet
+/packages/
+
+# Archivos generados por Visual Studio
+*.csproj.user
+*.vs/

@@ -1,4 +1,4 @@
-import { createAction } from "@ngrx/store";
+import { createAction, createActionGroup, props } from "@ngrx/store";
 
 export const menuButtonClicked = createAction(
     '[Main Toolbar] - Menu button clicked'
@@ -12,6 +12,13 @@ export const shoppingCartButtonClicked = createAction(
 export const profileButtonClicked = createAction(
     '[Main Toolbar] - Profile button clicked'
 );
+
+export const SecondaryToolbarActions = createActionGroup({
+    source: 'Secondary Toolbar',
+    events: {
+        ButtonClicked: props<{categoria: string}>(),
+    }
+})
 
 export const pantsButtonClicked = createAction(
     '[Secondary toolbar] - Pants button clicked'

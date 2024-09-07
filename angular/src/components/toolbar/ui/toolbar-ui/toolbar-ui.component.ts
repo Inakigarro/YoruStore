@@ -4,10 +4,10 @@ import { Button, ToolbarConfig } from "@root/components/models";
 
 @Component({
     selector: 'app-toolbar-ui',
-    templateUrl: './toolbar.component.html',
-    styleUrl: './toolbar.component.scss'
+    templateUrl: './toolbar-ui.component.html',
+    styleUrl: './toolbar-ui.component.scss'
 })
-export class AppToolbarUiComponent {
+export class ToolbarUiComponent {
     @Input()
     public id: string;
     
