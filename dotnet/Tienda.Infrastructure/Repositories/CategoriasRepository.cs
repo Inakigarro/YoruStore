@@ -74,10 +74,23 @@ public class CategoriasRepository : ICategoriasRepository, IDisposable
         return await this._context.Categorias.ToListAsync();
     }
 
-
-    public void Dispose()
+    protected virtual void Dispose(bool disposing)
     {
-        throw new NotImplementedException();
+        if (!this._disposed)
+        {
+            if (disposing)
+            {
+                this._context.Dispose();
+            }
+
+            this._disposed = true;
+        }
     }
 
+    /// <inheritdoc/>
+    public void Dispose()
+    {
+        Dispose(true);
+        GC.SuppressFinalize(this);
+    }
 }

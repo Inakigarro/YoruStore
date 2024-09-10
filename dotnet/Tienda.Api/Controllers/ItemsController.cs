@@ -22,7 +22,6 @@ public class ItemsController : ControllerBase
         var item1 = new Item(Guid.NewGuid());
         item1.SetTitulo("Medias negras vlack");
         item1.SetDescripcion("Tremendas meidas negras para hockey");
-        item1.SetCategoria(categoria1);
         item1.SetPrecio(1000);
         var list = new List<Item>();
         list.Add(item1);

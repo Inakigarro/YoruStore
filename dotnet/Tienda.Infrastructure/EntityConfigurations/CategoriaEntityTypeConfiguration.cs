@@ -12,5 +12,9 @@ public class CategoriaEntityTypeConfiguration: IEntityTypeConfiguration<Categori
 
         builder.Property(x => x.Nombre)
             .IsRequired();
+
+        builder.HasMany(x => x.Items)
+            .WithOne()
+            .IsRequired();
     }
 }

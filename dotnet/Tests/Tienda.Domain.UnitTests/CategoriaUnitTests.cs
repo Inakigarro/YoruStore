@@ -13,7 +13,7 @@ public class CategoriaUnitTests
         categoria1.SetNombre(nombre);
 
         // Assert.
-        Assert.NotNull(categoria1);
+        Assert.That(categoria1, Is.Not.Null);
         Assert.That(categoria1.Nombre, Is.EqualTo(nombre));
     }
 

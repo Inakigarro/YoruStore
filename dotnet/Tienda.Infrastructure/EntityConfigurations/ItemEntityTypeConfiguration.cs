@@ -14,9 +14,6 @@ public class ItemEntityTypeConfiguration : IEntityTypeConfiguration<Item>
             .IsRequired();
         builder.Property(x => x.Descripcion)
             .IsRequired();
-        builder.HasOne(x => x.Categoria)
-            .WithMany()
-            .IsRequired();
         builder.Property(x => x.Precio)
             .IsRequired();
     }

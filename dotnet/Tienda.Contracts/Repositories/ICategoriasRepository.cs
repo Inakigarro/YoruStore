@@ -3,9 +3,6 @@ using Tienda.Domain;
 
 namespace Tienda.Contracts.Repositories;
 
-/// <summary>
-/// Repositorio utilizado para almacenar categorias en la base de datos.
-/// </summary>
 public interface ICategoriasRepository
 {
     /// <summary>
