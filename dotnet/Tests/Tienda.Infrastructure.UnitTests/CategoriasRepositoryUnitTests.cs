@@ -87,4 +87,51 @@ public class CategoriasUnitTests
         Assert.That(categoriaActualizada, Is.Not.Null);
         Assert.That(categoriaActualizada.Nombre, Is.EqualTo("Pantalones"));
     }
+
+    [Test]
+    public async Task ActualizarCategoria_AgregandoUnItemALista_DebeDevolverCategoriaConItemAgregado()
+    {
+        // Arrange.
+        Guid itemId = Guid.NewGuid();
+        Item item = new Item(itemId);
+        item.SetTitulo("Titulo");
+        item.SetDescripcion("Descripcion");
+        item.SetPrecio(1000);
+
+        using var scope = this._serviceProvider.CreateScope();
+        var dbContext = scope.ServiceProvider.GetRequiredService<TiendaDbContext>();
+        dbContext.Items.Add(item);
+        dbContext.SaveChanges();
+
+        // Repositorio a probar.
+        var repository = scope.ServiceProvider.GetRequiredService<ICategoriasRepository>();
+
+        // Agrego categoria a modificar.
+        CrearOActualizarCategoriaDto categoria = new CrearOActualizarCategoriaDto()
+        {
+            Id = Guid.NewGuid(),
+            Nombre = "Medias",
+        };
+
+        Categoria nuevaCategoria = await repository.Add(categoria);
+
+        // Me aseguro que la categoria se creo correctamente.
+        Assert.That(nuevaCategoria, Is.Not.Null);
+        Assert.That(nuevaCategoria.Nombre, Is.EqualTo("Medias"));
+
+        CrearOActualizarCategoriaDto categoriaAModificar = new CrearOActualizarCategoriaDto()
+        {
+            Id = nuevaCategoria.Id,
+            Nombre = nuevaCategoria.Nombre,
+            Items = new List<Guid>() { itemId }
+        };
+
+        // Act.
+        Categoria categoriaActualizada = await repository.Update(categoriaAModificar);
+
+        // Assert.
+        Assert.That(categoriaActualizada, Is.Not.Null);
+        Assert.That(categoriaActualizada.Items, Has.Count.EqualTo(1));
+        Assert.That(categoriaActualizada.Items, Does.Contain(item));
+    }
 }

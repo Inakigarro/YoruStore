@@ -19,8 +19,8 @@ public class ItemsRepository : IItemsRepository, IDisposable
     {
         Item item = new Item(Guid.NewGuid());
         item.SetTitulo(nuevoItem.Titulo);
-        item.SetDescripcion(item.Descripcion);
-        item.SetPrecio(item.Precio);
+        item.SetDescripcion(nuevoItem.Descripcion);
+        item.SetPrecio(nuevoItem.Precio);
 
         await this._dbContext.Items.AddAsync(item);
         await this._dbContext.SaveChangesAsync();

@@ -26,7 +26,7 @@ public class CategoriasServices : ICategoriasService
     public async Task<CategoriaDto> Create(CrearOActualizarCategoriaDto nuevaCategoria)
     {
         var categoria = await this._categoriasRepository.Get(nuevaCategoria.Id);
-        if (categoria is null)
+        if (categoria is not null)
         {
             throw new InvalidOperationException($"Ya existe una categoria con el Id: {nuevaCategoria.Id}");
         }

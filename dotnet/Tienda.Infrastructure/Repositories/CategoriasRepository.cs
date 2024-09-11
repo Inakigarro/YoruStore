@@ -20,6 +20,7 @@ public class CategoriasRepository : ICategoriasRepository, IDisposable
     {
         Categoria nuevaCategoria = new Categoria(Guid.NewGuid());
         nuevaCategoria.SetNombre(categoria.Nombre);
+        await this.AgregarItems(nuevaCategoria, categoria.Items);
         await this._context.AddAsync(nuevaCategoria);
         await this._context.SaveChangesAsync();
 
@@ -37,6 +38,7 @@ public class CategoriasRepository : ICategoriasRepository, IDisposable
         }
 
         categoriaExistente.SetNombre(categoria.Nombre);
+        await this.AgregarItems(categoriaExistente, categoria.Items);
         this._context.Categorias.Update(categoriaExistente);
         await this._context.SaveChangesAsync();
         return categoriaExistente;
@@ -92,5 +94,17 @@ public class CategoriasRepository : ICategoriasRepository, IDisposable
     {
         Dispose(true);
         GC.SuppressFinalize(this);
+    }
+
+    private async Task AgregarItems(Categoria categoria, IEnumerable<Guid> itemIds)
+    {
+        foreach (var itemId in itemIds)
+        {
+            Item? item = await this._context.Items.FindAsync(itemId);
+            if (item is not null)
+            {
+                categoria.AddItem(item);
+            }
+        }
     }
 }

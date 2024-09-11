@@ -5,6 +5,7 @@ using Tienda.Contracts.Services;
 using Tienda.Infrastructure;
 using Tienda.Infrastructure.AutoMapper;
 using Tienda.Infrastructure.Repositories;
+using Tienda.Infrastructure.Services;
 
 namespace Tienda.Api;
 
@@ -26,7 +27,7 @@ public class Program
         });
 
         builder.Services.AddTransient<ICategoriasRepository,CategoriasRepository>();
-        builder.Services.AddTransient<ICategoriasService, ICategoriasService>();
+        builder.Services.AddTransient<ICategoriasService, CategoriasServices>();
 
         builder.Services.AddControllers();
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
