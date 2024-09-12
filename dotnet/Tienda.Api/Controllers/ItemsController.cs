@@ -47,7 +47,26 @@ public class ItemsController : ControllerBase
         }
     }
 
-    [HttpGet(Name = "ObtenerItems")]
+    [HttpPut]
+    [Route("ModificarItem")]
+    public async Task<ActionResult> ModificarItem(ActualizarItemDto item)
+    {
+        try
+        {
+            _logger.LogInformation($"Actualizando el item con id: {item.Id}");
+            var itemActualizado = await this._itemsService.Update(item);
+            return Ok(itemActualizado);
+        }
+        catch (Exception ex)
+        {
+            string error = $"Ocurrio un error durante la modificacion del Item. {ex.Message} - {ex.StackTrace}";
+            _logger.LogError(error);
+            return BadRequest(error);
+        }
+    }
+
+    [HttpGet]
+    [Route("ObtenerItems")]
     public async Task<ActionResult> ObtenerItems()
     {
         try
