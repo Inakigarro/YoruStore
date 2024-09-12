@@ -26,3 +26,13 @@ export interface Item {
     descripcion: string;
     precio: number;
 }
+
+export interface CrearCategoria {
+    nombre: string;
+}
+
+export interface Categoria {
+    id: string;
+    nombre: string;
+    items: Item[];
+}

@@ -13,6 +13,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { appReducer } from "./state/app.reducer";
 import { AppListModule } from "../components/list/list.module";
 import { AppCardModule } from "../components/card/card.module";
+import { provideHttpClient } from "@angular/common/http";
 
 @NgModule({
     declarations: [
@@ -34,6 +35,7 @@ import { AppCardModule } from "../components/card/card.module";
     bootstrap: [AppComponent],
     providers: [
         provideAnimationsAsync(),
+        provideHttpClient(),
     ]
 })
 export class AppModule {}

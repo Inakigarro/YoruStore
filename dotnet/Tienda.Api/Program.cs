@@ -11,6 +11,7 @@ namespace Tienda.Api;
 
 public class Program
 {
+    public const string LocalHostOrigin = "LocalHostOrigin";
     public static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
@@ -44,6 +45,12 @@ public class Program
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
         
+        builder.Services.AddCors(opts =>
+        {
+            opts.AddPolicy(LocalHostOrigin, policy =>
+                policy.WithOrigins("http://localhost:4200")
+                    .WithHeaders("Content-Type"));
+        });
 
         var app = builder.Build();
 
@@ -55,7 +62,7 @@ public class Program
         }
 
         app.UseHttpsRedirection();
-
+        app.UseCors(LocalHostOrigin);
         app.UseAuthorization();
 
 
