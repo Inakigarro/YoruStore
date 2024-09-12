@@ -10,14 +10,14 @@ public interface ICategoriasRepository
     /// </summary>
     /// <param name="categoria">La categoria a agregar.</param>
     /// <returns>La categoria agregada.</returns>
-    Task<Categoria> Add(CrearOActualizarCategoriaDto categoria);
+    Task<Categoria> Add(CrearCategoriaDto categoria);
 
     /// <summary>
     /// Actualiza una categoria en la base de datos.
     /// </summary>
     /// <param name="categoria">La categoria a actualizar.</param>
     /// <returns>La categoria actualizada.</returns>
-    Task<Categoria> Update(CrearOActualizarCategoriaDto categoria);
+    Task<Categoria> Update(ActualizarCategoriaDto categoria);
 
     /// <summary>
     /// Borra una categoria de la base de datos.
@@ -31,6 +31,7 @@ public interface ICategoriasRepository
     /// </summary>
     /// <param name="id">El id de la categoria a buscar.</param>
     /// <returns>La categoria correspondiente al id.</returns>
+    /// <exception cref="ArgumentException"></exception>
     Task<Categoria> Get(Guid id);
 
     /// <summary>

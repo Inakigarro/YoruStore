@@ -36,9 +36,8 @@ public class ItemsRepositoryUnitTests
         using var scope = this._serviceProvider.CreateScope();
         var repository = scope.ServiceProvider.GetRequiredService<IItemsRepository>();
         Guid itemId = Guid.NewGuid();
-        CrearOActualizarItemDto nuevoItem = new CrearOActualizarItemDto()
+        CrearItemDto nuevoItem = new CrearItemDto()
         {
-            Id = itemId,
             Titulo = "Titulo",
             Descripcion = "Descripcion",
             Precio = 1000,
@@ -61,9 +60,8 @@ public class ItemsRepositoryUnitTests
         using var scope = this._serviceProvider.CreateScope();
         var repository = scope.ServiceProvider.GetRequiredService<IItemsRepository>();
         Guid itemId = Guid.NewGuid();
-        CrearOActualizarItemDto item = new CrearOActualizarItemDto()
+        CrearItemDto item = new CrearItemDto()
         {
-            Id = itemId,
             Titulo = "Titulo",
             Descripcion = "Descripcion",
             Precio = 1000,
@@ -73,7 +71,7 @@ public class ItemsRepositoryUnitTests
 
         Assert.That(nuevoItem, Is.Not.Null);
 
-        CrearOActualizarItemDto itemAModificar = new CrearOActualizarItemDto()
+        ActualizarItemDto itemAModificar = new ActualizarItemDto()
         {
             Id = nuevoItem.Id,
             Titulo = nuevoItem.Titulo,

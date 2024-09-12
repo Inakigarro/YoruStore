@@ -1,4 +1,10 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
+using System.Linq.Expressions;
+using Tienda.Contracts.Categorias;
+using Tienda.Contracts.Items;
+using Tienda.Contracts.Services;
 using Tienda.Domain;
 
 namespace Tienda.Api.Controllers;
@@ -7,25 +13,54 @@ namespace Tienda.Api.Controllers;
 [Route("[controller]")]
 public class ItemsController : ControllerBase
 {
+    private readonly ICategoriasService _categoriasService;
+    private readonly IItemsService _itemsService;
     private readonly ILogger<ItemsController> _logger;
+    private readonly IMapper _mapper;
 
-    public ItemsController(ILogger<ItemsController> logger)
+    public ItemsController(
+        ICategoriasService categoriasService,
+        IItemsService itemsService,
+        ILogger<ItemsController> logger,
+        IMapper mapper)
     {
+        _categoriasService = categoriasService;
+        _itemsService = itemsService;
         _logger = logger;
+        _mapper = mapper;
     }
 
-    [HttpGet(Name = "GetItems")]
-    public IEnumerable<Item> Get()
+    [HttpPost]
+    [Route("AgregarItem")]
+    public async Task<IActionResult> AgregarItem(CrearItemDto crearItem, Guid categoriaId)
     {
-        Categoria categoria1 = new Categoria(Guid.NewGuid());
-        categoria1.SetNombre("Medias");
-        var item1 = new Item(Guid.NewGuid());
-        item1.SetTitulo("Medias negras vlack");
-        item1.SetDescripcion("Tremendas meidas negras para hockey");
-        item1.SetPrecio(1000);
-        var list = new List<Item>();
-        list.Add(item1);
+        try
+        {
+            var item = await this._itemsService.Create(crearItem, categoriaId);
+            return Ok(item);
+        }
+        catch (Exception ex)
+        {
+            string error = $"Ocurrio un error durante la creacion del Item. {ex.Message} - {ex.StackTrace}";
+            _logger.LogError(error);
+            return BadRequest(error);
+        }
+    }
 
-        return list;
+    [HttpGet(Name = "ObtenerItems")]
+    public async Task<ActionResult> ObtenerItems()
+    {
+        try
+        {
+            _logger.LogInformation("Obteniendo todos los items.");
+            var categorias = await this._itemsService.GetAll();
+            return Ok(categorias);
+        }
+        catch (Exception ex)
+        {
+            string error = $"Ocurrio un error durante la busqueda de todos los items. {ex.Message} - {ex.StackTrace}";
+            _logger.LogError(error);
+            return BadRequest(error);
+        }
     }
 }

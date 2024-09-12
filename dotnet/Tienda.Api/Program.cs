@@ -17,17 +17,27 @@ public class Program
 
         // Add services to the container.
         builder.Services.AddDbContext<TiendaDbContext>(opts =>
-            opts.UseSqlServer(
-                builder.Configuration.GetConnectionString("DefaultConnection"),
-                assembly => assembly.MigrationsAssembly(typeof(TiendaDbContext).Assembly.FullName)));
+            opts
+                .EnableSensitiveDataLogging()
+                .UseSqlServer(
+                    builder.Configuration.GetConnectionString("DefaultConnection"),
+                    assembly => assembly.MigrationsAssembly(typeof(TiendaDbContext).Assembly.FullName)));
 
         builder.Services.AddAutoMapper(cfg =>
         {
             cfg.AddProfile(new CategoriaProfile());
+            cfg.AddProfile(new ItemProfile());
         });
 
-        builder.Services.AddTransient<ICategoriasRepository,CategoriasRepository>();
-        builder.Services.AddTransient<ICategoriasService, CategoriasServices>();
+        // Categorias.
+        builder.Services
+            .AddScoped<ICategoriasRepository,CategoriasRepository>()
+            .AddScoped<ICategoriasService, CategoriasServices>();
+
+        // Items.
+        builder.Services
+            .AddScoped<IItemsRepository, ItemsRepository>()
+            .AddScoped<IItemsService, ItemsService>();
 
         builder.Services.AddControllers();
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

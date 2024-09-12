@@ -1,44 +1,49 @@
 ﻿using AutoMapper;
 using Microsoft.Extensions.Logging;
+using Tienda.Contracts.Categorias;
 using Tienda.Contracts.Items;
 using Tienda.Contracts.Repositories;
 using Tienda.Contracts.Services;
-using Tienda.Domain;
 
 namespace Tienda.Infrastructure.Services;
 
 public class ItemsService : IItemsService
 {
     private readonly IItemsRepository _itemsRepository;
+    private readonly ICategoriasRepository _categoriesRepository;
     private readonly ILogger<ItemsService> _logger;
     private readonly IMapper _mapper;
 
     public ItemsService(
         IItemsRepository itemsRepository,
+        ICategoriasRepository categoriesRepository,
         ILogger<ItemsService> logger,
         IMapper mapper)
     {
         _itemsRepository = itemsRepository;
+        _categoriesRepository = categoriesRepository;
         _logger = logger;
         _mapper = mapper;
     }
 
     /// <inheritdoc/>
-    public async Task<ItemDto> Create(CrearOActualizarItemDto nuevoItem)
+    public async Task<ItemDto> Create(CrearItemDto nuevoItem, Guid categoriaId)
     {
-        var item = await this._itemsRepository.Get(nuevoItem.Id);
-        if (item is not null)
-        {
-            throw new InvalidOperationException($"Ya existe un item con el Id: {item.Id}");
-        }
-
         _logger.LogInformation($"Creando un nuevo item con el titulo: {nuevoItem.Titulo}");
-        item = await this._itemsRepository.Add(nuevoItem);
+        var item = await this._itemsRepository.Add(nuevoItem);
+        var categoria = await this._categoriesRepository.Get(categoriaId);
+        if (categoria is null)
+        {
+            throw new InvalidOperationException($"No existe una categoria con el Id: {categoriaId}");
+        }
+        categoria.AddItem(item);
+        ActualizarCategoriaDto categoriaDto = this._mapper.Map<ActualizarCategoriaDto>(categoria);
+        await this._categoriesRepository.Update(categoriaDto);
         return this._mapper.Map<ItemDto>(item);
     }
 
     /// <inheritdoc/>
-    public async Task<ItemDto> Update(CrearOActualizarItemDto item)
+    public async Task<ItemDto> Update(ActualizarItemDto item)
     {
         var itemExistente = await this._itemsRepository.Get(item.Id);
         if (itemExistente is null)

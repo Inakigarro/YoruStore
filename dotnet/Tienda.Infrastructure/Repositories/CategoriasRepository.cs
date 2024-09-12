@@ -16,11 +16,10 @@ public class CategoriasRepository : ICategoriasRepository, IDisposable
     }
 
     ///<inheritdoc/>
-    public async Task<Categoria> Add(CrearOActualizarCategoriaDto categoria)
+    public async Task<Categoria> Add(CrearCategoriaDto categoria)
     {
         Categoria nuevaCategoria = new Categoria(Guid.NewGuid());
         nuevaCategoria.SetNombre(categoria.Nombre);
-        await this.AgregarItems(nuevaCategoria, categoria.Items);
         await this._context.AddAsync(nuevaCategoria);
         await this._context.SaveChangesAsync();
 
@@ -28,7 +27,7 @@ public class CategoriasRepository : ICategoriasRepository, IDisposable
     }
 
     ///<inheritdoc/>
-    public async Task<Categoria> Update(CrearOActualizarCategoriaDto categoria)
+    public async Task<Categoria> Update(ActualizarCategoriaDto categoria)
     {
         Categoria? categoriaExistente = await this._context.Categorias.FindAsync(categoria.Id);
 
@@ -39,7 +38,8 @@ public class CategoriasRepository : ICategoriasRepository, IDisposable
 
         categoriaExistente.SetNombre(categoria.Nombre);
         await this.AgregarItems(categoriaExistente, categoria.Items);
-        this._context.Categorias.Update(categoriaExistente);
+        this._context.Categorias.Attach(categoriaExistente);
+        this._context.Entry(categoriaExistente).State = EntityState.Modified;
         await this._context.SaveChangesAsync();
         return categoriaExistente;
     }
@@ -61,7 +61,10 @@ public class CategoriasRepository : ICategoriasRepository, IDisposable
     ///<inheritdoc/>
     public async Task<Categoria> Get(Guid id)
     {
-        Categoria? categoria = await this._context.Categorias.FindAsync(id);
+        Categoria? categoria = await this._context.Categorias
+            .Where(x => x.Id == id)
+            .Include(x => x.Items)
+            .FirstOrDefaultAsync();
         if (categoria is null)
         {
             throw new ArgumentException("No existe una categoria con el Id ingresado.", nameof(id));
@@ -74,6 +77,18 @@ public class CategoriasRepository : ICategoriasRepository, IDisposable
     public async Task<IEnumerable<Categoria>> GetAll()
     {
         return await this._context.Categorias.ToListAsync();
+    }
+
+    ///<inheritdoc/>
+    public async Task<IEnumerable<Item>> GetByCategoria(Guid categoriaId)
+    {
+        Categoria? categoria = await this._context.Categorias.FindAsync(categoriaId);
+        if (categoria is null)
+        {
+            throw new ArgumentException("No existe una categoria con el Id proveido", nameof(categoriaId));
+        }
+
+        return categoria.Items;
     }
 
     protected virtual void Dispose(bool disposing)

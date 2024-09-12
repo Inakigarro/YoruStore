@@ -14,7 +14,6 @@ public class CategoriaEntityTypeConfiguration: IEntityTypeConfiguration<Categori
             .IsRequired();
 
         builder.HasMany(x => x.Items)
-            .WithOne()
-            .IsRequired();
+            .WithOne();
     }
 }

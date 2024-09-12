@@ -1,4 +1,5 @@
-﻿using Tienda.Contracts.Items;
+﻿using Microsoft.EntityFrameworkCore;
+using Tienda.Contracts.Items;
 using Tienda.Contracts.Repositories;
 using Tienda.Domain;
 
@@ -15,7 +16,7 @@ public class ItemsRepository : IItemsRepository, IDisposable
     }
 
     ///<inheritdoc/>
-    public async Task<Item> Add(CrearOActualizarItemDto nuevoItem)
+    public async Task<Item> Add(CrearItemDto nuevoItem)
     {
         Item item = new Item(Guid.NewGuid());
         item.SetTitulo(nuevoItem.Titulo);
@@ -29,7 +30,7 @@ public class ItemsRepository : IItemsRepository, IDisposable
     }
 
     ///<inheritdoc/>
-    public async Task<Item> Update(CrearOActualizarItemDto item)
+    public async Task<Item> Update(ActualizarItemDto item)
     {
         Item? itemExistente = await this._dbContext.Items.FindAsync(item.Id);
         if (itemExistente is null)
@@ -40,33 +41,42 @@ public class ItemsRepository : IItemsRepository, IDisposable
         itemExistente.SetTitulo(item.Titulo);
         itemExistente.SetDescripcion(item.Descripcion);
         itemExistente.SetPrecio(item.Precio);
-        this._dbContext.Items.Update(itemExistente);
+        this._dbContext.Items.Attach(itemExistente);
+        this._dbContext.Entry(itemExistente).State = EntityState.Modified;
         await this._dbContext.SaveChangesAsync();
         return itemExistente;
     }
 
     ///<inheritdoc/>
-    public Task<Item> Delete(Guid id)
+    public async Task<Item> Delete(Guid itemId)
     {
-        throw new NotImplementedException();
+        Item? itemExistente = await this._dbContext.Items.FindAsync(itemId);
+        if (itemExistente is null)
+        {
+            throw new ArgumentException("No existe un item con el Id proveido", nameof(itemId));
+        }
+
+        this._dbContext.Remove(itemExistente);
+        await this._dbContext.SaveChangesAsync();
+        return itemExistente;
     }
 
     ///<inheritdoc/>
-    public Task<Item> Get(Guid id)
+    public async Task<Item> Get(Guid itemId)
     {
-        throw new NotImplementedException();
+        Item? item = await this._dbContext.Items.FindAsync(itemId);
+        if (item is null)
+        {
+            throw new ArgumentException("No existe un item con el Id proveido", nameof(itemId));
+        }
+
+        return item;
     }
 
     ///<inheritdoc/>
-    public Task<IEnumerable<Item>> GetAll()
+    public async Task<IEnumerable<Item>> GetAll()
     {
-        throw new NotImplementedException();
-    }
-
-    ///<inheritdoc/>
-    public Task<IEnumerable<Item>> GetByCategoria(Guid categoriaId)
-    {
-        throw new NotImplementedException();
+        return await this._dbContext.Items.ToListAsync();
     }
 
     protected virtual void Dispose(bool disposing)

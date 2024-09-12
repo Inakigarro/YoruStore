@@ -1,4 +1,5 @@
 ﻿using Tienda.Contracts.Categorias;
+using Tienda.Contracts.Items;
 
 namespace Tienda.Contracts.Services;
 
@@ -9,14 +10,22 @@ public interface ICategoriasService
     /// </summary>
     /// <param name="nuevaCategoria">La categoria a crear.</param>
     /// <returns>Un dto que representa la nueva categoria.</returns>
-    Task<CategoriaDto> Create(CrearOActualizarCategoriaDto nuevaCategoria);
+    Task<CategoriaDto> Create(CrearCategoriaDto nuevaCategoria);
 
     /// <summary>
     /// Actualiza una categoria existente.
     /// </summary>
     /// <param name="categoria">La categoria a actualizar.</param>
     /// <returns>Un dto que representa la categoria actualizada.</returns>
-    Task<CategoriaDto> Update(CrearOActualizarCategoriaDto categoria);
+    Task<CategoriaDto> Update(ActualizarCategoriaDto categoria);
+
+    /// <summary>
+    /// Agrega un item a la categoria correspondiente al Id proveido.
+    /// </summary>
+    /// <param name="categoriaId">El Id de la categoria.</param>
+    /// <param name="item">El item a agregar.</param>
+    /// <returns>Un dto que representa la categoria actualizada.</returns>
+    Task<CategoriaDto> AddItem(Guid categoriaId, ItemDto item);
 
     /// <summary>
     /// Elimina la categoria correspondiente al Id.

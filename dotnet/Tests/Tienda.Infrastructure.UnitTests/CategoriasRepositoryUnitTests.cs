@@ -39,9 +39,8 @@ public class CategoriasUnitTests
 
         // Categoria a guardar en db.
         Guid categoriaId = Guid.NewGuid();
-        CrearOActualizarCategoriaDto nuevaCategoria = new CrearOActualizarCategoriaDto()
+        CrearCategoriaDto nuevaCategoria = new CrearCategoriaDto()
         {
-            Id = categoriaId,
             Nombre = "Medias",
         };
 
@@ -62,9 +61,8 @@ public class CategoriasUnitTests
         var repository = scope.ServiceProvider.GetRequiredService<ICategoriasRepository>();
 
         // Agrego categoria a modificar.
-        CrearOActualizarCategoriaDto categoria = new CrearOActualizarCategoriaDto()
+        CrearCategoriaDto categoria = new CrearCategoriaDto()
         {
-            Id = Guid.NewGuid(),
             Nombre = "Medias",
         };
 
@@ -74,7 +72,7 @@ public class CategoriasUnitTests
         Assert.That(nuevaCategoria, Is.Not.Null);
         Assert.That(nuevaCategoria.Nombre, Is.EqualTo("Medias"));
 
-        CrearOActualizarCategoriaDto categoriaAModificar = new CrearOActualizarCategoriaDto()
+        ActualizarCategoriaDto categoriaAModificar = new ActualizarCategoriaDto()
         {
             Id = nuevaCategoria.Id, 
             Nombre = "Pantalones",
@@ -107,9 +105,8 @@ public class CategoriasUnitTests
         var repository = scope.ServiceProvider.GetRequiredService<ICategoriasRepository>();
 
         // Agrego categoria a modificar.
-        CrearOActualizarCategoriaDto categoria = new CrearOActualizarCategoriaDto()
+        CrearCategoriaDto categoria = new CrearCategoriaDto()
         {
-            Id = Guid.NewGuid(),
             Nombre = "Medias",
         };
 
@@ -119,7 +116,7 @@ public class CategoriasUnitTests
         Assert.That(nuevaCategoria, Is.Not.Null);
         Assert.That(nuevaCategoria.Nombre, Is.EqualTo("Medias"));
 
-        CrearOActualizarCategoriaDto categoriaAModificar = new CrearOActualizarCategoriaDto()
+        ActualizarCategoriaDto categoriaAModificar = new ActualizarCategoriaDto()
         {
             Id = nuevaCategoria.Id,
             Nombre = nuevaCategoria.Nombre,

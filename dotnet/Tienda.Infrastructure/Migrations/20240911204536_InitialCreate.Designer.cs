@@ -12,7 +12,7 @@ using Tienda.Infrastructure;
 namespace Tienda.Infrastructure.Migrations
 {
     [DbContext(typeof(TiendaDbContext))]
-    [Migration("20240910223239_InitialCreate")]
+    [Migration("20240911204536_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -46,7 +46,7 @@ namespace Tienda.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("CategoriaId")
+                    b.Property<Guid?>("CategoriaId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Descripcion")
@@ -71,9 +71,7 @@ namespace Tienda.Infrastructure.Migrations
                 {
                     b.HasOne("Tienda.Domain.Categoria", null)
                         .WithMany("Items")
-                        .HasForeignKey("CategoriaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CategoriaId");
                 });
 
             modelBuilder.Entity("Tienda.Domain.Categoria", b =>

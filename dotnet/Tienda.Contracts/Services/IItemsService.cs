@@ -8,15 +8,16 @@ public interface IItemsService
     /// Crea un nuevo item.
     /// </summary>
     /// <param name="nuevoItem">El item a crear.</param>
+    /// <param name="categoriaId">El id de la categoria a agregar el item.</param>
     /// <returns>Un dto que representa el item completamente creado.</returns>
-    Task<ItemDto> Create(CrearOActualizarItemDto nuevoItem);
+    Task<ItemDto> Create(CrearItemDto nuevoItem, Guid categoriaId);
 
     /// <summary>
     /// Actualiza un item existente.
     /// </summary>
     /// <param name="item">El item a modificar.</param>
     /// <returns>Un dto que representa el item completamente actualizado.</returns>
-    Task<ItemDto> Update(CrearOActualizarItemDto item);
+    Task<ItemDto> Update(ActualizarItemDto item);
 
     /// <summary>
     /// Elimina el item correspondiente al Id.

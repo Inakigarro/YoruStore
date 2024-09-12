@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.Extensions.Logging;
 using Tienda.Contracts.Categorias;
+using Tienda.Contracts.Items;
 using Tienda.Contracts.Repositories;
 using Tienda.Contracts.Services;
 using Tienda.Domain;
@@ -23,21 +24,15 @@ public class CategoriasServices : ICategoriasService
     }
 
     /// <inheritdoc/>
-    public async Task<CategoriaDto> Create(CrearOActualizarCategoriaDto nuevaCategoria)
+    public async Task<CategoriaDto> Create(CrearCategoriaDto nuevaCategoria)
     {
-        var categoria = await this._categoriasRepository.Get(nuevaCategoria.Id);
-        if (categoria is not null)
-        {
-            throw new InvalidOperationException($"Ya existe una categoria con el Id: {nuevaCategoria.Id}");
-        }
-
         _logger.LogInformation($"Creando una nueva categoria con el nombre: {nuevaCategoria.Nombre}");
-        categoria = await this._categoriasRepository.Add(nuevaCategoria);
+        var categoria = await this._categoriasRepository.Add(nuevaCategoria);
         return this._mapper.Map<CategoriaDto>(categoria);
     }
 
     /// <inheritdoc/>
-    public async Task<CategoriaDto> Update(CrearOActualizarCategoriaDto categoria)
+    public async Task<CategoriaDto> Update(ActualizarCategoriaDto categoria)
     {
         var categoriaExistente = await this._categoriasRepository.Get(categoria.Id);
         if (categoriaExistente is null)
@@ -47,6 +42,21 @@ public class CategoriasServices : ICategoriasService
 
         _logger.LogInformation($"Actualizando la categoria: {categoriaExistente}, con la informacion: {categoria}");
         var categoriaActualizada = await this._categoriasRepository.Update(categoria);
+        return this._mapper.Map<CategoriaDto>(categoriaActualizada);
+    }
+
+    /// <inheritdoc/>
+    public async Task<CategoriaDto> AddItem(Guid categoriaId, ItemDto item)
+    {
+        var categoria = await this._categoriasRepository.Get(categoriaId);
+        if (categoria is null)
+        {
+            throw new InvalidOperationException($"No existe una categoria con el Id: {categoriaId}");
+        }
+
+        _logger.LogInformation($"Agregando el item: {item.Id} - {item.Titulo}, a la categoria: {categoria.Nombre}");
+        categoria.AddItem(this._mapper.Map<Item>(item));
+        var categoriaActualizada = await _categoriasRepository.Update(this._mapper.Map <ActualizarCategoriaDto>(categoria));
         return this._mapper.Map<CategoriaDto>(categoriaActualizada);
     }
 

@@ -1,11 +1,12 @@
-﻿using Tienda.Domain;
+﻿using Tienda.Contracts.Categorias;
+using Tienda.Domain;
 
 namespace Tienda.Contracts.Items;
 
 /// <summary>
-/// Dto utilizado para representar un Item.
+/// Dto utilizado actualizar un Item.
 /// </summary>
-public record ItemDto
+public record ActualizarItemDto
 {
     /// <summary>
     /// Obtiene o asigna el Id del Item.

@@ -2,7 +2,7 @@
 
 namespace Tienda.Contracts.Categorias;
 
-public record CrearOActualizarCategoriaDto
+public record ActualizarCategoriaDto
 {
     public Guid Id { get; set; }
     public string Nombre { get; set; } = string.Empty;
