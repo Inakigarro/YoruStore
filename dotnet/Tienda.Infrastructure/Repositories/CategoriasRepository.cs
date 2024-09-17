@@ -76,7 +76,9 @@ public class CategoriasRepository : ICategoriasRepository, IDisposable
     ///<inheritdoc/>
     public async Task<IEnumerable<Categoria>> GetAll()
     {
-        return await this._context.Categorias.ToListAsync();
+        return await this._context.Categorias
+            .OrderBy(categoria => categoria.Nombre)
+            .ToListAsync();
     }
 
     ///<inheritdoc/>

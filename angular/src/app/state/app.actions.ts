@@ -2,6 +2,15 @@ import { createAction, createActionGroup, props } from "@ngrx/store";
 import { UserProfile } from "../identity/models";
 import { Categoria } from "@root/components/models";
 
+export const InitApp = createAction(
+    '[App] - Init App'
+);
+
+export const categoriesObtained = createAction(
+    '[App] - Categorias obtenidas',
+    props<{categorias: Categoria[]}>()
+)
+
 export const menuButtonClicked = createAction(
     '[Main Toolbar] - Menu button clicked'
 );

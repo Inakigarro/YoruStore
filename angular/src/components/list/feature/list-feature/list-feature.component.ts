@@ -13,7 +13,7 @@ export class ListFeatureComponent {
     public id: string;
 
     @Input()
-    public titulo: string;
+    public titulo: Observable<string>;
 
     @Input()
     public data$: Observable<Item[]>;

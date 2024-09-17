@@ -12,7 +12,7 @@ export class ListUiComponent {
     public id: string;
 
     @Input()
-    public title: string;
+    public title: Observable<string>;
 
     @Input()
     public data$: Observable<Item[]>;

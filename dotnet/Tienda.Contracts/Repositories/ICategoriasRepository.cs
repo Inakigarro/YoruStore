@@ -35,7 +35,8 @@ public interface ICategoriasRepository
     Task<Categoria> Get(Guid id);
 
     /// <summary>
-    /// Obtiene todas las categorias almacenadas en la base de datos.
+    /// Obtiene todas las categorias almacenadas en la base de datos
+    /// ordenadas alfabeticamente en orden ascendente.
     /// </summary>
     /// <returns>Una lista de categorias.</returns>
     Task<IEnumerable<Categoria>> GetAll();

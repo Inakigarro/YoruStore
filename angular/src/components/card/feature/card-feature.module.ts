@@ -9,7 +9,6 @@ import { CardFeatureComponent } from "./card-feature/card-feature.component";
     imports: [
         CommonModule,
         CardUiModule,
-        StoreModule.forFeature('card-feature', {}),
     ],
     exports: [CardFeatureComponent]
 })

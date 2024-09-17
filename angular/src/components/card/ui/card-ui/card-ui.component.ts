@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Button } from '@components/models';
 import { DetailsButtonClicked, ShoppingCartButtonClicked } from '../../state/card.actions';
 import { Action } from '@ngrx/store';
@@ -10,7 +10,7 @@ import { Action } from '@ngrx/store';
 })
 export class CardUiComponent {
     @Input()
-    public id: string = '';
+    public id: string;
 
     @Input()
     public titulo: string;

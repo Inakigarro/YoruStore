@@ -1,13 +1,11 @@
 import { Component } from '@angular/core';
 import { AppService } from './app.service';
 import { RegisterToolbar } from '@root/components/toolbar/state/toolbar.actions';
-import { menuButtonClicked, profileButtonClicked, searchButtonClicked, SecondaryToolbarActions, shoppingCartButtonClicked, userProfileObtained } from './state/app.actions';
+import { InitApp, menuButtonClicked, profileButtonClicked, searchButtonClicked, shoppingCartButtonClicked, userProfileObtained } from './state/app.actions';
 import { Observable, of } from 'rxjs';
-import { Button, Item, Toolbar } from '@root/components/models';
+import { Item, Toolbar } from '@root/components/models';
 import { UserProfile } from './identity/models';
-
-const MAIN_TOOLBAR_ID = 'app-main-toolbar';
-const SECONDARY_TOOLBAR_ID = 'app-secondary-toolbar';
+import { MAIN_TOOLBAR_ID, SECONDARY_TOOLBAR_ID } from './app-constants';
 
 @Component({
   selector: 'app-root',
@@ -22,68 +20,11 @@ export class AppComponent {
 
   public isAdmin: boolean = true;
 
-  public data$: Observable<Item[]> = of([
-    {
-      id: '1',
-      titulo: 'Medias Negras Vlack',
-      descripcion: 'Unas medias buenisimas para jugar al hockey',
-      precio: 10000
-    },
-    {
-      id: '2',
-      titulo: 'Medias Negras Vlack',
-      descripcion: 'Unas medias buenisimas para jugar al hockey',
-      precio: 10000
-    },
-    {
-      id: '2',
-      titulo: 'Medias Negras Vlack',
-      descripcion: 'Unas medias buenisimas para jugar al hockey',
-      precio: 10000
-    },
-    {
-      id: '2',
-      titulo: 'Medias Negras Vlack',
-      descripcion: 'Unas medias buenisimas para jugar al hockey',
-      precio: 10000
-    },
-    {
-      id: '2',
-      titulo: 'Medias Negras Vlack',
-      descripcion: 'Unas medias buenisimas para jugar al hockey',
-      precio: 10000
-    }, {
-      id: '2',
-      titulo: 'Medias Negras Vlack',
-      descripcion: 'Unas medias buenisimas para jugar al hockey',
-      precio: 10000
-    }])
+  public data$: Observable<Item[]>;
+  public listTitle$: Observable<string>;
 
   constructor(private service: AppService) {
-    this.service
-      .ObtenerCategorias()
-      .subscribe(categorias => {
-        let botonesCategorias: Button[] = [];
-        categorias.forEach(cat => {
-          let button : Button = {
-            type: 'fab',
-            label: cat.nombre,
-            icon: '',
-            action: SecondaryToolbarActions.buttonClicked({categoriaId: cat.id})
-          };
-          botonesCategorias.push(button);
-        });
-        this.service.dispatch(RegisterToolbar({
-          toolbar: {
-            id: SECONDARY_TOOLBAR_ID,
-            secondaryButton: botonesCategorias,
-            toolbarConfig:{
-              isSecondaryToolbar:true,
-              isTitleSeparete: false
-            }
-          }
-        }))
-      });
+    this.service.dispatch(InitApp());
     this.service.dispatch(RegisterToolbar({
       toolbar: {
         id: MAIN_TOOLBAR_ID,
@@ -133,6 +74,7 @@ export class AppComponent {
     this.secondaryToolbar$ = this.service.getToolbarById(SECONDARY_TOOLBAR_ID);
     this.isMenuOpened$ = this.service.isMenuOpened$;
     this.currentUserProfile$ = this.service.currentUserProfile$;
+    this.data$ = this.service.currentCategoryItems$;
+    this.listTitle$ = this.service.currentCategoryName$;
   }
-  title = 'angular';
 }

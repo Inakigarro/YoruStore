@@ -1,5 +1,6 @@
 import { createFeatureSelector, createSelector } from "@ngrx/store";
 import { APP_STATE_KEY, AppState } from "./app.reducer";
+import { filter } from "rxjs";
 
 export const getAppState = createFeatureSelector<AppState>(APP_STATE_KEY);
 
@@ -11,4 +12,19 @@ export const getMenuOpened = createSelector(
 export const getCurrentUserProfile = createSelector(
     getAppState,
     state => state.currentUserProfile
-)
+);
+
+export const getCurrentCategory = createSelector(
+    getAppState,
+    state => state.currentCategory
+);
+
+export const getCurrentCategoryName = createSelector(
+    getCurrentCategory,
+    cat => cat ? cat.nombre : ''
+);
+
+export const getCurrentCategoryItems = createSelector(
+    getCurrentCategory,
+    cat => cat ? cat.items : []
+);

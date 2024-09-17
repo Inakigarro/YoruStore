@@ -1,4 +1,6 @@
-<h2 class="list-title">{{ title }}</h2>
+@if (title | async; as titulo) {
+	<h2 class="list-title">{{ titulo }}</h2>
+}
 @if (data$ | async; as data) {
 	<mat-grid-list
 		grid-cols
@@ -7,12 +9,7 @@
 	>
 		@for (item of data; track $index) {
 			<mat-grid-tile>
-				<app-card-ui
-					[id]="item.id"
-					[titulo]="item.titulo"
-					[descripcion]="item.descripcion"
-					[precio]="item.precio"
-				/>
+				<app-card-feature [item]="item" />
 			</mat-grid-tile>
 		}
 	</mat-grid-list>
