@@ -77,6 +77,24 @@ public class CategoriasController : ControllerBase
         }
     }
 
+    [HttpGet]
+    [Route("ObtenerCategorias")]
+    public async Task<ActionResult> ObtenerCategorias()
+    {
+        try
+        {
+            _logger.LogInformation("Obteniendo todas las categorias");
+            var categorias = await this._categoriaService.GetAll();
+            return Ok(categorias);
+        }
+        catch (Exception ex)
+        {
+            string error = $"Ocurrio un error durante la busqueda de las categorias: {ex.Message} - {ex.StackTrace}";
+            _logger.LogError(error);
+            return BadRequest(error);
+        }
+    }
+
     [HttpDelete]
     [Route("BorrarCategoriaPorId")]
     public async Task<ActionResult> BorrarCategoriaPorId(Guid categoriaId)

@@ -7,3 +7,8 @@ export const getMenuOpened = createSelector(
     getAppState,
     state => state.isMenuOpened
 );
+
+export const getCurrentUserProfile = createSelector(
+    getAppState,
+    state => state.currentUserProfile
+)

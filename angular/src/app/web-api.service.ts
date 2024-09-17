@@ -18,8 +18,12 @@ export class WebApiService {
         return this.http.post<Categoria>(this.categoriasUrl + 'CrearCategoria', crearCategoria);
     }
 
+    public obtenerCategorias() {
+        return this.http.get<Categoria[]>(this.categoriasUrl + 'ObtenerCategorias');
+    }
+
     public obtenerCategoriaById(categoriaId: string): Observable<Categoria> {
-        return this.http.get<Categoria>(this.categoriasUrl + categoriaId);
+        return this.http.get<Categoria>(this.categoriasUrl + 'ObtenerCategoriaPorId?categoriaId=' + categoriaId);
     }
 
     // Example endpoint: POST /api/users

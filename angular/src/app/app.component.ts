@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { AppService } from './app.service';
 import { RegisterToolbar } from '@root/components/toolbar/state/toolbar.actions';
-import { menuButtonClicked, pantsButtonClicked, profileButtonClicked, searchButtonClicked, SecondaryToolbarActions, shoppingCartButtonClicked, tShirtsButtonClicked } from './state/app.actions';
+import { menuButtonClicked, profileButtonClicked, searchButtonClicked, SecondaryToolbarActions, shoppingCartButtonClicked, userProfileObtained } from './state/app.actions';
 import { Observable, of } from 'rxjs';
-import { Item, Toolbar } from '@root/components/models';
+import { Button, Item, Toolbar } from '@root/components/models';
+import { UserProfile } from './identity/models';
 
 const MAIN_TOOLBAR_ID = 'app-main-toolbar';
 const SECONDARY_TOOLBAR_ID = 'app-secondary-toolbar';
@@ -17,6 +18,9 @@ export class AppComponent {
   public mainToolbar$: Observable<Toolbar | undefined>;
   public secondaryToolbar$: Observable<Toolbar | undefined>;
   public isMenuOpened$: Observable<boolean>;
+  public currentUserProfile$: Observable<UserProfile | undefined>;
+
+  public isAdmin: boolean = true;
 
   public data$: Observable<Item[]> = of([
     {
@@ -56,6 +60,30 @@ export class AppComponent {
     }])
 
   constructor(private service: AppService) {
+    this.service
+      .ObtenerCategorias()
+      .subscribe(categorias => {
+        let botonesCategorias: Button[] = [];
+        categorias.forEach(cat => {
+          let button : Button = {
+            type: 'fab',
+            label: cat.nombre,
+            icon: '',
+            action: SecondaryToolbarActions.buttonClicked({categoriaId: cat.id})
+          };
+          botonesCategorias.push(button);
+        });
+        this.service.dispatch(RegisterToolbar({
+          toolbar: {
+            id: SECONDARY_TOOLBAR_ID,
+            secondaryButton: botonesCategorias,
+            toolbarConfig:{
+              isSecondaryToolbar:true,
+              isTitleSeparete: false
+            }
+          }
+        }))
+      });
     this.service.dispatch(RegisterToolbar({
       toolbar: {
         id: MAIN_TOOLBAR_ID,
@@ -92,38 +120,19 @@ export class AppComponent {
         }
       }
     }));
-    this.service.dispatch(RegisterToolbar({
-      toolbar: {
-        id: SECONDARY_TOOLBAR_ID,
-        secondaryButton: [
-          {
-            type: 'fab',
-            label: 'Medias',
-            icon: '',
-            action: SecondaryToolbarActions.buttonClicked({categoria: 'Medias'}),
-          },
-          {
-            type: 'fab',
-            label: 'Pantalones',
-            icon: '',
-            action: SecondaryToolbarActions.buttonClicked({categoria: 'pantalones'}),
-          },
-          {
-            type: 'fab',
-            label: 'Remeras',
-            icon: '',
-            action: SecondaryToolbarActions.buttonClicked({categoria: 'Remeras'}),
-          }
-        ],
-        toolbarConfig:{
-          isSecondaryToolbar:true,
-          isTitleSeparete: false
-        }
+    this.service.dispatch(userProfileObtained({
+      userProfile: {
+        id: '1',
+        loginId: 'Zaky',
+        nombre: 'Iñaki',
+        apellido: 'Garro',
+        email: 'email@email.com'
       }
     }))
     this.mainToolbar$ = this.service.getToolbarById(MAIN_TOOLBAR_ID);
     this.secondaryToolbar$ = this.service.getToolbarById(SECONDARY_TOOLBAR_ID);
     this.isMenuOpened$ = this.service.isMenuOpened$;
+    this.currentUserProfile$ = this.service.currentUserProfile$;
   }
   title = 'angular';
 }

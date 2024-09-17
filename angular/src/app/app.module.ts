@@ -14,6 +14,7 @@ import { appReducer } from "./state/app.reducer";
 import { AppListModule } from "../components/list/list.module";
 import { AppCardModule } from "../components/card/card.module";
 import { provideHttpClient } from "@angular/common/http";
+import { AppEffects } from "./state/app.effects";
 
 @NgModule({
     declarations: [
@@ -28,7 +29,7 @@ import { provideHttpClient } from "@angular/common/http";
         AppListModule,
         AppToolbarModule,
         StoreModule.forRoot({ 'app-state': appReducer }, {}),
-        EffectsModule.forRoot([]),
+        EffectsModule.forRoot(AppEffects),
         StoreRouterConnectingModule.forRoot(),
         StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
     ],

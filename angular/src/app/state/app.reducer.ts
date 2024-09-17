@@ -1,9 +1,13 @@
 import { Action, createReducer, on } from '@ngrx/store';
-import { menuButtonClicked } from './app.actions';
+import { menuButtonClicked, SecondaryToolbarActions, userProfileObtained } from './app.actions';
+import { UserProfile } from '../identity/models';
+import { Categoria } from '@root/components/models';
 
 export const APP_STATE_KEY = 'app-state';
 
 export interface AppState {
+    currentUserProfile?: UserProfile;
+    currentCategory?: Categoria;
     isMenuOpened: boolean
 }
 
@@ -20,6 +24,14 @@ export const appReducer = createReducer(
     on(menuButtonClicked, state => ({
         ...state,
         isMenuOpened: !state.isMenuOpened
+    })),
+    on(userProfileObtained, (state, action) =>({
+        ...state,
+        currentUserProfile: action.userProfile
+    })),
+    on(SecondaryToolbarActions.categoriaCargada, (state, action) => ({
+        ...state,
+        currentCategory: action.categoria
     })),
 );
 
