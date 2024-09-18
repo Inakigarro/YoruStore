@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Button } from '@components/models';
 import { DetailsButtonClicked, ShoppingCartButtonClicked } from '../../state/card.actions';
 import { Action } from '@ngrx/store';
@@ -8,7 +8,7 @@ import { Action } from '@ngrx/store';
     templateUrl: './card-ui.component.html',
     styleUrl: './card-ui.component.scss'
 })
-export class CardUiComponent {
+export class CardUiComponent implements OnInit {
     @Input()
     public id: string;
 
@@ -24,17 +24,22 @@ export class CardUiComponent {
     @Output()
     public actionEmitter = new EventEmitter<Action>();
 
-    public shoppingCartButton: Button = {
-        type: 'raised',
-        label: 'Agregar al carrito',
-        icon: 'shopping_cart',
-        action: ShoppingCartButtonClicked({itemId: this.id})
-    }
+    public shoppingCartButton: Button;
+    public detailsButton: Button;
 
-    public detailsButton: Button = {
-        type: 'basic',
-        label: 'Detalles',
-        icon: '',
-        action: DetailsButtonClicked({itemId: this.id})
+    public ngOnInit(): void {
+        this.shoppingCartButton = {
+            type: 'raised',
+            label: 'Agregar al carrito',
+            icon: 'shopping_cart',
+            action: ShoppingCartButtonClicked({itemId: this.id})
+        };
+
+        this.detailsButton = {
+            type: 'basic',
+            label: 'Detalles',
+            icon: '',
+            action: DetailsButtonClicked({itemId: this.id})
+        }
     }
 }

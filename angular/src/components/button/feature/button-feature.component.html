@@ -1,0 +1,17 @@
+@if (button.type == "shopping") {
+	<app-button
+		[matBadge]="shoppingBadgeCount$ | async"
+		[matBadgeHidden]="badgeHidden"
+		[type]="'icon'"
+		[label]="button.label"
+		[icon]="button.icon"
+		[action]="button.action"
+	/>
+} @else {
+	<app-button
+		[type]="button.type"
+		[label]="button.label"
+		[icon]="button.icon"
+		[action]="button.action"
+	/>
+}

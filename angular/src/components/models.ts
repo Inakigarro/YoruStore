@@ -1,7 +1,7 @@
 import { Action } from "@ngrx/store";
 
 export interface Button {
-    type: 'basic' | 'raised' | 'fab' | 'icon' | 'flat';
+    type: 'basic' | 'raised' | 'fab' | 'icon' | 'flat' | 'shopping';
     label: string;
     icon: string;
     action: Action;

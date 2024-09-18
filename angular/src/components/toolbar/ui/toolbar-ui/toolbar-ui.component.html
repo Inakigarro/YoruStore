@@ -25,11 +25,8 @@
 		}
 		@if (secondaryButtons) {
 			@for (button of secondaryButtons; track $index) {
-				<app-button
-					[type]="button.type"
-					[label]="button.label"
-					[icon]="button.icon"
-					[action]="button.action"
+				<button-feature
+					[button]="button"
 					(actionEmmiter)="this.actionEmitter.emit($event)"
 				/>
 			}
@@ -42,11 +39,8 @@
 	>
 		@if (secondaryButtons) {
 			@for (button of secondaryButtons; track $index) {
-				<app-button
-					[type]="button.type"
-					[label]="button.label"
-					[icon]="button.icon"
-					[action]="button.action"
+				<button-feature
+					[button]="button"
 					(actionEmmiter)="this.actionEmitter.emit($event)"
 				/>
 			}

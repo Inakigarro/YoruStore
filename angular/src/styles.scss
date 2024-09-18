@@ -65,6 +65,7 @@
     --sys-error-fixed-dim:#ffb4ab;
     --sys-on-error-fixed:#3b0907;
     --sys-on-error-fixed-variant:#73342d;
+    --sys-label-small-size: 10px
 }
 
 $dark-theme: mat.define-theme((
@@ -82,7 +83,6 @@ html, body {
 body {
     margin: 0;
     font-family: Roboto, "Helvetica Neue", sans-serif;
-    color:cyan;
     @include mat.all-component-themes($dark-theme);
     @include toolbar.theme($dark-theme);
     @include list.theme($dark-theme);

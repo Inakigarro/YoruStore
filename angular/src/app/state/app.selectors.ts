@@ -14,6 +14,11 @@ export const getCurrentUserProfile = createSelector(
     state => state.currentUserProfile
 );
 
+export const getShoppingCartCount = createSelector(
+    getAppState,
+    state => state.shoppingCartCount
+)
+
 export const getCurrentCategory = createSelector(
     getAppState,
     state => state.currentCategory
