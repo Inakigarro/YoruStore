@@ -4,37 +4,39 @@ import { filter } from "rxjs";
 
 export const getAppState = createFeatureSelector<AppState>(APP_STATE_KEY);
 
+export const getLoading = createSelector(getAppState, (state) => state.loading);
+
 export const getMenuOpened = createSelector(
-    getAppState,
-    state => state.isMenuOpened
+	getAppState,
+	(state) => state.isMenuOpened
 );
 
 export const getShoppingCartOpened = createSelector(
-    getAppState,
-    state => state.isShoppingCartOpened
+	getAppState,
+	(state) => state.isShoppingCartOpened
 );
 
 export const getCurrentUserProfile = createSelector(
-    getAppState,
-    state => state.currentUserProfile
+	getAppState,
+	(state) => state.currentUserProfile
 );
 
 export const getShoppingCartCount = createSelector(
-    getAppState,
-    state => state.shoppingCartCount
-)
+	getAppState,
+	(state) => state.shoppingCartCount
+);
 
 export const getCurrentCategory = createSelector(
-    getAppState,
-    state => state.currentCategory
+	getAppState,
+	(state) => state.currentCategory
 );
 
 export const getCurrentCategoryName = createSelector(
-    getCurrentCategory,
-    cat => cat ? cat.nombre : ''
+	getCurrentCategory,
+	(cat) => (cat ? cat.nombre : "")
 );
 
 export const getCurrentCategoryItems = createSelector(
-    getCurrentCategory,
-    cat => cat ? cat.items : []
+	getCurrentCategory,
+	(cat) => (cat ? cat.items : [])
 );

@@ -17,7 +17,7 @@ import { provideHttpClient } from "@angular/common/http";
 import { AppEffects } from "./state/app.effects";
 import { MatSidenavModule } from "@angular/material/sidenav";
 import { ShoppingCartModule } from "./shopping-cart/shopping-cart.module";
-import { ShoppingCartFeatureModule } from "./shopping-cart/feature/shopping-cart-feature.module";
+import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 
 @NgModule({
 	declarations: [AppComponent],
@@ -31,6 +31,7 @@ import { ShoppingCartFeatureModule } from "./shopping-cart/feature/shopping-cart
 		AppToolbarModule,
 		ShoppingCartModule,
 		MatSidenavModule,
+		MatProgressSpinnerModule,
 		StoreModule.forRoot({ "app-state": appReducer }, {}),
 		EffectsModule.forRoot(AppEffects),
 		StoreRouterConnectingModule.forRoot(),

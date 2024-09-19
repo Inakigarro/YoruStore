@@ -21,11 +21,15 @@
 			<shopping-cart-feature />
 		</mat-drawer>
 		<mat-drawer-content>
-			<list-feature
-				[id]="'app-list'"
-				[titulo]="listTitle$"
-				[data$]="data$"
-			/>
+			@if (loading$ | async) {
+				<mat-spinner [mode]="'indeterminate'"></mat-spinner>
+			} @else {
+				<list-feature
+					[id]="'app-list'"
+					[titulo]="listTitle$"
+					[data$]="data$"
+				/>
+			}
 		</mat-drawer-content>
 	</mat-drawer-container>
 </main>

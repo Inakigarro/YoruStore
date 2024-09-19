@@ -1,30 +1,34 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from "@angular/core";
+import {
+	ChangeDetectionStrategy,
+	Component,
+	EventEmitter,
+	Input,
+	Output,
+} from "@angular/core";
 import { Action } from "@ngrx/store";
-import { BehaviorSubject, filter, map, Observable, Subject } from "rxjs";
 
 @Component({
-    selector: "app-button",
-    templateUrl: "./button.component.html",
-    styleUrl: "./button.component.scss"
+	selector: "app-button",
+	templateUrl: "./button.component.html",
+	styleUrl: "./button.component.scss",
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ButtonComponent
-{
-    public destroy$ = new Subject<void>();
-    @Input()
-    public type: "basic" | "raised" | "icon" | "fab" | "flat" | "shopping";
+export class ButtonComponent {
+	@Input()
+	public type: "basic" | "raised" | "icon" | "fab" | "flat" | "shopping";
 
-    @Input()
-    public label: string;
+	@Input()
+	public label: string;
 
-    @Input()
-    public icon: string;
+	@Input()
+	public icon: string;
 
-    @Input()
-    public action: Action;
+	@Input()
+	public action: Action;
 
-    @Input()
-    public color: 'primary' | 'secondary' | 'tertiary' = 'primary';
+	@Input()
+	public color: "primary" | "secondary" | "tertiary" = "primary";
 
-    @Output()
-    public actionEmmiter = new EventEmitter<Action>();
+	@Output()
+	public actionEmmiter = new EventEmitter<Action>();
 }
