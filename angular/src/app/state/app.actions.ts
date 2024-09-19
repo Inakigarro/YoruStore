@@ -20,6 +20,9 @@ export const searchButtonClicked = createAction(
 export const shoppingCartButtonClicked = createAction(
     '[Main Toolbar] - Shopping cart button clicked'
 );
+export const backdropClicked = createAction(
+    '[Drawer] - Backdrop clicked'
+)
 export const profileButtonClicked = createAction(
     '[Main Toolbar] - Profile button clicked'
 );

@@ -1,8 +1,8 @@
 import { NgModule } from "@angular/core";
-import { CardUiModule } from "./ui/card-ui.module";
+import { CardFeatureModule } from "./feature/card-feature.module";
 
 @NgModule({
-    imports: [CardUiModule],
-    exports: [CardUiModule]
+    imports: [CardFeatureModule],
+    exports: [CardFeatureModule]
 })
 export class AppCardModule {}

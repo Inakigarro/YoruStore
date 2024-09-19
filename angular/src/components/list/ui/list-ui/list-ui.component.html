@@ -9,7 +9,10 @@
 	>
 		@for (item of data; track $index) {
 			<mat-grid-tile>
-				<app-card-feature [item]="item" />
+				<app-card-feature
+					[side]="false"
+					[item]="item"
+				/>
 			</mat-grid-tile>
 		}
 	</mat-grid-list>

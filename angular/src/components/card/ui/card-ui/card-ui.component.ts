@@ -1,45 +1,62 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Button } from '@components/models';
-import { DetailsButtonClicked, ShoppingCartButtonClicked } from '../../state/card.actions';
-import { Action } from '@ngrx/store';
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { Button } from "@components/models";
+import {
+	DetailsButtonClicked,
+	ShoppingCartButtonClicked,
+} from "../../state/card.actions";
+import { Action } from "@ngrx/store";
 
 @Component({
-    selector: 'app-card-ui',
-    templateUrl: './card-ui.component.html',
-    styleUrl: './card-ui.component.scss'
+	selector: "app-card-ui",
+	templateUrl: "./card-ui.component.html",
+	styleUrl: "./card-ui.component.scss",
 })
 export class CardUiComponent implements OnInit {
-    @Input()
-    public id: string;
+	@Input()
+	public side: boolean;
 
-    @Input()
-    public titulo: string;
+	@Input()
+	public id: string;
 
-    @Input()
-    public descripcion: string;
+	@Input()
+	public titulo: string;
 
-    @Input()
-    public precio: number;
+	@Input()
+	public descripcion: string;
 
-    @Output()
-    public actionEmitter = new EventEmitter<Action>();
+	@Input()
+	public precio: number;
 
-    public shoppingCartButton: Button;
-    public detailsButton: Button;
+	@Input()
+	public cantidad: number;
 
-    public ngOnInit(): void {
-        this.shoppingCartButton = {
-            type: 'raised',
-            label: 'Agregar al carrito',
-            icon: 'shopping_cart',
-            action: ShoppingCartButtonClicked({itemId: this.id})
-        };
+	@Output()
+	public actionEmitter = new EventEmitter<Action>();
 
-        this.detailsButton = {
-            type: 'basic',
-            label: 'Detalles',
-            icon: '',
-            action: DetailsButtonClicked({itemId: this.id})
-        }
-    }
+	public shoppingCartButton: Button;
+	public detailsButton: Button;
+
+	public ngOnInit(): void {
+		this.shoppingCartButton = {
+			type: "raised",
+			label: "Agregar al carrito",
+			icon: "shopping_cart",
+			action: ShoppingCartButtonClicked({
+				item: {
+					id: this.id,
+					titulo: this.titulo,
+					descripcion: this.descripcion,
+					precio: this.precio,
+					cantidad: this.cantidad,
+				},
+			}),
+		};
+
+		this.detailsButton = {
+			type: "basic",
+			label: "Detalles",
+			icon: "",
+			action: DetailsButtonClicked({ itemId: this.id }),
+		};
+	}
 }

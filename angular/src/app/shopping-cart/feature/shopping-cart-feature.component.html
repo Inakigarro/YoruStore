@@ -1,0 +1,8 @@
+@if (items$ | async; as items) {
+	@for (item of items; track $index) {
+		<app-card-feature
+			[side]="true"
+			[item]="item"
+		/>
+	}
+}

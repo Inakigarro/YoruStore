@@ -1,5 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from "@angular/core";
-import { Store } from "@ngrx/store";
+import { Action, Store } from "@ngrx/store";
 import { getShoppingCartCount } from "@root/app/state/app.selectors";
 import { Button } from "@root/components/models";
 import { Observable, Subject, takeUntil } from "rxjs";
@@ -25,5 +25,9 @@ export class ButtonFeatureComponent implements OnInit, OnDestroy {
     public ngOnDestroy(): void {
         this.destroy$.next();
         this.destroy$.complete();
+    }
+
+    public dispatch(action: Action) {
+        this.store.dispatch(action);
     }
 }

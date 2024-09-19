@@ -4,13 +4,7 @@
 		class="toolbar"
 	>
 		@if (mainButton) {
-			<app-button
-				[type]="mainButton.type"
-				[label]="mainButton.label"
-				[icon]="mainButton.icon"
-				[action]="mainButton.action"
-				(actionEmmiter)="this.actionEmitter.emit($event)"
-			/>
+			<button-feature [button]="mainButton" />
 		}
 		@if (toolbarConfig.isTitleSeparete) {
 			<span class="spacer"></span>
@@ -25,10 +19,7 @@
 		}
 		@if (secondaryButtons) {
 			@for (button of secondaryButtons; track $index) {
-				<button-feature
-					[button]="button"
-					(actionEmmiter)="this.actionEmitter.emit($event)"
-				/>
+				<button-feature [button]="button" />
 			}
 		}
 	</mat-toolbar>
@@ -39,10 +30,7 @@
 	>
 		@if (secondaryButtons) {
 			@for (button of secondaryButtons; track $index) {
-				<button-feature
-					[button]="button"
-					(actionEmmiter)="this.actionEmitter.emit($event)"
-				/>
+				<button-feature [button]="button" />
 			}
 		}
 	</mat-toolbar>

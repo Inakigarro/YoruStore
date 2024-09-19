@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AppService } from './app.service';
 import { RegisterToolbar } from '@root/components/toolbar/state/toolbar.actions';
-import { InitApp, menuButtonClicked, profileButtonClicked, searchButtonClicked, shoppingCartButtonClicked, userProfileObtained } from './state/app.actions';
+import { backdropClicked, InitApp, menuButtonClicked, profileButtonClicked, searchButtonClicked, shoppingCartButtonClicked, userProfileObtained } from './state/app.actions';
 import { Observable } from 'rxjs';
 import { Item, Toolbar } from '@root/components/models';
 import { UserProfile } from './identity/models';
@@ -16,6 +16,7 @@ export class AppComponent implements OnInit {
   public mainToolbar$: Observable<Toolbar | undefined>;
   public secondaryToolbar$: Observable<Toolbar | undefined>;
   public isMenuOpened$: Observable<boolean>;
+  public isShoppingCartOpened$: Observable<boolean>;
   public currentUserProfile$: Observable<UserProfile | undefined>;
 
   public isAdmin: boolean = true;
@@ -40,6 +41,7 @@ export class AppComponent implements OnInit {
     this.mainToolbar$ = this.service.getToolbarById(MAIN_TOOLBAR_ID);
     this.secondaryToolbar$ = this.service.getToolbarById(SECONDARY_TOOLBAR_ID);
     this.isMenuOpened$ = this.service.isMenuOpened$;
+    this.isShoppingCartOpened$ = this.service.isShoppingCartOpened$
     this.currentUserProfile$ = this.service.currentUserProfile$;
     this.data$ = this.service.currentCategoryItems$;
     this.listTitle$ = this.service.currentCategoryName$;
@@ -79,5 +81,9 @@ export class AppComponent implements OnInit {
         }
       }
     }));
+  }
+
+  public onBackdropClicked() {
+    this.service.dispatch(backdropClicked())
   }
 }

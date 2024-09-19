@@ -11,6 +11,6 @@ import { MatListModule } from "@angular/material/list";
         MatCardModule,
         MatListModule
     ],
-    exports: [],
+    exports: [ShoppingCartUiComponent],
 })
 export class ShoppingCartUiModule {}

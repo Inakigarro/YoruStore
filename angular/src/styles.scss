@@ -3,6 +3,7 @@
 @use './components/list/list-theme.scss' as list;
 @use './components/toolbar/toolbar-theme.scss' as toolbar;
 @use './components/button/button-theme.scss' as button;
+@use './components/card/ui/card-ui-theme.scss' as card;
 
 @include mat.core();
 
@@ -87,4 +88,5 @@ body {
     @include toolbar.theme($dark-theme);
     @include list.theme($dark-theme);
     @include button.theme($dark-theme);
+    @include card.theme($dark-theme);
 }

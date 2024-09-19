@@ -1,7 +1,9 @@
 <app-card-ui
+	[side]="side"
 	[id]="item.id"
 	[titulo]="item.titulo"
 	[descripcion]="item.descripcion"
 	[precio]="item.precio"
+	[cantidad]="item.cantidad"
 	(actionEmitter)="this.dispatch($event)"
 />

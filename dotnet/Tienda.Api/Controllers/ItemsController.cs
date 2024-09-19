@@ -1,11 +1,7 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using System.Linq.Expressions;
-using Tienda.Contracts.Categorias;
 using Tienda.Contracts.Items;
 using Tienda.Contracts.Services;
-using Tienda.Domain;
 
 namespace Tienda.Api.Controllers;
 

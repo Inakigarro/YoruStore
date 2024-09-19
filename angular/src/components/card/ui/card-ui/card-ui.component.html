@@ -1,33 +1,48 @@
-<mat-card>
-	<mat-card-header>
-		<mat-card-title-group class="card-title-group">
+@if (side) {
+	<mat-card class="side-card">
+		<mat-card-header class="side-card-header">
 			<img
 				mat-card-image
 				src="assets\medias\medias-negras-vlack.jpg"
 				alt="medias vlack"
 			/>
-			<mat-card-title>
-				{{ titulo }}
-			</mat-card-title>
-		</mat-card-title-group>
-	</mat-card-header>
-	<mat-card-content>
-		<p>{{ descripcion }}</p>
-	</mat-card-content>
-	<mat-card-actions>
-		<app-button
-			[type]="shoppingCartButton.type"
-			[label]="shoppingCartButton.label"
-			[icon]="shoppingCartButton.icon"
-			[action]="shoppingCartButton.action"
-			(actionEmmiter)="this.actionEmitter.emit($event)"
-		/>
-		<app-button
-			[type]="detailsButton.type"
-			[label]="detailsButton.label"
-			[icon]="detailsButton.icon"
-			[action]="detailsButton.action"
-			(actionEmmiter)="this.actionEmitter.emit($event)"
-		/>
-	</mat-card-actions>
-</mat-card>
+		</mat-card-header>
+		<mat-card-content class="side-card-content">
+			<div class="card-title">
+				<mat-card-title class="side-card-title">{{ titulo }}</mat-card-title>
+				<mat-card-subtitle class="side-card-subtitle">
+					@if (cantidad > 1) {
+						{{ cantidad }} x
+					}
+					{{ precio | currency }}</mat-card-subtitle
+				>
+			</div>
+			{{ descripcion }}
+		</mat-card-content>
+	</mat-card>
+} @else {
+	<mat-card>
+		<mat-card-header>
+			<mat-card-title-group class="card-title-group">
+				<img
+					mat-card-image
+					src="assets\medias\medias-negras-vlack.jpg"
+					alt="medias vlack"
+				/>
+				<mat-card-title>
+					{{ titulo }}
+				</mat-card-title>
+			</mat-card-title-group>
+		</mat-card-header>
+		<mat-card-content>
+			<p>{{ descripcion }}</p>
+		</mat-card-content>
+		<mat-card-footer>
+			<span>{{ precio | currency }}</span>
+		</mat-card-footer>
+		<mat-card-actions>
+			<button-feature [button]="shoppingCartButton" />
+			<button-feature [button]="detailsButton" />
+		</mat-card-actions>
+	</mat-card>
+}

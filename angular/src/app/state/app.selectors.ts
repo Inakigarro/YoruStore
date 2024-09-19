@@ -9,6 +9,11 @@ export const getMenuOpened = createSelector(
     state => state.isMenuOpened
 );
 
+export const getShoppingCartOpened = createSelector(
+    getAppState,
+    state => state.isShoppingCartOpened
+);
+
 export const getCurrentUserProfile = createSelector(
     getAppState,
     state => state.currentUserProfile

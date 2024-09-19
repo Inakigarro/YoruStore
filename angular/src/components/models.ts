@@ -1,38 +1,39 @@
 import { Action } from "@ngrx/store";
 
 export interface Button {
-    type: 'basic' | 'raised' | 'fab' | 'icon' | 'flat' | 'shopping';
-    label: string;
-    icon: string;
-    action: Action;
+	type: "basic" | "raised" | "fab" | "icon" | "flat" | "shopping";
+	label: string;
+	icon: string;
+	action: Action;
 }
 
 export interface Toolbar {
-    id: string;
-    mainButton?: Button;
-    title?: string;
-    secondaryButton?: Button[];
-    toolbarConfig: ToolbarConfig;
+	id: string;
+	mainButton?: Button;
+	title?: string;
+	secondaryButton?: Button[];
+	toolbarConfig: ToolbarConfig;
 }
 
 export interface ToolbarConfig {
-    isTitleSeparete: boolean;
-    isSecondaryToolbar: boolean;
+	isTitleSeparete: boolean;
+	isSecondaryToolbar: boolean;
 }
 
 export interface Item {
-    id: string;
-    titulo: string;
-    descripcion: string;
-    precio: number;
+	id: string;
+	titulo: string;
+	descripcion: string;
+	precio: number;
+	cantidad: number;
 }
 
 export interface CrearCategoria {
-    nombre: string;
+	nombre: string;
 }
 
 export interface Categoria {
-    id: string;
-    nombre: string;
-    items: Item[];
+	id: string;
+	nombre: string;
+	items: Item[];
 }

@@ -1,5 +1,5 @@
 import { Action, createReducer, on } from '@ngrx/store';
-import { categoriesObtained, menuButtonClicked, SecondaryToolbarActions, shoppingCartButtonClicked, userProfileObtained } from './app.actions';
+import { backdropClicked, categoriesObtained, menuButtonClicked, SecondaryToolbarActions, shoppingCartButtonClicked, userProfileObtained } from './app.actions';
 import { UserProfile } from '../identity/models';
 import { Categoria } from '@root/components/models';
 import { ShoppingCartButtonClicked } from '@components/card/state/card.actions';
@@ -11,6 +11,7 @@ export interface AppState {
     currentUserProfile?: UserProfile;
     currentCategory?: Categoria;
     isMenuOpened: boolean;
+    isShoppingCartOpened: boolean;
     shoppingCartCount: number;
 }
 
@@ -21,6 +22,7 @@ export interface AppPartialState {
 const initialState: AppState = {
     categories: [],
     isMenuOpened: true,
+    isShoppingCartOpened: false,
     shoppingCartCount: 0,
 };
 
@@ -41,6 +43,14 @@ export const appReducer = createReducer(
     on(SecondaryToolbarActions.categoriaCargada, (state, action) => ({
         ...state,
         currentCategory: action.categoria
+    })),
+    on(shoppingCartButtonClicked, state => ({
+        ...state,
+        isShoppingCartOpened: !state.isShoppingCartOpened
+    })),
+    on(backdropClicked, state => ({
+        ...state,
+        isShoppingCartOpened: false
     })),
     on(ShoppingCartButtonClicked, state => ({
         ...state,
