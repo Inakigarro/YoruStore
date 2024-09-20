@@ -40,3 +40,8 @@ export const getCurrentCategoryItems = createSelector(
 	getCurrentCategory,
 	(cat) => (cat ? cat.items : [])
 );
+
+export const getCurrentItem = createSelector(
+	getAppState,
+	(state) => state.currentItem
+);

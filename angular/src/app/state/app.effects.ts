@@ -4,12 +4,15 @@ import { Actions, createEffect, ofType } from "@ngrx/effects";
 import {
 	categoriesObtained,
 	InitApp,
+	itemCargado,
 	SecondaryToolbarActions,
 } from "./app.actions";
-import { filter, map, switchMap } from "rxjs";
+import { filter, map, switchMap, tap } from "rxjs";
 import { Button } from "@root/components/models";
 import { RegisterToolbar } from "@root/components/toolbar/state/toolbar.actions";
 import { SECONDARY_TOOLBAR_ID } from "../app-constants";
+import { DetailsButtonClicked } from "@root/components/card/state/card.actions";
+import { NavigationService } from "../navigation.service";
 
 @Injectable()
 export class AppEffects {
@@ -78,8 +81,18 @@ export class AppEffects {
 		)
 	);
 
+	public loadCurrentItem$ = createEffect(() =>
+		this.actions.pipe(
+			ofType(DetailsButtonClicked),
+			switchMap((action) => this.service.ObtenerItemPorId(action.itemId)),
+			tap((action) => this.navigationService.navigate([`${action.id}`], true)),
+			map((item) => itemCargado({ item }))
+		)
+	);
+
 	constructor(
 		private actions: Actions,
-		private readonly service: AppService
+		private readonly service: AppService,
+		private readonly navigationService: NavigationService
 	) {}
 }

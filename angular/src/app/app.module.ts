@@ -7,7 +7,7 @@ import { RouterOutlet } from "@angular/router";
 import { BrowserModule } from "@angular/platform-browser";
 import { StoreModule } from "@ngrx/store";
 import { EffectsModule } from "@ngrx/effects";
-import { StoreRouterConnectingModule } from "@ngrx/router-store";
+import { routerReducer, StoreRouterConnectingModule } from "@ngrx/router-store";
 import { AppToolbarModule } from "@root/components";
 import { StoreDevtoolsModule } from "@ngrx/store-devtools";
 import { appReducer } from "./state/app.reducer";
@@ -18,9 +18,10 @@ import { AppEffects } from "./state/app.effects";
 import { MatSidenavModule } from "@angular/material/sidenav";
 import { ShoppingCartModule } from "./shopping-cart/shopping-cart.module";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
+import { MainComponent } from "./main/main.component";
 
 @NgModule({
-	declarations: [AppComponent],
+	declarations: [AppComponent, MainComponent],
 	imports: [
 		CommonModule,
 		BrowserModule,
@@ -32,9 +33,9 @@ import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 		ShoppingCartModule,
 		MatSidenavModule,
 		MatProgressSpinnerModule,
-		StoreModule.forRoot({ "app-state": appReducer }, {}),
+		StoreModule.forRoot({ routerReducer, "app-state": appReducer }, {}),
 		EffectsModule.forRoot(AppEffects),
-		StoreRouterConnectingModule.forRoot(),
+		StoreRouterConnectingModule.forRoot({ stateKey: "router-reducer" }),
 		StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
 	],
 	bootstrap: [AppComponent],

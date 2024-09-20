@@ -6,6 +6,7 @@ import {
 	getCurrentCategory,
 	getCurrentCategoryItems,
 	getCurrentCategoryName,
+	getCurrentItem,
 	getCurrentUserProfile,
 	getLoading,
 	getMenuOpened,
@@ -15,6 +16,7 @@ import {
 import { WebApiService } from "./web-api.service";
 import { UserProfile } from "./identity/models";
 import { Categoria, Item } from "@root/components/models";
+import { Router } from "@angular/router";
 
 @Injectable({
 	providedIn: "root",
@@ -26,6 +28,7 @@ export class AppService {
 	public currentCategory$: Observable<Categoria | undefined>;
 	public currentCategoryName$: Observable<string>;
 	public currentCategoryItems$: Observable<Item[]>;
+	public currentItem$: Observable<Item | undefined>;
 	public shoppingCartCount$: Observable<number>;
 	public loading$: Observable<boolean>;
 
@@ -39,6 +42,7 @@ export class AppService {
 		this.currentCategory$ = this.store.select(getCurrentCategory);
 		this.currentCategoryName$ = this.store.select(getCurrentCategoryName);
 		this.currentCategoryItems$ = this.store.select(getCurrentCategoryItems);
+		this.currentItem$ = this.store.select(getCurrentItem);
 		this.shoppingCartCount$ = this.store.select(getShoppingCartCount);
 		this.loading$ = this.store.select(getLoading);
 	}
@@ -66,5 +70,9 @@ export class AppService {
 		return this.webApi
 			.obtenerCategoriaById(categoriaId)
 			.pipe(filter((x) => !!x));
+	}
+
+	public ObtenerItemPorId(itemId: string) {
+		return this.webApi.obtenerItemPorId(itemId).pipe(filter((x) => !!x));
 	}
 }

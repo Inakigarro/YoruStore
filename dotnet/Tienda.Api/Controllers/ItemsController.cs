@@ -62,6 +62,24 @@ public class ItemsController : ControllerBase
     }
 
     [HttpGet]
+    [Route("ObtenerItemPorId")]
+    public async Task<ActionResult> ObtenerItemPorId(Guid itemId)
+    {
+        try
+        {
+            _logger.LogInformation($"Obteniendo el item con id: {itemId}");
+            var item = await this._itemsService.Get(itemId);
+            return Ok(item);
+        }
+        catch (Exception ex)
+        {
+            string error = $"Ocurrio un error durante la busqueda del Item. {ex.Message} - {ex.StackTrace}";
+            _logger.LogError(error);
+            return BadRequest(error);
+        }
+    }
+
+    [HttpGet]
     [Route("ObtenerItems")]
     public async Task<ActionResult> ObtenerItems()
     {
