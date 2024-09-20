@@ -62,7 +62,7 @@ export class AppEffects {
 			filter(({ categorias }) => !!categorias),
 			map(({ categorias }) =>
 				SecondaryToolbarActions.buttonClicked({
-					categoriaId: categorias[1].id,
+					categoriaId: categorias[0].id,
 				})
 			)
 		)

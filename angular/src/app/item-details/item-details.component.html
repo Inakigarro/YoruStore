@@ -1,3 +1,9 @@
 @if (item$ | async; as item) {
-	{{ item | json }}
+	<mat-card>
+		<mat-card-header>
+			@if (cardToolbar$ | async; as toolbar) {
+				<toolbar-feature [toolbar]="toolbar" />
+			}
+		</mat-card-header>
+	</mat-card>
 }
