@@ -1,12 +1,16 @@
 import { Component, Input, OnDestroy, OnInit } from "@angular/core";
-import { Item, Toolbar } from "@components/models";
+import { Button, Item, Toolbar } from "@components/models";
 import {
 	ItemDetailsService,
 	DETAILS_CARD_TOOLBAR,
 } from "./item-details.service";
 import { filter, Observable, Subject, takeUntil } from "rxjs";
 import { RegisterToolbar } from "@components/toolbar/state/toolbar.actions";
-import { detailsBackButtonClicked } from "./state/item-details.actions";
+import {
+	detailsAddShoppingCartButtonClicked,
+	detailsBackButtonClicked,
+	detailsBuyButtonClicked,
+} from "./state/item-details.actions";
 
 @Component({
 	selector: "item-details",
@@ -17,38 +21,34 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
 	private destroy$ = new Subject<void>();
 	public item$: Observable<Item | undefined>;
 	public cardToolbar$: Observable<Toolbar | undefined>;
-
+	public backButton: Button = {
+		type: "icon",
+		label: "",
+		icon: "arrow_back",
+		action: detailsBackButtonClicked(),
+	};
+	public buyButton: Button;
+	public addToCartButon: Button;
 	constructor(private service: ItemDetailsService) {}
 
 	public ngOnInit(): void {
 		this.item$ = this.service.currentItem$;
-		this.item$
-			.pipe(
-				takeUntil(this.destroy$),
-				filter((x) => !!x)
-			)
-			.subscribe((item) => {
-				this.service.dispatch(
-					RegisterToolbar({
-						toolbar: {
-							id: DETAILS_CARD_TOOLBAR,
-							mainButton: {
-								type: "icon",
-								icon: "arrow_back",
-								label: "",
-								action: detailsBackButtonClicked(),
-							},
-							title: item.titulo,
-							secondaryButton: [],
-							toolbarConfig: {
-								isTitleSeparete: true,
-								isSecondaryToolbar: false,
-							},
-						},
-					})
-				);
-			});
-		this.cardToolbar$ = this.service.cardToolbar$;
+		this.item$.subscribe((item) => {
+			this.buyButton = {
+				type: "raised",
+				label: "Comprar ahora",
+				icon: "payments",
+				action: detailsBuyButtonClicked({ item: item as Item }),
+			};
+			this.addToCartButon = {
+				type: "basic",
+				label: "Agregar al carrito",
+				icon: "shopping_cart",
+				action: detailsAddShoppingCartButtonClicked({
+					item: item as Item,
+				}),
+			};
+		});
 	}
 
 	public ngOnDestroy(): void {

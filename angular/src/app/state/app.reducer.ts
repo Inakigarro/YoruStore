@@ -14,6 +14,7 @@ import {
 	DetailsButtonClicked,
 	ShoppingCartButtonClicked,
 } from "@components/card/state/card.actions";
+import { detailsAddShoppingCartButtonClicked } from "../item-details/state/item-details.actions";
 
 export const APP_STATE_KEY = "app-state";
 
@@ -73,6 +74,10 @@ export const appReducer = createReducer(
 		isShoppingCartOpened: false,
 	})),
 	on(ShoppingCartButtonClicked, (state) => ({
+		...state,
+		shoppingCartCount: state.shoppingCartCount + 1,
+	})),
+	on(detailsAddShoppingCartButtonClicked, (state) => ({
 		...state,
 		shoppingCartCount: state.shoppingCartCount + 1,
 	})),

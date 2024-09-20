@@ -1,19 +1,25 @@
-@if (title | async; as titulo) {
-	<h2 class="list-title">{{ titulo }}</h2>
-}
-@if (data$ | async; as data) {
-	<mat-grid-list
-		grid-cols
-		gutterSize="5px"
-		rowHeight="465px"
-	>
-		@for (item of data; track $index) {
-			<mat-grid-tile>
-				<app-card-feature
-					[side]="false"
-					[item]="item"
-				/>
-			</mat-grid-tile>
+<mat-card class="list-card">
+	<mat-card-header>
+		@if (title | async; as titulo) {
+			<mat-card-title class="list-title">{{ titulo }}</mat-card-title>
 		}
-	</mat-grid-list>
-}
+	</mat-card-header>
+	<mat-card-content>
+		@if (data$ | async; as data) {
+			<mat-grid-list
+				grid-cols
+				gutterSize="5px"
+				rowHeight="465px"
+			>
+				@for (item of data; track $index) {
+					<mat-grid-tile>
+						<app-card-feature
+							[side]="false"
+							[item]="item"
+						/>
+					</mat-grid-tile>
+				}
+			</mat-grid-list>
+		}
+	</mat-card-content>
+</mat-card>

@@ -2,6 +2,9 @@
 
 @mixin color($theme) {
     $theme-type: mat.get-theme-type($theme);
+    .list-card {
+        background-color: var(--sys-primary-container)
+    }
 }
 
 @mixin theme($theme) {

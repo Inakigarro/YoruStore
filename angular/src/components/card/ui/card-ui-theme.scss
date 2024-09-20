@@ -6,7 +6,7 @@
     }
 
     .side-card {
-        background-color: mat.get-theme-color($theme, secondary, 50);
+        background-color: var(--sys-primary-container);
     }
 }
 

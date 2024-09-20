@@ -9,5 +9,19 @@
 	}
 </header>
 <main>
-	<router-outlet></router-outlet>
+	<mat-drawer-container
+		autosize
+		(backdropClick)="onBackdropClicked()"
+	>
+		<mat-drawer
+			mode="over"
+			[opened]="isShoppingCartOpened$ | async"
+			position="end"
+		>
+			<shopping-cart-feature />
+		</mat-drawer>
+		<mat-drawer-content>
+			<router-outlet></router-outlet>
+		</mat-drawer-content>
+	</mat-drawer-container>
 </main>

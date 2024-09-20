@@ -1,9 +1,27 @@
 @if (item$ | async; as item) {
-	<mat-card>
-		<mat-card-header>
-			@if (cardToolbar$ | async; as toolbar) {
-				<toolbar-feature [toolbar]="toolbar" />
-			}
+	<mat-card class="item-details-card">
+		<mat-card-header class="item-details-card-header">
+			<button-feature [button]="backButton" />
+			<h2>{{ item.titulo }}</h2>
 		</mat-card-header>
+		<mat-card-content class="item-details-card-content">
+			<img
+				mat-card-image
+				src="assets\medias\medias-negras-vlack - grande.webp"
+				alt="medias vlack"
+			/>
+			<div>
+				<p>
+					{{ item.descripcion }}
+				</p>
+				<h3>
+					{{ item.precio | currency }}
+				</h3>
+				<mat-card-actions class="item-details-card-actions">
+					<button-feature [button]="buyButton" />
+					<button-feature [button]="addToCartButon" />
+				</mat-card-actions>
+			</div>
+		</mat-card-content>
 	</mat-card>
 }

@@ -1,23 +1,9 @@
-<mat-drawer-container
-	autosize
-	(backdropClick)="onBackdropClicked()"
->
-	<mat-drawer
-		mode="over"
-		[opened]="isShoppingCartOpened$ | async"
-		position="end"
-	>
-		<shopping-cart-feature />
-	</mat-drawer>
-	<mat-drawer-content>
-		@if (loading$ | async) {
-			<mat-spinner [mode]="'indeterminate'"></mat-spinner>
-		} @else {
-			<list-feature
-				[id]="'app-list'"
-				[titulo]="listTitle$"
-				[data$]="data$"
-			/>
-		}
-	</mat-drawer-content>
-</mat-drawer-container>
+@if (loading$ | async) {
+	<mat-spinner [mode]="'indeterminate'"></mat-spinner>
+} @else {
+	<list-feature
+		[id]="'app-list'"
+		[titulo]="listTitle$"
+		[data$]="data$"
+	/>
+}

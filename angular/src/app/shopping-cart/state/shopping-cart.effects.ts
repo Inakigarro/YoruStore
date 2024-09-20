@@ -5,12 +5,13 @@ import { ShoppingCartButtonClicked } from "@components/card/state/card.actions";
 import { map, withLatestFrom } from "rxjs/operators";
 import { ItemAddedToShoppingCart } from "./shopping-cart.actions";
 import { Item } from "@components/models";
+import { detailsAddShoppingCartButtonClicked } from "@root/app/item-details/state/item-details.actions";
 
 @Injectable()
 export class ShoppingCartEffects {
 	public upsertItem$ = createEffect(() =>
 		this.actions.pipe(
-			ofType(ShoppingCartButtonClicked),
+			ofType(ShoppingCartButtonClicked, detailsAddShoppingCartButtonClicked),
 			withLatestFrom(this.service.items$),
 			map(([action, items]) => {
 				let item = items.find((x) => x.id == action.item.id);

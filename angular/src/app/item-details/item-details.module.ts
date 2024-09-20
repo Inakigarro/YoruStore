@@ -4,7 +4,7 @@ import { CommonModule } from "@angular/common";
 import { MatCardModule } from "@angular/material/card";
 import { ItemDetailsRoutingModule } from "./item-details-routing.module";
 import { AppToolbarModule } from "../../components/toolbar/toolbar.module";
-import { ToolbarFeatureModule } from "../../components/toolbar/feature/toolbar-feature.module";
+import { AppButtonModule } from "../../components/button/button.module";
 
 @NgModule({
 	declarations: [ItemDetailsComponent],
@@ -13,6 +13,7 @@ import { ToolbarFeatureModule } from "../../components/toolbar/feature/toolbar-f
 		MatCardModule,
 		ItemDetailsRoutingModule,
 		AppToolbarModule,
+		AppButtonModule,
 	],
 	exports: [ItemDetailsComponent],
 })

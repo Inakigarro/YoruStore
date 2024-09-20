@@ -1,0 +1,23 @@
+.item-details-card {
+    width: 100%;
+    background-color: var(--sys-primary-container);
+}
+
+.item-details-card-header {
+    background-color: var(--sys-on-primary);
+    align-items: center;
+
+    & h2 {
+        margin-bottom: 0;
+    }
+}
+
+.item-details-card-content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.item-details-card-actions {
+    flex-direction: column;
+}

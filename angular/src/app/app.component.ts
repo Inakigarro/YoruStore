@@ -25,7 +25,7 @@ export class AppComponent implements OnInit {
 	public secondaryToolbar$: Observable<Toolbar | undefined>;
 	public isMenuOpened$: Observable<boolean>;
 	public currentUserProfile$: Observable<UserProfile | undefined>;
-
+	public isShoppingCartOpened$: Observable<boolean>;
 	public isAdmin: boolean = true;
 
 	constructor(private service: AppService) {
@@ -48,6 +48,7 @@ export class AppComponent implements OnInit {
 		this.secondaryToolbar$ = this.service.getToolbarById(SECONDARY_TOOLBAR_ID);
 		this.isMenuOpened$ = this.service.isMenuOpened$;
 		this.currentUserProfile$ = this.service.currentUserProfile$;
+		this.isShoppingCartOpened$ = this.service.isShoppingCartOpened$;
 		this.service.dispatch(
 			RegisterToolbar({
 				toolbar: {
@@ -86,5 +87,9 @@ export class AppComponent implements OnInit {
 				},
 			})
 		);
+	}
+
+	public onBackdropClicked() {
+		this.service.dispatch(backdropClicked());
 	}
 }
