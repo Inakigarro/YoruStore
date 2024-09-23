@@ -4,11 +4,10 @@ import { RegisterToolbar } from "@root/components/toolbar/state/toolbar.actions"
 import {
 	backdropClicked,
 	InitApp,
-	menuButtonClicked,
 	profileButtonClicked,
 	searchButtonClicked,
-	shoppingCartButtonClicked,
 	userProfileObtained,
+	MainToolbarActions,
 } from "./state/app.actions";
 import { Observable } from "rxjs";
 import { Item, Toolbar } from "@root/components/models";
@@ -57,7 +56,7 @@ export class AppComponent implements OnInit {
 						type: "icon",
 						icon: "menu",
 						label: "",
-						action: menuButtonClicked(),
+						action: MainToolbarActions.menuButtonClicked(),
 					},
 					title: "Yoru Store",
 					secondaryButton: [
@@ -71,7 +70,7 @@ export class AppComponent implements OnInit {
 							type: "shopping",
 							icon: "shopping_cart",
 							label: "",
-							action: shoppingCartButtonClicked(),
+							action: MainToolbarActions.shoppingCartButtonClicked(),
 						},
 						{
 							type: "icon",

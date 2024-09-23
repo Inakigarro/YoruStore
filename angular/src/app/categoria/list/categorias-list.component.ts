@@ -1,17 +1,17 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
-import { MediasService } from "../medias.service";
+import { CategoriasService } from "../categorias.service";
 import { Observable, Subject } from "rxjs";
 import { Item } from "@root/components/models";
 
 @Component({
-	selector: "medias-list",
-	templateUrl: "./medias-list.component.html",
+	selector: "categorias-list",
+	templateUrl: "./categorias-list.component.html",
 })
-export class MediasListComponent implements OnInit, OnDestroy {
+export class CategoriasListComponent implements OnInit, OnDestroy {
 	private destroy$ = new Subject<void>();
 	public listTitle$: Observable<string>;
 	public listData$: Observable<Item[]>;
-	constructor(private service: MediasService) {}
+	constructor(private service: CategoriasService) {}
 
 	public ngOnInit(): void {
 		this.listData$ = this.service.data$;

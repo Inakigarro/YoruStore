@@ -4,4 +4,4 @@ import { Component } from "@angular/core";
 	selector: "medias-routing",
 	template: `<router-outlet></router-outlet>`,
 })
-export class MediasRoutingComponent {}
+export class CategoriasRoutingComponent {}

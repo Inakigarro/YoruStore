@@ -11,7 +11,12 @@ export const routes: Routes = [
 	{
 		path: "medias",
 		loadChildren: () =>
-			import("./medias/medias.module").then((m) => m.MediasModule),
+			import("./categoria/categorias.module").then((m) => m.CategoriasModule),
+	},
+	{
+		path: "pantalones",
+		loadChildren: () =>
+			import("./categoria/categorias.module").then((m) => m.CategoriasModule),
 	},
 ];
 

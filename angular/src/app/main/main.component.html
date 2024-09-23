@@ -1,9 +1,5 @@
 @if (loading$ | async) {
 	<mat-spinner [mode]="'indeterminate'"></mat-spinner>
 } @else {
-	<list-feature
-		[id]="'app-list'"
-		[titulo]="listTitle$"
-		[data$]="data$"
-	/>
+	<categorias-list />
 }

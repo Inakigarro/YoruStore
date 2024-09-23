@@ -3,25 +3,21 @@ import {
 	backdropClicked,
 	categoriesObtained,
 	itemCargado,
-	menuButtonClicked,
 	SecondaryToolbarActions,
-	shoppingCartButtonClicked,
 	userProfileObtained,
+	MainToolbarActions,
 } from "./app.actions";
 import { UserProfile } from "../identity/models";
 import { Categoria, Item } from "@components/models";
-import {
-	DetailsButtonClicked,
-	ShoppingCartButtonClicked,
-} from "@components/card/state/card.actions";
+import { ShoppingCartButtonClicked } from "@components/card/state/card.actions";
 import { detailsAddShoppingCartButtonClicked } from "../item-details/state/item-details.actions";
+import { CategoriesActions } from "../categoria/state/categorias.actions";
 
 export const APP_STATE_KEY = "app-state";
 
 export interface AppState {
 	categories: Categoria[];
 	currentUserProfile?: UserProfile;
-	currentCategory?: Categoria;
 	currentItem?: Item;
 	isMenuOpened: boolean;
 	isShoppingCartOpened: boolean;
@@ -47,7 +43,7 @@ export const appReducer = createReducer(
 		...state,
 		categories: action.categorias,
 	})),
-	on(menuButtonClicked, (state) => ({
+	on(MainToolbarActions.menuButtonClicked, (state) => ({
 		...state,
 		isMenuOpened: !state.isMenuOpened,
 	})),
@@ -55,17 +51,15 @@ export const appReducer = createReducer(
 		...state,
 		currentUserProfile: action.userProfile,
 	})),
-	on(SecondaryToolbarActions.buttonClicked, (state, action) => ({
+	on(SecondaryToolbarActions.categoryButtonClicked, (state) => ({
 		...state,
-		currentCategory: undefined,
 		loading: true,
 	})),
-	on(SecondaryToolbarActions.categoriaCargada, (state, action) => ({
+	on(CategoriesActions.categoriaCargada, (state, action) => ({
 		...state,
-		currentCategory: action.categoria,
 		loading: false,
 	})),
-	on(shoppingCartButtonClicked, (state) => ({
+	on(MainToolbarActions.shoppingCartButtonClicked, (state) => ({
 		...state,
 		isShoppingCartOpened: !state.isShoppingCartOpened,
 	})),

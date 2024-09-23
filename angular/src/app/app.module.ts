@@ -19,6 +19,7 @@ import { MatSidenavModule } from "@angular/material/sidenav";
 import { ShoppingCartModule } from "./shopping-cart/shopping-cart.module";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { MainComponent } from "./main/main.component";
+import { CategoriasModule } from "./categoria/categorias.module";
 
 @NgModule({
 	declarations: [AppComponent, MainComponent],
@@ -33,6 +34,7 @@ import { MainComponent } from "./main/main.component";
 		ShoppingCartModule,
 		MatSidenavModule,
 		MatProgressSpinnerModule,
+		CategoriasModule,
 		StoreModule.forRoot({ routerReducer, "app-state": appReducer }, {}),
 		EffectsModule.forRoot(AppEffects),
 		StoreRouterConnectingModule.forRoot({ stateKey: "router-reducer" }),

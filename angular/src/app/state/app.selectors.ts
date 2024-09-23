@@ -26,21 +26,6 @@ export const getShoppingCartCount = createSelector(
 	(state) => state.shoppingCartCount
 );
 
-export const getCurrentCategory = createSelector(
-	getAppState,
-	(state) => state.currentCategory
-);
-
-export const getCurrentCategoryName = createSelector(
-	getCurrentCategory,
-	(cat) => (cat ? cat.nombre : "")
-);
-
-export const getCurrentCategoryItems = createSelector(
-	getCurrentCategory,
-	(cat) => (cat ? cat.items : [])
-);
-
 export const getCurrentItem = createSelector(
 	getAppState,
 	(state) => state.currentItem

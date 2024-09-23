@@ -1,16 +1,16 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import { MediasListComponent } from "./list/medias-list.component";
-import { MediasRoutingComponent } from "./medias-routing.component";
+import { CategoriasListComponent } from "./list/categorias-list.component";
+import { CategoriasRoutingComponent } from "./categorias-routing.component";
 
 const routes: Routes = [
 	{
 		path: "",
-		component: MediasRoutingComponent,
+		component: CategoriasRoutingComponent,
 		children: [
 			{
 				path: "",
-				component: MediasListComponent,
+				component: CategoriasListComponent,
 			},
 			{
 				path: ":itemId",
@@ -27,4 +27,4 @@ const routes: Routes = [
 	imports: [RouterModule.forChild(routes)],
 	exports: [RouterModule],
 })
-export class MediasRoutingModule {}
+export class CategoriasRoutingModule {}

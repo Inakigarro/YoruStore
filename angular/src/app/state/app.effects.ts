@@ -16,6 +16,7 @@ import { NavigationService } from "../navigation.service";
 import { routerNavigatedAction } from "@ngrx/router-store";
 import { RouterService } from "../router/router.service";
 import { detailsBackButtonClicked } from "../item-details/state/item-details.actions";
+import { CategoriesActions } from "../categoria/state/categorias.actions";
 
 @Injectable()
 export class AppEffects {
@@ -39,7 +40,7 @@ export class AppEffects {
 						type: "fab",
 						label: cat.nombre,
 						icon: "",
-						action: SecondaryToolbarActions.buttonClicked({
+						action: SecondaryToolbarActions.categoryButtonClicked({
 							categoriaId: cat.id,
 						}),
 					};
@@ -64,24 +65,10 @@ export class AppEffects {
 			ofType(categoriesObtained),
 			filter(({ categorias }) => !!categorias),
 			map(({ categorias }) =>
-				SecondaryToolbarActions.buttonClicked({
+				SecondaryToolbarActions.categoryButtonClicked({
 					categoriaId: categorias[0].id,
 				})
 			)
-		)
-	);
-
-	public secondaryButtonClicked$ = createEffect(() =>
-		this.actions.pipe(
-			ofType(SecondaryToolbarActions.buttonClicked),
-			switchMap((action) =>
-				this.service.ObtenerCategoriaPorId(action.categoriaId)
-			),
-			filter((categoria) => !!categoria),
-			map((categoria) => {
-				this.navigationService.navigate([categoria.nombre.toLowerCase()], true);
-				return SecondaryToolbarActions.categoriaCargada({ categoria });
-			})
 		)
 	);
 
