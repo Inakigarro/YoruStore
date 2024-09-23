@@ -78,9 +78,10 @@ export class AppEffects {
 				this.service.ObtenerCategoriaPorId(action.categoriaId)
 			),
 			filter((categoria) => !!categoria),
-			map((categoria) =>
-				SecondaryToolbarActions.categoriaCargada({ categoria })
-			)
+			map((categoria) => {
+				this.navigationService.navigate([categoria.nombre.toLowerCase()], true);
+				return SecondaryToolbarActions.categoriaCargada({ categoria });
+			})
 		)
 	);
 

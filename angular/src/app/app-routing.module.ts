@@ -9,11 +9,9 @@ export const routes: Routes = [
 		component: MainComponent,
 	},
 	{
-		path: ":itemId",
+		path: "medias",
 		loadChildren: () =>
-			import("./item-details/item-details.module").then(
-				(m) => m.ItemDetailsModule
-			),
+			import("./medias/medias.module").then((m) => m.MediasModule),
 	},
 ];
 
