@@ -4,19 +4,15 @@ import { Actions, createEffect, ofType } from "@ngrx/effects";
 import {
 	categoriesObtained,
 	InitApp,
-	itemCargado,
 	SecondaryToolbarActions,
 } from "./app.actions";
-import { filter, map, switchMap, take, tap } from "rxjs";
+import { filter, map, switchMap, tap } from "rxjs";
 import { Button } from "@root/components/models";
 import { RegisterToolbar } from "@root/components/toolbar/state/toolbar.actions";
 import { SECONDARY_TOOLBAR_ID } from "../app-constants";
 import { DetailsButtonClicked } from "@root/components/card/state/card.actions";
 import { NavigationService } from "../navigation.service";
-import { routerNavigatedAction } from "@ngrx/router-store";
 import { RouterService } from "../router/router.service";
-import { detailsBackButtonClicked } from "../item-details/state/item-details.actions";
-import { CategoriesActions } from "../categoria/state/categorias.actions";
 
 @Injectable()
 export class AppEffects {
@@ -72,31 +68,13 @@ export class AppEffects {
 		)
 	);
 
-	public loadCurrentItem$ = createEffect(() =>
-		this.actions.pipe(
-			ofType(DetailsButtonClicked),
-			switchMap((action) => this.service.ObtenerItemPorId(action.itemId)),
-			tap((action) => this.navigationService.navigate([`${action.id}`], true)),
-			map((item) => itemCargado({ item }))
-		)
-	);
-
-	public loadCurrentItemFromNavigation$ = createEffect(() =>
-		this.actions.pipe(
-			ofType(routerNavigatedAction),
-			switchMap(() => this.routerService.routerParams$.pipe(take(1))),
-			filter((params) => !!params["itemId"]),
-			switchMap((params) => this.service.ObtenerItemPorId(params["itemId"])),
-			filter((x) => !!x),
-			map((item) => itemCargado({ item }))
-		)
-	);
-
-	public navigateToHomeFromDetails$ = createEffect(
+	public loadCurrentItem$ = createEffect(
 		() =>
 			this.actions.pipe(
-				ofType(detailsBackButtonClicked),
-				tap(() => this.navigationService.navigate([""]))
+				ofType(DetailsButtonClicked),
+				tap((action) =>
+					this.navigationService.navigate([`${action.itemId}`], true)
+				)
 			),
 		{ dispatch: false }
 	);

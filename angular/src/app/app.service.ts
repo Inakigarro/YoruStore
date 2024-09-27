@@ -61,8 +61,4 @@ export class AppService {
 			.obtenerCategoriaById(categoriaId)
 			.pipe(filter((x) => !!x));
 	}
-
-	public ObtenerItemPorId(itemId: string) {
-		return this.webApi.obtenerItemPorId(itemId).pipe(filter((x) => !!x));
-	}
 }

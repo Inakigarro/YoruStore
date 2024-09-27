@@ -1,16 +1,17 @@
-import { createAction, props } from "@ngrx/store";
+import {
+	createAction,
+	createActionGroup,
+	emptyProps,
+	props,
+} from "@ngrx/store";
 import { Item } from "@root/components/models";
 
-export const detailsBackButtonClicked = createAction(
-	"[DetailsCard] - Back button clicked"
-);
-
-export const detailsBuyButtonClicked = createAction(
-	"[DetailsCard] - Buy button clicked",
-	props<{ item: Item }>()
-);
-
-export const detailsAddShoppingCartButtonClicked = createAction(
-	"[DetailsCard] - Add to shopping cart button clicked",
-	props<{ item: Item }>()
-);
+export const ItemDetailsActions = createActionGroup({
+	source: "Item Details",
+	events: {
+		ItemLoaded: props<{ item: Item }>(),
+		BackButtonClicked: emptyProps,
+		BuyButtonClicked: props<{ item: Item }>(),
+		AddShoppingCartButtonClicked: props<{ item: Item }>(),
+	},
+});

@@ -10,8 +10,8 @@ import {
 import { UserProfile } from "../identity/models";
 import { Categoria, Item } from "@components/models";
 import { ShoppingCartButtonClicked } from "@components/card/state/card.actions";
-import { detailsAddShoppingCartButtonClicked } from "../item-details/state/item-details.actions";
 import { CategoriesActions } from "../categoria/state/categorias.actions";
+import { ItemDetailsActions } from "../item-details/state/item-details.actions";
 
 export const APP_STATE_KEY = "app-state";
 
@@ -67,14 +67,14 @@ export const appReducer = createReducer(
 		...state,
 		isShoppingCartOpened: false,
 	})),
-	on(ShoppingCartButtonClicked, (state) => ({
-		...state,
-		shoppingCartCount: state.shoppingCartCount + 1,
-	})),
-	on(detailsAddShoppingCartButtonClicked, (state) => ({
-		...state,
-		shoppingCartCount: state.shoppingCartCount + 1,
-	})),
+	on(
+		ShoppingCartButtonClicked,
+		ItemDetailsActions.addShoppingCartButtonClicked,
+		(state) => ({
+			...state,
+			shoppingCartCount: state.shoppingCartCount + 1,
+		})
+	),
 	on(itemCargado, (state, action) => ({
 		...state,
 		currentItem: action.item,

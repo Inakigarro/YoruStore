@@ -1,16 +1,8 @@
-import { Component, Input, OnDestroy, OnInit } from "@angular/core";
-import { Button, Item, Toolbar } from "@components/models";
-import {
-	ItemDetailsService,
-	DETAILS_CARD_TOOLBAR,
-} from "./item-details.service";
-import { filter, Observable, Subject, takeUntil } from "rxjs";
-import { RegisterToolbar } from "@components/toolbar/state/toolbar.actions";
-import {
-	detailsAddShoppingCartButtonClicked,
-	detailsBackButtonClicked,
-	detailsBuyButtonClicked,
-} from "./state/item-details.actions";
+import { Component, OnDestroy, OnInit } from "@angular/core";
+import { Button, Item } from "@components/models";
+import { ItemDetailsService } from "./item-details.service";
+import { Observable, Subject } from "rxjs";
+import { ItemDetailsActions } from "./state/item-details.actions";
 
 @Component({
 	selector: "item-details",
@@ -20,12 +12,12 @@ import {
 export class ItemDetailsComponent implements OnInit, OnDestroy {
 	private destroy$ = new Subject<void>();
 	public item$: Observable<Item | undefined>;
-	public cardToolbar$: Observable<Toolbar | undefined>;
+	public loaded$: Observable<boolean>;
 	public backButton: Button = {
 		type: "icon",
 		label: "",
 		icon: "arrow_back",
-		action: detailsBackButtonClicked(),
+		action: ItemDetailsActions.backButtonClicked(),
 	};
 	public buyButton: Button;
 	public addToCartButon: Button;
@@ -33,18 +25,19 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
 
 	public ngOnInit(): void {
 		this.item$ = this.service.currentItem$;
+		this.loaded$ = this.service.loaded$;
 		this.item$.subscribe((item) => {
 			this.buyButton = {
 				type: "raised",
 				label: "Comprar ahora",
 				icon: "payments",
-				action: detailsBuyButtonClicked({ item: item as Item }),
+				action: ItemDetailsActions.buyButtonClicked({ item: item as Item }),
 			};
 			this.addToCartButon = {
 				type: "basic",
 				label: "Agregar al carrito",
 				icon: "shopping_cart",
-				action: detailsAddShoppingCartButtonClicked({
+				action: ItemDetailsActions.addShoppingCartButtonClicked({
 					item: item as Item,
 				}),
 			};

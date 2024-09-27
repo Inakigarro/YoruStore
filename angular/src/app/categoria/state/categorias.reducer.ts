@@ -1,4 +1,4 @@
-import { Categoria } from "@components/models";
+import { Categoria, Item } from "@components/models";
 import { Action, createReducer, on } from "@ngrx/store";
 import { CategoriesActions } from "./categorias.actions";
 import { SecondaryToolbarActions } from "@root/app/state/app.actions";
@@ -6,6 +6,7 @@ import { SecondaryToolbarActions } from "@root/app/state/app.actions";
 export const CATEGORIES_FEATURE_KEY = "categorias";
 export interface CategoriesState {
 	currentCategory?: Categoria;
+	items?: Item[];
 	loaded: boolean;
 }
 export interface CategoriesPartialState {
@@ -19,11 +20,13 @@ export const categoriesReducer = createReducer(
 	on(SecondaryToolbarActions.categoryButtonClicked, (state) => ({
 		...state,
 		currentCategory: undefined,
+		items: undefined,
 		loaded: false,
 	})),
 	on(CategoriesActions.categoriaCargada, (state, action) => ({
 		...state,
 		currentCategory: action.categoria,
+		items: action.categoria.items,
 		loaded: true,
 	}))
 );
