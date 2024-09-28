@@ -1,5 +1,29 @@
-<list-feature
-	[id]="'app-list'"
-	[titulo]="listTitle$"
-	[data$]="listData$"
-/>
+<mat-card class="categoria-card">
+	<mat-card-header class="categoria-header">
+		<mat-card-title>
+			<h2>{{ listTitle$ | async }}</h2>
+		</mat-card-title>
+		<mat-card-subtitle class="card-subtitle">
+			<mat-form-field class="buscar-form-field">
+				<mat-label>Buscar...</mat-label>
+				<input
+					matInput
+					type="search"
+				/>
+			</mat-form-field>
+			<button
+				mat-flat-button
+				(click)="onBuscarButtonClicked()"
+			>
+				<mat-icon>{{ buscarButton.icon }}</mat-icon>
+				<span>{{ buscarButton.label }}</span>
+			</button>
+		</mat-card-subtitle>
+	</mat-card-header>
+	<mat-card-content>
+		<list-feature
+			[id]="'app-list'"
+			[data$]="listData$"
+		/>
+	</mat-card-content>
+</mat-card>

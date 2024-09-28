@@ -11,6 +11,11 @@ import {
 } from "./state/categorias.reducer";
 import { EffectsModule } from "@ngrx/effects";
 import { CategoriesEffects } from "./state/categorias.effects";
+import { MatCardModule } from "@angular/material/card";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatIconModule } from "@angular/material/icon";
+import { MatInputModule } from "@angular/material/input";
+import { MatButtonModule } from "@angular/material/button";
 
 @NgModule({
 	declarations: [CategoriasRoutingComponent, CategoriasListComponent],
@@ -18,6 +23,11 @@ import { CategoriesEffects } from "./state/categorias.effects";
 		CommonModule,
 		CategoriasRoutingModule,
 		AppListModule,
+		MatCardModule,
+		MatIconModule,
+		MatInputModule,
+		MatFormFieldModule,
+		MatButtonModule,
 		StoreModule.forFeature(CATEGORIES_FEATURE_KEY, categoriesReducer),
 		EffectsModule.forFeature(CategoriesEffects),
 	],

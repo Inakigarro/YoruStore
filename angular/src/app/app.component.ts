@@ -61,12 +61,6 @@ export class AppComponent implements OnInit {
 					title: "Yoru Store",
 					secondaryButton: [
 						{
-							type: "basic",
-							icon: "search",
-							label: "Buscar",
-							action: searchButtonClicked(),
-						},
-						{
 							type: "shopping",
 							icon: "shopping_cart",
 							label: "",

@@ -1,0 +1,17 @@
+.categoria-card {
+    background-color: var(--sys-primary-container);
+}
+.categoria-header {
+    width: 100%;
+}
+.card-subtitle {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: start;
+    width: 75vw;
+}
+.buscar-form-field {
+    width: 75%;
+    margin: 0;
+}

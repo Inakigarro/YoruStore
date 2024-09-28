@@ -3,17 +3,14 @@ import { Item } from "@root/components/models";
 import { Observable } from "rxjs";
 
 @Component({
-    selector: 'list-ui',
-    templateUrl: './list-ui.component.html',
-    styleUrl: './list-ui.component.scss',
+	selector: "list-ui",
+	templateUrl: "./list-ui.component.html",
+	styleUrl: "./list-ui.component.scss",
 })
 export class ListUiComponent {
-    @Input()
-    public id: string;
+	@Input()
+	public id: string;
 
-    @Input()
-    public title: Observable<string>;
-
-    @Input()
-    public data$: Observable<Item[]>;
+	@Input()
+	public data$: Observable<Item[]>;
 }
