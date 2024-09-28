@@ -5,15 +5,10 @@ using Tienda.Domain;
 
 namespace Tienda.Infrastructure.Repositories;
 
-public class ItemsRepository : IItemsRepository, IDisposable
+public class ItemsRepository(TiendaDbContext dbContext) : IItemsRepository, IDisposable
 {
-    private readonly TiendaDbContext _dbContext;
+    private readonly TiendaDbContext _dbContext = dbContext;
     private bool _disposed;
-
-    public ItemsRepository(TiendaDbContext dbContext)
-    {
-        _dbContext = dbContext;
-    }
 
     ///<inheritdoc/>
     public async Task<Item> Add(CrearItemDto nuevoItem)

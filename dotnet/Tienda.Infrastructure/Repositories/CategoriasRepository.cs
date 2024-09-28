@@ -5,15 +5,10 @@ using Tienda.Domain;
 
 namespace Tienda.Infrastructure.Repositories;
 
-public class CategoriasRepository : ICategoriasRepository, IDisposable
+public class CategoriasRepository(TiendaDbContext context) : ICategoriasRepository, IDisposable
 {
-    private TiendaDbContext _context;
+    private TiendaDbContext _context = context;
     private bool _disposed;
-
-    public CategoriasRepository(TiendaDbContext context)
-    {
-        this._context = context;
-    }
 
     ///<inheritdoc/>
     public async Task<Categoria> Add(CrearCategoriaDto categoria)

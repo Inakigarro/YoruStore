@@ -7,24 +7,16 @@ using Tienda.Contracts.Services;
 
 namespace Tienda.Infrastructure.Services;
 
-public class ItemsService : IItemsService
+public class ItemsService(
+    IItemsRepository itemsRepository,
+    ICategoriasRepository categoriesRepository,
+    ILogger<ItemsService> logger,
+    IMapper mapper) : IItemsService
 {
-    private readonly IItemsRepository _itemsRepository;
-    private readonly ICategoriasRepository _categoriesRepository;
-    private readonly ILogger<ItemsService> _logger;
-    private readonly IMapper _mapper;
-
-    public ItemsService(
-        IItemsRepository itemsRepository,
-        ICategoriasRepository categoriesRepository,
-        ILogger<ItemsService> logger,
-        IMapper mapper)
-    {
-        _itemsRepository = itemsRepository;
-        _categoriesRepository = categoriesRepository;
-        _logger = logger;
-        _mapper = mapper;
-    }
+    private readonly IItemsRepository _itemsRepository = itemsRepository;
+    private readonly ICategoriasRepository _categoriesRepository = categoriesRepository;
+    private readonly ILogger<ItemsService> _logger = logger;
+    private readonly IMapper _mapper = mapper;
 
     /// <inheritdoc/>
     public async Task<ItemDto> Create(CrearItemDto nuevoItem, Guid categoriaId)

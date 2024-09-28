@@ -7,24 +7,16 @@ namespace Tienda.Api.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class ItemsController : ControllerBase
+public class ItemsController(
+    ICategoriasService categoriasService,
+    IItemsService itemsService,
+    ILogger<ItemsController> logger,
+    IMapper mapper) : ControllerBase
 {
-    private readonly ICategoriasService _categoriasService;
-    private readonly IItemsService _itemsService;
-    private readonly ILogger<ItemsController> _logger;
-    private readonly IMapper _mapper;
-
-    public ItemsController(
-        ICategoriasService categoriasService,
-        IItemsService itemsService,
-        ILogger<ItemsController> logger,
-        IMapper mapper)
-    {
-        _categoriasService = categoriasService;
-        _itemsService = itemsService;
-        _logger = logger;
-        _mapper = mapper;
-    }
+    private readonly ICategoriasService _categoriasService = categoriasService;
+    private readonly IItemsService _itemsService = itemsService;
+    private readonly ILogger<ItemsController> _logger = logger;
+    private readonly IMapper _mapper = mapper;
 
     [HttpPost]
     [Route("AgregarItem")]

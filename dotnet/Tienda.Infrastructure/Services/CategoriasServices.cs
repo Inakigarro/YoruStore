@@ -8,20 +8,14 @@ using Tienda.Domain;
 
 namespace Tienda.Infrastructure.Services;
 
-public class CategoriasServices : ICategoriasService
+public class CategoriasServices(
+    ICategoriasRepository categoriasRepository,
+    ILogger<CategoriasServices> logger,
+    IMapper mapper) : ICategoriasService
 {
-    private readonly ICategoriasRepository _categoriasRepository;
-    private readonly ILogger<CategoriasServices> _logger;
-    private readonly IMapper _mapper;
-    public CategoriasServices(
-        ICategoriasRepository categoriasRepository,
-        ILogger<CategoriasServices> logger,
-        IMapper mapper)
-    {
-        _categoriasRepository = categoriasRepository;
-        _logger = logger;
-        _mapper = mapper;
-    }
+    private readonly ICategoriasRepository _categoriasRepository = categoriasRepository;
+    private readonly ILogger<CategoriasServices> _logger = logger;
+    private readonly IMapper _mapper = mapper;
 
     /// <inheritdoc/>
     public async Task<CategoriaDto> Create(CrearCategoriaDto nuevaCategoria)

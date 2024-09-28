@@ -7,21 +7,14 @@ namespace Tienda.Api.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class CategoriasController : ControllerBase
+public class CategoriasController(
+    ICategoriasService categoriaService,
+    ILogger<CategoriasController> logger,
+    IMapper mapper) : ControllerBase
 {
-    private readonly ICategoriasService _categoriaService;
-    private readonly ILogger<CategoriasController> _logger;
-    private readonly IMapper _mapper;
-
-    public CategoriasController(
-        ICategoriasService categoriaService,
-        ILogger<CategoriasController> logger,
-        IMapper mapper)
-    {
-        _categoriaService = categoriaService;
-        _logger = logger;
-        _mapper = mapper;
-    }
+    private readonly ICategoriasService _categoriaService = categoriaService;
+    private readonly ILogger<CategoriasController> _logger = logger;
+    private readonly IMapper _mapper = mapper;
 
     [HttpPost]
     [Route("CrearCategoria")]

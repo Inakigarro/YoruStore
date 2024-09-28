@@ -1,18 +1,12 @@
 ﻿namespace Tienda.Domain;
 
-public class Categoria
+public class Categoria(Guid id)
 {
-    public Guid Id { get; private set; }
+    public Guid Id { get; private set; } = id;
 
     public string Nombre { get; private set; } = string.Empty;
 
-    public List<Item> Items { get; private set; }
-
-    public Categoria(Guid id)
-    {
-        this.Id = id;
-        this.Items = new List<Item>();
-    }
+    public List<Item> Items { get; private set; } = [];
 
     /// <summary>
     /// Asigna un nombre a la categoria.
@@ -24,7 +18,7 @@ public class Categoria
     {
         if (string.IsNullOrWhiteSpace(nombre))
         {
-            throw new ArgumentNullException("El nombre de la categoria no puede ser nulo ni estar vacio.");
+            throw new ArgumentNullException(nameof(nombre), "El nombre de la categoria no puede ser nulo ni estar vacio.");
         }
         this.Nombre = nombre;
     }
