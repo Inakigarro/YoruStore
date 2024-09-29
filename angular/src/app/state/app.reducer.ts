@@ -12,6 +12,10 @@ import { Categoria, Item } from "@components/models";
 import { ShoppingCartButtonClicked } from "@components/card/state/card.actions";
 import { CategoriesActions } from "../categoria/state/categorias.actions";
 import { ItemDetailsActions } from "../item-details/state/item-details.actions";
+import {
+	CloseButtonClicked,
+	EmptyButtonClicked,
+} from "../shopping-cart/state/shopping-cart.actions";
 
 export const APP_STATE_KEY = "app-state";
 
@@ -63,7 +67,7 @@ export const appReducer = createReducer(
 		...state,
 		isShoppingCartOpened: !state.isShoppingCartOpened,
 	})),
-	on(backdropClicked, (state) => ({
+	on(backdropClicked, CloseButtonClicked, (state) => ({
 		...state,
 		isShoppingCartOpened: false,
 	})),
@@ -75,6 +79,10 @@ export const appReducer = createReducer(
 			shoppingCartCount: state.shoppingCartCount + 1,
 		})
 	),
+	on(EmptyButtonClicked, (state) => ({
+		...state,
+		shoppingCartCount: 0,
+	})),
 	on(itemCargado, (state, action) => ({
 		...state,
 		currentItem: action.item,

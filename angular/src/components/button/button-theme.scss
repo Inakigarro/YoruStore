@@ -11,6 +11,10 @@
         color: black !important;
         background-color: mat.get-theme-color($theme, tertiary, 50);
     }
+    button.flat-button {
+        color: black !important;
+        background-color: mat.get-theme-color($theme, error) !important;
+    }
 }
 
 @mixin theme($theme) {

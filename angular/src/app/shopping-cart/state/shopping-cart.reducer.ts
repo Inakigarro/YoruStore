@@ -1,7 +1,10 @@
 import { createEntityAdapter, EntityAdapter, EntityState } from "@ngrx/entity";
 import { Action, createReducer, on } from "@ngrx/store";
 import { Item } from "@components/models";
-import { ItemAddedToShoppingCart } from "./shopping-cart.actions";
+import {
+	EmptyButtonClicked,
+	ItemAddedToShoppingCart,
+} from "./shopping-cart.actions";
 import { ItemDetailsActions } from "@root/app/item-details/state/item-details.actions";
 
 export const SHOPPING_CART_FEATURE_KEY = "shopping-cart";
@@ -38,9 +41,9 @@ const reducer = createReducer(
 		...ShoppingCartAdapter.upsertOne(action.item, state),
 		total: state.total + action.item.precio,
 	})),
-	on(ItemDetailsActions.addShoppingCartButtonClicked, (state, action) => ({
-		...ShoppingCartAdapter.upsertOne(action.item, state),
-		total: state.total + action.item.precio,
+	on(EmptyButtonClicked, (state) => ({
+		...ShoppingCartAdapter.removeAll(state),
+		total: 0,
 	}))
 );
 

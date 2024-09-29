@@ -4,6 +4,7 @@
 			mat-raised-button
 			class="raised-button"
 			(click)="this.actionEmmiter.emit(this.action)"
+			color="error"
 		>
 			@if (label) {
 				<span>{{ label }}</span>
@@ -16,6 +17,7 @@
 	@case ("flat") {
 		<button
 			mat-flat-button
+			class="flat-button"
 			(click)="this.actionEmmiter.emit(this.action)"
 		>
 			@if (label) {

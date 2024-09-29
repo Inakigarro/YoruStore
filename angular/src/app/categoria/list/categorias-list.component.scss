@@ -1,8 +1,13 @@
 .categoria-card {
+    width: 100dvw;
+    height: 100%;
     background-color: var(--sys-primary-container);
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 .categoria-header {
     width: 100%;
+    box-sizing: border-box;
 }
 .card-subtitle {
     display: flex;
@@ -14,4 +19,8 @@
 .buscar-form-field {
     width: 75%;
     margin: 0;
+}
+.search-button {
+    margin-top: auto;
+    margin-bottom: auto;
 }

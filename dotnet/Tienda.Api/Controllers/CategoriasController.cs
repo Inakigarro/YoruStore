@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Tienda.Contracts.Categorias;
 using Tienda.Contracts.Services;
 
@@ -9,12 +8,10 @@ namespace Tienda.Api.Controllers;
 [Route("[controller]")]
 public class CategoriasController(
     ICategoriasService categoriaService,
-    ILogger<CategoriasController> logger,
-    IMapper mapper) : ControllerBase
+    ILogger<CategoriasController> logger) : ControllerBase
 {
     private readonly ICategoriasService _categoriaService = categoriaService;
     private readonly ILogger<CategoriasController> _logger = logger;
-    private readonly IMapper _mapper = mapper;
 
     [HttpPost]
     [Route("CrearCategoria")]

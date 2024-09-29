@@ -12,11 +12,13 @@
 	<mat-drawer-container
 		autosize
 		(backdropClick)="onBackdropClicked()"
+		style="height: 100%"
 	>
 		<mat-drawer
 			mode="over"
 			[opened]="isShoppingCartOpened$ | async"
 			position="end"
+			class="cart-drawer"
 		>
 			<shopping-cart-feature />
 		</mat-drawer>

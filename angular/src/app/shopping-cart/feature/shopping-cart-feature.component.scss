@@ -1,0 +1,31 @@
+$header-height: 10%;
+$footer-height: 15%;
+$content-height: calc(100% - $header-height - $footer-height);
+mat-card {
+    height: 100%;
+    & mat-card-header {
+        height: $header-height;
+        justify-content: space-between;
+        align-items: center;
+        & h3 {
+            margin: 0;
+        }
+    }
+    & mat-card-content {
+        min-height: $content-height;
+    }
+    & mat-card-footer {
+        height: $footer-height;
+        & p {
+            margin: 0 0.5rem
+        }
+        & mat-card-actions {
+            justify-content: space-evenly;
+        }
+    }
+}
+
+
+
+
+

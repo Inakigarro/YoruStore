@@ -1,8 +1,27 @@
-@if (items$ | async; as items) {
-	@for (item of items; track $index) {
-		<app-card-feature
-			[side]="true"
-			[item]="item"
-		/>
-	}
-}
+<mat-card>
+	<mat-card-header>
+		<h3>Tus Compras</h3>
+		<button-feature [button]="closeButton" />
+	</mat-card-header>
+	<mat-card-content>
+		@if (items$ | async; as items) {
+			<shopping-cart-ui [items]="items" />
+		}
+	</mat-card-content>
+	<mat-card-footer>
+		<p>
+			Monto a pagar:
+			<strong>
+				@if (montoTotal$ | async; as monto) {
+					{{ monto | currency }}
+				} @else {
+					{{ 0 | currency }}
+				}
+			</strong>
+		</p>
+		<mat-card-actions>
+			<button-feature [button]="pagarButton" />
+			<button-feature [button]="vaciarButton" />
+		</mat-card-actions>
+	</mat-card-footer>
+</mat-card>

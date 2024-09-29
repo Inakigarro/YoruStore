@@ -1,1 +1,9 @@
-<h3>EL MONTO TOTAL ES: {{ montoTotal | async }}</h3>
+@for (item of items; track $index) {
+	<app-card-feature
+		[side]="true"
+		[item]="item"
+	/>
+	@if ($index != items.length - 1) {
+		<mat-divider class="card-separator" />
+	}
+}
