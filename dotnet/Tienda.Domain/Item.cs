@@ -1,4 +1,6 @@
-﻿namespace Tienda.Domain;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Tienda.Domain;
 
 public class Item(Guid id)
 {
@@ -9,6 +11,9 @@ public class Item(Guid id)
 	public string Descripcion { get; private set; } = string.Empty;
 
 	public double Precio { get; private set; } = double.NaN;
+
+	public virtual Guid CategoriaId { get; set; }
+	public Categoria Categoria { get; set; } = null!;
 
     public void SetTitulo(string titulo)
 	{

@@ -43,7 +43,7 @@ namespace Tienda.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("CategoriaId")
+                    b.Property<Guid>("CategoriaId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Descripcion")
@@ -66,9 +66,13 @@ namespace Tienda.Infrastructure.Migrations
 
             modelBuilder.Entity("Tienda.Domain.Item", b =>
                 {
-                    b.HasOne("Tienda.Domain.Categoria", null)
+                    b.HasOne("Tienda.Domain.Categoria", "Categoria")
                         .WithMany("Items")
-                        .HasForeignKey("CategoriaId");
+                        .HasForeignKey("CategoriaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Categoria");
                 });
 
             modelBuilder.Entity("Tienda.Domain.Categoria", b =>

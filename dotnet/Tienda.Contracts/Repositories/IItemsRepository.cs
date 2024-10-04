@@ -36,6 +36,15 @@ public interface IItemsRepository
     /// <summary>
     /// Obtiene todos los Items de la base de datos.
     /// </summary>
-    /// <returns></returns>
+    /// <returns>Una lista de Items</returns>
     Task<IEnumerable<Item>> GetAll();
+
+    /// <summary>
+    /// Obtiene todos los items de una categoria.
+    /// </summary>
+    /// <param name="categoriaId">El id de la categoria.</param>
+    /// <param name="take">Cantidad de objetos a pedir.</param>
+    /// <param name="skip">Cantidad de objetos a saltar.</param>
+    /// <returns>Una lista de items filtrados por una categoria.</returns>
+    Task<IEnumerable<Item>> GetAllByCategoriaId(Guid categoriaId, int take, int skip);
 }

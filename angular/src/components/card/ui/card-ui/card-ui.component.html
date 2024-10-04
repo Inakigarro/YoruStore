@@ -30,12 +30,12 @@
 					alt="medias vlack"
 				/>
 				<mat-card-title>
-					{{ titulo }}
+					{{ titulo | elipsis: 20 }}
 				</mat-card-title>
 			</mat-card-title-group>
 		</mat-card-header>
 		<mat-card-content>
-			<p>{{ descripcion }}</p>
+			<p>{{ descripcion | elipsis: 50 }}</p>
 		</mat-card-content>
 		<mat-card-footer>
 			<span>{{ precio | currency }}</span>

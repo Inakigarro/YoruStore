@@ -71,7 +71,18 @@ public class ItemsRepository(TiendaDbContext dbContext) : IItemsRepository, IDis
     ///<inheritdoc/>
     public async Task<IEnumerable<Item>> GetAll()
     {
-        return await this._dbContext.Items.ToListAsync();
+        return await this._dbContext.Items.Include(item => item.Categoria).ToListAsync();
+    }
+
+    public async Task<IEnumerable<Item>> GetAllByCategoriaId(Guid categoriaId, int take, int skip)
+    {
+        var items = await this._dbContext.Items
+            .Include(item => item.Categoria)
+            .Where(item => item.CategoriaId == categoriaId)
+            .Skip(skip)
+            .Take(take)
+            .ToListAsync();
+        return items;
     }
 
     protected virtual void Dispose(bool disposing)

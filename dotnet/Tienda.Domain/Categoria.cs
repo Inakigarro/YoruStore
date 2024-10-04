@@ -35,5 +35,6 @@ public class Categoria(Guid id)
             return;
         }
         this.Items.Add(item);
+        item.Categoria = this;
     }
 }

@@ -78,4 +78,10 @@ public class ItemsService(
         var items = await this._itemsRepository.GetAll();
         return this._mapper.Map<IEnumerable<ItemDto>>(items);
     }
+
+    public async Task<IEnumerable<ItemDto>> GetByCategoriaId(Guid categoriaId, int skip, int take)
+    {
+        var items = await this._itemsRepository.GetAllByCategoriaId(categoriaId, skip, take);
+        return this._mapper.Map<IEnumerable<ItemDto>>(items);
+    }
 }

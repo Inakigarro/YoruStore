@@ -26,4 +26,9 @@ public record ItemDto
     /// Obtiene o asigna el Precio del Item.
     /// </summary>
     public double Precio { get; set; } = double.NaN;
+
+    /// <summary>
+    /// Obtiene o asigna el Id de la Categoria del Item.
+    /// </summary>
+    public Guid CategoriaId { get; set; }
 }
