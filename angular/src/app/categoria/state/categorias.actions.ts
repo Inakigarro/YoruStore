@@ -1,10 +1,13 @@
 import { createActionGroup, emptyProps, props } from "@ngrx/store";
-import { Categoria } from "@components/models";
+import { Categoria, Item } from "@components/models";
 
 export const CategoriesActions = createActionGroup({
 	source: "Categoria",
 	events: {
 		CategoriaCargada: props<{ categoria: Categoria }>(),
-		SearchButtonClicked: emptyProps(),
+		SearchInputKeyUp: props<{ value: string }>(),
+		SearchButtonClicked: props<{ value: string }>(),
+		SearchClearButtonClicked: emptyProps,
+		ItemFiltered: props<{ items: Item[] }>(),
 	},
 });

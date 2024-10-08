@@ -16,9 +16,15 @@ import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatIconModule } from "@angular/material/icon";
 import { MatInputModule } from "@angular/material/input";
 import { MatButtonModule } from "@angular/material/button";
+import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
+import { KeyUpDirective } from "./key-up.directive";
 
 @NgModule({
-	declarations: [CategoriasRoutingComponent, CategoriasListComponent],
+	declarations: [
+		CategoriasRoutingComponent,
+		CategoriasListComponent,
+		KeyUpDirective,
+	],
 	imports: [
 		CommonModule,
 		CategoriasRoutingModule,
@@ -28,6 +34,7 @@ import { MatButtonModule } from "@angular/material/button";
 		MatInputModule,
 		MatFormFieldModule,
 		MatButtonModule,
+		MatProgressSpinnerModule,
 		StoreModule.forFeature(CATEGORIES_FEATURE_KEY, categoriesReducer),
 		EffectsModule.forFeature(CategoriesEffects),
 	],

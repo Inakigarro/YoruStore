@@ -20,11 +20,11 @@ public class ItemsController(
 
     [HttpPost]
     [Route("AgregarItem")]
-    public async Task<IActionResult> AgregarItem(CrearItemDto crearItem, Guid categoriaId)
+    public async Task<IActionResult> AgregarItem(CrearItemDto crearItem, Guid categoriaId, CancellationToken cancellationToken = default)
     {
         try
         {
-            var item = await this._itemsService.Create(crearItem, categoriaId);
+            var item = await this._itemsService.CreateAsync(crearItem, categoriaId, cancellationToken);
             return Ok(item);
         }
         catch (Exception ex)
@@ -37,12 +37,12 @@ public class ItemsController(
 
     [HttpPut]
     [Route("ModificarItem")]
-    public async Task<ActionResult> ModificarItem(ActualizarItemDto item)
+    public async Task<ActionResult> ModificarItem(ActualizarItemDto item, CancellationToken cancellationToken = default)
     {
         try
         {
             _logger.LogInformation($"Actualizando el item con id: {item.Id}");
-            var itemActualizado = await this._itemsService.Update(item);
+            var itemActualizado = await this._itemsService.UpdateAsync(item, cancellationToken);
             return Ok(itemActualizado);
         }
         catch (Exception ex)
@@ -55,12 +55,12 @@ public class ItemsController(
 
     [HttpGet]
     [Route("ObtenerItemPorId")]
-    public async Task<ActionResult> ObtenerItemPorId(Guid itemId)
+    public async Task<ActionResult> ObtenerItemPorId(Guid itemId, CancellationToken cancellationToken = default)
     {
         try
         {
             _logger.LogInformation($"Obteniendo el item con id: {itemId}");
-            var item = await this._itemsService.Get(itemId);
+            var item = await this._itemsService.GetAsync(itemId, cancellationToken);
             return Ok(item);
         }
         catch (Exception ex)
@@ -73,17 +73,35 @@ public class ItemsController(
 
     [HttpGet]
     [Route("ObtenerItems")]
-    public async Task<ActionResult> ObtenerItems()
+    public async Task<ActionResult> ObtenerItems(CancellationToken cancellationToken = default)
     {
         try
         {
             _logger.LogInformation("Obteniendo todos los items.");
-            var categorias = await this._itemsService.GetAll();
-            return Ok(categorias);
+            var items = await this._itemsService.GetAllAsync(cancellationToken);
+            return Ok(items);
         }
         catch (Exception ex)
         {
             string error = $"Ocurrio un error durante la busqueda de todos los items. {ex.Message} - {ex.StackTrace}";
+            _logger.LogError(error);
+            return BadRequest(error);
+        }
+    }
+
+    [HttpGet]
+    [Route("ObtenerItemsPorFiltro")]
+    public async Task<ActionResult> ObtenerItemsPorFiltro(Guid categoriaId, string filter, CancellationToken cancellationToken = default)
+    {
+        try
+        {
+            _logger.LogInformation($"Obteniendo todos los items segun el filtro: {filter}");
+            var items = await this._itemsService.GetByFilterAsync(categoriaId, filter, cancellationToken);
+            return Ok(items);
+        }
+        catch (Exception ex)
+        {
+            string error = $"Ocurrio un error durante de la busqueda de todos los items segun el filtro especificado. {ex.Message} - {ex.StackTrace}";
             _logger.LogError(error);
             return BadRequest(error);
         }

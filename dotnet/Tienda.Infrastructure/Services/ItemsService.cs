@@ -19,10 +19,10 @@ public class ItemsService(
     private readonly IMapper _mapper = mapper;
 
     /// <inheritdoc/>
-    public async Task<ItemDto> Create(CrearItemDto nuevoItem, Guid categoriaId)
+    public async Task<ItemDto> CreateAsync(CrearItemDto nuevoItem, Guid categoriaId, CancellationToken cancellationToken)
     {
         _logger.LogInformation($"Creando un nuevo item con el titulo: {nuevoItem.Titulo}");
-        var item = await this._itemsRepository.Add(nuevoItem);
+        var item = await this._itemsRepository.AddAsync(nuevoItem, cancellationToken);
         var categoria = await this._categoriesRepository.Get(categoriaId);
         if (categoria is null)
         {
@@ -35,36 +35,36 @@ public class ItemsService(
     }
 
     /// <inheritdoc/>
-    public async Task<ItemDto> Update(ActualizarItemDto item)
+    public async Task<ItemDto> UpdateAsync(ActualizarItemDto item, CancellationToken cancellationToken)
     {
-        var itemExistente = await this._itemsRepository.Get(item.Id);
+        var itemExistente = await this._itemsRepository.GetAsync(item.Id, cancellationToken);
         if (itemExistente is null)
         {
             throw new InvalidOperationException($"No existe un item con el Id: {item.Id}");
         }
 
         _logger.LogInformation($"Actualizando el item: {itemExistente}, con la informacion: {item}");
-        var itemActualizado = await this._itemsRepository.Update(item);
+        var itemActualizado = await this._itemsRepository.UpdateAsync(item, cancellationToken);
         return this._mapper.Map<ItemDto>(itemActualizado);
     }
 
     /// <inheritdoc/>
-    public async Task<ItemDto> Delete(Guid itemId)
+    public async Task<ItemDto> DeleteAsync(Guid itemId, CancellationToken cancellationToken)
     {
-        var item = await this._itemsRepository.Get(itemId);
+        var item = await this._itemsRepository.GetAsync(itemId, cancellationToken);
         if (item is null)
         {
             throw new InvalidOperationException($"No existe un item con el Id: {itemId}");
         }
         _logger.LogInformation($"Eliminando el item correspondiente al Id: {itemId}");
-        var itemEliminado = await this._itemsRepository.Delete(itemId);
+        var itemEliminado = await this._itemsRepository.DeleteAsync(itemId, cancellationToken);
         return this._mapper.Map<ItemDto>(itemEliminado);
     }
 
     /// <inheritdoc/>
-    public async Task<ItemDto> Get(Guid itemId)
+    public async Task<ItemDto> GetAsync(Guid itemId, CancellationToken cancellationToken)
     {
-        var item = await this._itemsRepository.Get(itemId);
+        var item = await this._itemsRepository.GetAsync(itemId, cancellationToken);
         if (item is null)
         {
             throw new InvalidOperationException($"No existe un item con el Id: {itemId}");
@@ -73,15 +73,22 @@ public class ItemsService(
         return this._mapper.Map<ItemDto>(item);
     }
 
-    public async Task<IEnumerable<ItemDto>> GetAll()
+    /// <inheritdoc/>
+    public async Task<IEnumerable<ItemDto>> GetByFilterAsync(Guid categoriaId, string filter, CancellationToken cancellationToken)
     {
-        var items = await this._itemsRepository.GetAll();
+        var items = await this._itemsRepository.GetByFilterAsync(categoriaId, filter, cancellationToken);
         return this._mapper.Map<IEnumerable<ItemDto>>(items);
     }
 
-    public async Task<IEnumerable<ItemDto>> GetByCategoriaId(Guid categoriaId, int skip, int take)
+    public async Task<IEnumerable<ItemDto>> GetAllAsync(CancellationToken cancellationToken)
     {
-        var items = await this._itemsRepository.GetAllByCategoriaId(categoriaId, skip, take);
+        var items = await this._itemsRepository.GetAllAsync(cancellationToken);
+        return this._mapper.Map<IEnumerable<ItemDto>>(items);
+    }
+
+    public async Task<IEnumerable<ItemDto>> GetByCategoriaId(Guid categoriaId, int skip, int take, CancellationToken cancellationToken)
+    {
+        var items = await this._itemsRepository.GetAllByCategoriaIdAsync(categoriaId, skip, take, cancellationToken);
         return this._mapper.Map<IEnumerable<ItemDto>>(items);
     }
 }

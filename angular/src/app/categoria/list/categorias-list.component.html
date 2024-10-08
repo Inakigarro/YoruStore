@@ -7,13 +7,26 @@
 			<mat-form-field class="buscar-form-field">
 				<mat-label>Buscar...</mat-label>
 				<input
+					#filterInput
+					key-up
+					[value]="filterInput.value"
 					matInput
-					type="search"
+					type="text"
 				/>
+				@if (filterInput.value) {
+					<button
+						matSuffix
+						mat-icon-button
+						aria-label="Clear"
+						(click)="onClearButtonClicked(filterInput)"
+					>
+						<mat-icon>close</mat-icon>
+					</button>
+				}
 			</mat-form-field>
 			<button
 				mat-flat-button
-				(click)="onBuscarButtonClicked()"
+				(click)="onBuscarButtonClicked(filterInput.value)"
 				class="search-button"
 			>
 				<mat-icon>{{ buscarButton.icon }}</mat-icon>
@@ -22,9 +35,13 @@
 		</mat-card-subtitle>
 	</mat-card-header>
 	<mat-card-content>
-		<list-feature
-			[id]="'app-list'"
-			[data$]="listData$"
-		/>
+		@if (loaded$ | async) {
+			<list-feature
+				[id]="'app-list'"
+				[data$]="listData$"
+			/>
+		} @else {
+			<mat-spinner />
+		}
 	</mat-card-content>
 </mat-card>

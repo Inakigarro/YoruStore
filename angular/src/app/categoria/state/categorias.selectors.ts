@@ -5,6 +5,11 @@ export const getCategoriesState = createFeatureSelector<CategoriesState>(
 	CATEGORIES_FEATURE_KEY
 );
 
+export const getLoaded = createSelector(
+	getCategoriesState,
+	(state) => state.loaded
+);
+
 export const getCurrentCategory = createSelector(
 	getCategoriesState,
 	(state) => state.currentCategory
@@ -18,4 +23,9 @@ export const getCurrentCategoryName = createSelector(
 export const getCurrentCategoryItems = createSelector(
 	getCurrentCategory,
 	(cat) => (cat ? cat.items : [])
+);
+
+export const getCurrentItems = createSelector(
+	getCategoriesState,
+	(state) => state.items ?? []
 );

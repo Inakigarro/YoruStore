@@ -44,7 +44,7 @@ public class ItemsRepositoryUnitTests
         };
 
         // Act.
-        var item = await repository.Add(nuevoItem);
+        var item = await repository.AddAsync(nuevoItem, default);
 
         // Assert.
         Assert.That(item, Is.Not.Null);
@@ -67,7 +67,7 @@ public class ItemsRepositoryUnitTests
             Precio = 1000,
         };
 
-        var nuevoItem = await repository.Add(item);
+        var nuevoItem = await repository.AddAsync(item, default);
 
         Assert.That(nuevoItem, Is.Not.Null);
 
@@ -80,7 +80,7 @@ public class ItemsRepositoryUnitTests
         };
 
         // Act.
-        Item itemActualizado = await repository.Update(itemAModificar);
+        Item itemActualizado = await repository.UpdateAsync(itemAModificar, default);
 
         // Assert.
         Assert.That(itemActualizado, Is.Not.Null);

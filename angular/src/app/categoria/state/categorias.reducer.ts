@@ -28,6 +28,24 @@ export const categoriesReducer = createReducer(
 		currentCategory: action.categoria,
 		items: action.categoria.items,
 		loaded: true,
+	})),
+	on(CategoriesActions.searchButtonClicked, (state) => ({
+		...state,
+		loaded: false,
+		items: [],
+	})),
+	on(CategoriesActions.searchInputKeyUp, (state, action) => ({
+		...state,
+		items: state.currentCategory?.items.filter(
+			(item) =>
+				item.titulo.includes(action.value) ||
+				item.descripcion.includes(action.value)
+		),
+	})),
+	on(CategoriesActions.itemFiltered, (state, action) => ({
+		...state,
+		items: action.items,
+		loaded: true,
 	}))
 );
 export function reducer(state: CategoriesState, action: Action) {

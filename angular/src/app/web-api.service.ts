@@ -37,4 +37,15 @@ export class WebApiService {
 			this.itemsUrl + "ObtenerItemPorId?itemId=" + itemId
 		);
 	}
+
+	public obtenerItemsPorFiltro(categoriaId: string, filter: string) {
+		return this.http.get<Item[]>(
+			this.itemsUrl +
+				"ObtenerItemsPorFiltro" +
+				"?categoriaId=" +
+				categoriaId +
+				"&filter=" +
+				filter
+		);
+	}
 }

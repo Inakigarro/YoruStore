@@ -1,4 +1,6 @@
-<list-ui
-	[id]="id"
-	[data$]="data$"
-/>
+@if (data$ | async) {
+	<list-ui
+		[id]="id"
+		[data$]="data$"
+	/>
+}

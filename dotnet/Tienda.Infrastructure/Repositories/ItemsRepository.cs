@@ -11,23 +11,23 @@ public class ItemsRepository(TiendaDbContext dbContext) : IItemsRepository, IDis
     private bool _disposed;
 
     ///<inheritdoc/>
-    public async Task<Item> Add(CrearItemDto nuevoItem)
+    public async Task<Item> AddAsync(CrearItemDto nuevoItem, CancellationToken cancellationToken)
     {
         Item item = new Item(Guid.NewGuid());
         item.SetTitulo(nuevoItem.Titulo);
         item.SetDescripcion(nuevoItem.Descripcion);
         item.SetPrecio(nuevoItem.Precio);
 
-        await this._dbContext.Items.AddAsync(item);
-        await this._dbContext.SaveChangesAsync();
+        await this._dbContext.Items.AddAsync(item, cancellationToken);
+        await this._dbContext.SaveChangesAsync(cancellationToken);
 
         return item;
     }
 
     ///<inheritdoc/>
-    public async Task<Item> Update(ActualizarItemDto item)
+    public async Task<Item> UpdateAsync(ActualizarItemDto item, CancellationToken cancellationToken)
     {
-        Item? itemExistente = await this._dbContext.Items.FindAsync(item.Id);
+        Item? itemExistente = await this._dbContext.Items.FindAsync(item.Id, cancellationToken);
         if (itemExistente is null)
         {
             throw new ArgumentException("No existe un item con el Id ingresado.", nameof(item.Id));
@@ -38,28 +38,28 @@ public class ItemsRepository(TiendaDbContext dbContext) : IItemsRepository, IDis
         itemExistente.SetPrecio(item.Precio);
         this._dbContext.Items.Attach(itemExistente);
         this._dbContext.Entry(itemExistente).State = EntityState.Modified;
-        await this._dbContext.SaveChangesAsync();
+        await this._dbContext.SaveChangesAsync(cancellationToken);
         return itemExistente;
     }
 
     ///<inheritdoc/>
-    public async Task<Item> Delete(Guid itemId)
+    public async Task<Item> DeleteAsync(Guid itemId, CancellationToken cancellationToken)
     {
-        Item? itemExistente = await this._dbContext.Items.FindAsync(itemId);
+        Item? itemExistente = await this._dbContext.Items.FindAsync(itemId, cancellationToken);
         if (itemExistente is null)
         {
             throw new ArgumentException("No existe un item con el Id proveido", nameof(itemId));
         }
 
         this._dbContext.Remove(itemExistente);
-        await this._dbContext.SaveChangesAsync();
+        await this._dbContext.SaveChangesAsync(cancellationToken);
         return itemExistente;
     }
 
-    ///<inheritdoc/>
-    public async Task<Item> Get(Guid itemId)
+    /// <inheritdoc/>
+    public async Task<Item> GetAsync(Guid itemId, CancellationToken cancellationToken)
     {
-        Item? item = await this._dbContext.Items.FindAsync(itemId);
+        Item? item = await this._dbContext.Items.FindAsync(itemId, cancellationToken);
         if (item is null)
         {
             throw new ArgumentException("No existe un item con el Id proveido", nameof(itemId));
@@ -68,20 +68,31 @@ public class ItemsRepository(TiendaDbContext dbContext) : IItemsRepository, IDis
         return item;
     }
 
-    ///<inheritdoc/>
-    public async Task<IEnumerable<Item>> GetAll()
+    /// <inheritdoc />
+    public async Task<IEnumerable<Item>> GetByFilterAsync(Guid categoriaId, string filter, CancellationToken cancellationToken)
     {
-        return await this._dbContext.Items.Include(item => item.Categoria).ToListAsync();
+        var items = await this._dbContext.Items
+            .Include(item => item.Categoria)
+            .Where(item => item.CategoriaId == categoriaId)
+            .Where(item => item.Titulo.Contains(filter) || item.Descripcion.Contains(filter))
+            .ToListAsync(cancellationToken);
+        return items;
     }
 
-    public async Task<IEnumerable<Item>> GetAllByCategoriaId(Guid categoriaId, int take, int skip)
+    /// <inheritdoc />
+    public async Task<IEnumerable<Item>> GetAllAsync(CancellationToken cancellationToken)
+    {
+        return await this._dbContext.Items.Include(item => item.Categoria).ToListAsync(cancellationToken);
+    }
+
+    public async Task<IEnumerable<Item>> GetAllByCategoriaIdAsync(Guid categoriaId, int take, int skip, CancellationToken cancellationToken)
     {
         var items = await this._dbContext.Items
             .Include(item => item.Categoria)
             .Where(item => item.CategoriaId == categoriaId)
             .Skip(skip)
             .Take(take)
-            .ToListAsync();
+            .ToListAsync(cancellationToken);
         return items;
     }
 
