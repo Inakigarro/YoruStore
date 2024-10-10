@@ -20,11 +20,11 @@ public class ItemsController(
 
     [HttpPost]
     [Route("AgregarItem")]
-    public async Task<IActionResult> AgregarItem(CrearItemDto crearItem, Guid categoriaId, CancellationToken cancellationToken = default)
+    public async Task<IActionResult> AgregarItem(CrearItemDto crearItem, CancellationToken cancellationToken = default, Guid? categoriaId = default, string? categoriaNombre = default)
     {
         try
         {
-            var item = await this._itemsService.CreateAsync(crearItem, categoriaId, cancellationToken);
+            var item = await this._itemsService.CreateAsync(crearItem, cancellationToken, categoriaId, categoriaNombre);
             return Ok(item);
         }
         catch (Exception ex)

@@ -10,14 +10,14 @@ public interface ICategoriasService
     /// </summary>
     /// <param name="nuevaCategoria">La categoria a crear.</param>
     /// <returns>Un dto que representa la nueva categoria.</returns>
-    Task<CategoriaDto> Create(CrearCategoriaDto nuevaCategoria);
+    Task<CategoriaDto> CreateAsync(CrearCategoriaDto nuevaCategoria, CancellationToken cancellationToken);
 
     /// <summary>
     /// Actualiza una categoria existente.
     /// </summary>
     /// <param name="categoria">La categoria a actualizar.</param>
     /// <returns>Un dto que representa la categoria actualizada.</returns>
-    Task<CategoriaDto> Update(ActualizarCategoriaDto categoria);
+    Task<CategoriaDto> UpdateAsync(ActualizarCategoriaDto categoria, CancellationToken cancellationToken);
 
     /// <summary>
     /// Agrega un item a la categoria correspondiente al Id proveido.
@@ -25,25 +25,25 @@ public interface ICategoriasService
     /// <param name="categoriaId">El Id de la categoria.</param>
     /// <param name="item">El item a agregar.</param>
     /// <returns>Un dto que representa la categoria actualizada.</returns>
-    Task<CategoriaDto> AddItem(Guid categoriaId, ItemDto item);
+    Task<CategoriaDto> AddItemAsync(Guid categoriaId, ItemDto item, CancellationToken cancellationToken);
 
     /// <summary>
     /// Elimina la categoria correspondiente al Id.
     /// </summary>
     /// <param name="categoriaId">El Id de la categoria a eliminar.</param>
     /// <returns>Un dto que representa la categoria eliminada.</returns>
-    Task<CategoriaDto> Delete(Guid categoriaId);
+    Task<CategoriaDto> DeleteAsync(Guid categoriaId, CancellationToken cancellationToken);
 
     /// <summary>
     /// Obtiene la categoria correspondiente al Id.
     /// </summary>
     /// <param name="categoriaId">El Id de la categoria a buscar.</param>
     /// <returns>Un dto que representa la categoria encontrada.</returns>
-    Task<CategoriaDto> Get(Guid categoriaId);
+    Task<CategoriaDto> GetAsync(Guid categoriaId, CancellationToken cancellationToken);
 
     /// <summary>
     /// Obtiene todas las categorias.
     /// </summary>
     /// <returns>Una lista de dtos que representan las categorias actuales.</returns>
-    Task<IEnumerable<CategoriaDto>> GetAll();
+    Task<IEnumerable<CategoriaDto>> GetAllAsync(CancellationToken cancellationToken);
 }
