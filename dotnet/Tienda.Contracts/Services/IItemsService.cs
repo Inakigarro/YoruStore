@@ -9,8 +9,9 @@ public interface IItemsService
     /// </summary>
     /// <param name="nuevoItem">El item a crear.</param>
     /// <param name="categoriaId">El id de la categoria a agregar el item.</param>
+    /// <param name="categoriaNombre">El nombre de la categoria a agregar el item.</param>
     /// <returns>Un dto que representa el item completamente creado.</returns>
-    Task<ItemDto> CreateAsync(CrearItemDto nuevoItem, Guid categoriaId, CancellationToken cancellationToken);
+    Task<ItemDto> CreateAsync(CrearItemDto nuevoItem, CancellationToken cancellationToken, Guid? categoriaId = default, string? categoriaNombre = default);
 
     /// <summary>
     /// Actualiza un item existente.

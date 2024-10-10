@@ -19,18 +19,25 @@ public class ItemsService(
     private readonly IMapper _mapper = mapper;
 
     /// <inheritdoc/>
-    public async Task<ItemDto> CreateAsync(CrearItemDto nuevoItem, Guid categoriaId, CancellationToken cancellationToken)
+    public async Task<ItemDto> CreateAsync(CrearItemDto nuevoItem, CancellationToken cancellationToken, Guid? categoriaId = default, string? categoriaNombre = default)
     {
         _logger.LogInformation($"Creando un nuevo item con el titulo: {nuevoItem.Titulo}");
-        var item = await this._itemsRepository.AddAsync(nuevoItem, cancellationToken);
-        var categoria = await this._categoriesRepository.Get(categoriaId);
+        var categoria = categoriaId != default && categoriaId != Guid.Empty
+            ? await this._categoriesRepository.GetByIdAsync(categoriaId.Value, cancellationToken)
+            : categoriaNombre != default && !string.IsNullOrWhiteSpace(categoriaNombre)
+                ? await this._categoriesRepository.GetByNombreAsync(categoriaNombre, cancellationToken)
+                : throw new ArgumentNullException("Se necesita un Id o un Nombre para buscar la categoria en la que se agregara el item.");
+
         if (categoria is null)
         {
             throw new InvalidOperationException($"No existe una categoria con el Id: {categoriaId}");
         }
+
+        var item = await this._itemsRepository.AddAsync(nuevoItem, cancellationToken);
         categoria.AddItem(item);
         ActualizarCategoriaDto categoriaDto = this._mapper.Map<ActualizarCategoriaDto>(categoria);
-        await this._categoriesRepository.Update(categoriaDto);
+        await this._categoriesRepository.UpdateAsync(categoriaDto, cancellationToken);
+        await this._itemsRepository.SaveChangesAsync(cancellationToken);
         return this._mapper.Map<ItemDto>(item);
     }
 

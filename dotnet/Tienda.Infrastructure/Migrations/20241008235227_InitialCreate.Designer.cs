@@ -12,7 +12,7 @@ using Tienda.Infrastructure;
 namespace Tienda.Infrastructure.Migrations
 {
     [DbContext(typeof(TiendaDbContext))]
-    [Migration("20240911204536_InitialCreate")]
+    [Migration("20241008235227_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -20,7 +20,7 @@ namespace Tienda.Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.8")
+                .HasAnnotation("ProductVersion", "8.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -33,9 +33,12 @@ namespace Tienda.Infrastructure.Migrations
 
                     b.Property<string>("Nombre")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Nombre")
+                        .IsUnique();
 
                     b.ToTable("Categorias");
                 });
@@ -46,7 +49,7 @@ namespace Tienda.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("CategoriaId")
+                    b.Property<Guid>("CategoriaId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Descripcion")
@@ -69,9 +72,13 @@ namespace Tienda.Infrastructure.Migrations
 
             modelBuilder.Entity("Tienda.Domain.Item", b =>
                 {
-                    b.HasOne("Tienda.Domain.Categoria", null)
+                    b.HasOne("Tienda.Domain.Categoria", "Categoria")
                         .WithMany("Items")
-                        .HasForeignKey("CategoriaId");
+                        .HasForeignKey("CategoriaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Categoria");
                 });
 
             modelBuilder.Entity("Tienda.Domain.Categoria", b =>

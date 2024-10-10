@@ -58,4 +58,10 @@ public interface IItemsRepository
     /// <param name="skip">Cantidad de objetos a saltar.</param>
     /// <returns>Una lista de items filtrados por una categoria.</returns>
     Task<IEnumerable<Item>> GetAllByCategoriaIdAsync(Guid categoriaId, int take, int skip, CancellationToken cancellationToken);
+
+    /// <summary>
+    /// Guarda todos los cambios realizados en la base de datos.
+    /// </summary>
+    /// <returns></returns>
+    Task SaveChangesAsync(CancellationToken cancellationToken);
 }

@@ -9,7 +9,8 @@ public class CategoriaEntityTypeConfiguration: IEntityTypeConfiguration<Categori
     public void Configure(EntityTypeBuilder<Categoria> builder)
     {
         builder.HasKey(x => x.Id);
-
+        builder.HasIndex(x => x.Nombre).IsUnique();
+        
         builder.Property(x => x.Nombre)
             .IsRequired();
 

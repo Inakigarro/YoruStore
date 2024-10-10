@@ -15,12 +15,12 @@ public class CategoriasController(
 
     [HttpPost]
     [Route("CrearCategoria")]
-    public async Task<ActionResult> CrearCategoria(CrearCategoriaDto nuevaCategoria)
+    public async Task<ActionResult> CrearCategoria(CrearCategoriaDto nuevaCategoria, CancellationToken cancellationToken = default)
     {
         try
         {
             _logger.LogInformation($"Creando una categoria con el nombre: {nuevaCategoria.Nombre}");
-            var categoriaCreada = await this._categoriaService.Create(nuevaCategoria);
+            var categoriaCreada = await this._categoriaService.CreateAsync(nuevaCategoria, cancellationToken);
             return Ok(categoriaCreada);
         }
         catch (Exception ex)
@@ -33,12 +33,12 @@ public class CategoriasController(
 
     [HttpPut]
     [Route("ActualizarCategoria")]
-    public async Task<ActionResult> ActualizarCategoria(ActualizarCategoriaDto actualizarCategoria)
+    public async Task<ActionResult> ActualizarCategoria(ActualizarCategoriaDto actualizarCategoria, CancellationToken cancellationToken = default)
     {
         try
         {
             _logger.LogInformation($"Actualizando una categoria con el nombre: {actualizarCategoria.Nombre}");
-            var categoria = await this._categoriaService.Update(actualizarCategoria);
+            var categoria = await this._categoriaService.UpdateAsync(actualizarCategoria, cancellationToken);
             return Ok(categoria);
         }
         catch (Exception ex)
@@ -51,12 +51,12 @@ public class CategoriasController(
 
     [HttpGet]
     [Route("ObtenerCategoriaPorId")]
-    public async Task<ActionResult> ObtenerCategoriaPorId(Guid categoriaId)
+    public async Task<ActionResult> ObtenerCategoriaPorId(Guid categoriaId, CancellationToken cancellationToken = default)
     {
         try
         {
             _logger.LogInformation($"Obteniendo la categoria correspondiente al Id: {categoriaId}");
-            var categoria = await this._categoriaService.Get(categoriaId);
+            var categoria = await this._categoriaService.GetAsync(categoriaId, cancellationToken);
             return Ok(categoria);
         }
         catch (Exception ex)
@@ -69,12 +69,12 @@ public class CategoriasController(
 
     [HttpGet]
     [Route("ObtenerCategorias")]
-    public async Task<ActionResult> ObtenerCategorias()
+    public async Task<ActionResult> ObtenerCategorias(CancellationToken cancellationToken = default)
     {
         try
         {
             _logger.LogInformation("Obteniendo todas las categorias");
-            var categorias = await this._categoriaService.GetAll();
+            var categorias = await this._categoriaService.GetAllAsync(cancellationToken);
             return Ok(categorias);
         }
         catch (Exception ex)
@@ -87,12 +87,12 @@ public class CategoriasController(
 
     [HttpDelete]
     [Route("BorrarCategoriaPorId")]
-    public async Task<ActionResult> BorrarCategoriaPorId(Guid categoriaId)
+    public async Task<ActionResult> BorrarCategoriaPorId(Guid categoriaId, CancellationToken cancellationToken = default)
     {
         try
         {
             _logger.LogWarning($"Borrando categoria correspondiente al Id: {categoriaId}");
-            var categoria = await this._categoriaService.Delete(categoriaId);
+            var categoria = await this._categoriaService.DeleteAsync(categoriaId, cancellationToken);
             return Ok(categoria);
         }
         catch (Exception ex)

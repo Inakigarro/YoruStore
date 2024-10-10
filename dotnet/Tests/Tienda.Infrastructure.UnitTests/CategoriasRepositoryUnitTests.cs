@@ -45,7 +45,7 @@ public class CategoriasUnitTests
         };
 
         // Act.
-        var categoria = await repository.Add(nuevaCategoria);
+        var categoria = await repository.AddAsync(nuevaCategoria, default);
 
         // Assert.
         Assert.That(categoria, Is.Not.Null);
@@ -66,7 +66,7 @@ public class CategoriasUnitTests
             Nombre = "Medias",
         };
 
-        Categoria nuevaCategoria = await repository.Add(categoria);
+        Categoria nuevaCategoria = await repository.AddAsync(categoria, default);
 
         // Me aseguro que la categoria se creo correctamente.
         Assert.That(nuevaCategoria, Is.Not.Null);
@@ -79,7 +79,7 @@ public class CategoriasUnitTests
         };
 
         // Act.
-        Categoria categoriaActualizada = await repository.Update(categoriaAModificar);
+        Categoria categoriaActualizada = await repository.UpdateAsync(categoriaAModificar, default);
 
         // Assert.
         Assert.That(categoriaActualizada, Is.Not.Null);
@@ -110,7 +110,7 @@ public class CategoriasUnitTests
             Nombre = "Medias",
         };
 
-        Categoria nuevaCategoria = await repository.Add(categoria);
+        Categoria nuevaCategoria = await repository.AddAsync(categoria, default);
 
         // Me aseguro que la categoria se creo correctamente.
         Assert.That(nuevaCategoria, Is.Not.Null);
@@ -124,7 +124,7 @@ public class CategoriasUnitTests
         };
 
         // Act.
-        Categoria categoriaActualizada = await repository.Update(categoriaAModificar);
+        Categoria categoriaActualizada = await repository.UpdateAsync(categoriaAModificar, default);
 
         // Assert.
         Assert.That(categoriaActualizada, Is.Not.Null);

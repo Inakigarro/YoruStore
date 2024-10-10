@@ -19,8 +19,6 @@ public class ItemsRepository(TiendaDbContext dbContext) : IItemsRepository, IDis
         item.SetPrecio(nuevoItem.Precio);
 
         await this._dbContext.Items.AddAsync(item, cancellationToken);
-        await this._dbContext.SaveChangesAsync(cancellationToken);
-
         return item;
     }
 
@@ -38,7 +36,6 @@ public class ItemsRepository(TiendaDbContext dbContext) : IItemsRepository, IDis
         itemExistente.SetPrecio(item.Precio);
         this._dbContext.Items.Attach(itemExistente);
         this._dbContext.Entry(itemExistente).State = EntityState.Modified;
-        await this._dbContext.SaveChangesAsync(cancellationToken);
         return itemExistente;
     }
 
@@ -52,7 +49,6 @@ public class ItemsRepository(TiendaDbContext dbContext) : IItemsRepository, IDis
         }
 
         this._dbContext.Remove(itemExistente);
-        await this._dbContext.SaveChangesAsync(cancellationToken);
         return itemExistente;
     }
 
@@ -85,6 +81,7 @@ public class ItemsRepository(TiendaDbContext dbContext) : IItemsRepository, IDis
         return await this._dbContext.Items.Include(item => item.Categoria).ToListAsync(cancellationToken);
     }
 
+    /// <inheritdoc/>
     public async Task<IEnumerable<Item>> GetAllByCategoriaIdAsync(Guid categoriaId, int take, int skip, CancellationToken cancellationToken)
     {
         var items = await this._dbContext.Items
@@ -94,6 +91,11 @@ public class ItemsRepository(TiendaDbContext dbContext) : IItemsRepository, IDis
             .Take(take)
             .ToListAsync(cancellationToken);
         return items;
+    }
+
+    public async Task SaveChangesAsync(CancellationToken cancellationToken)
+    {
+        await this._dbContext.SaveChangesAsync(cancellationToken);
     }
 
     protected virtual void Dispose(bool disposing)
