@@ -12,7 +12,8 @@ import {
 } from "./state/app.selectors";
 import { WebApiService } from "./web-api.service";
 import { UserProfile } from "./identity/models";
-import { Item } from "@root/components/models";
+import { Item, Login } from "@root/components/models";
+import { AuthService } from "./auth/auth.service";
 
 @Injectable({
 	providedIn: "root",
@@ -27,7 +28,8 @@ export class AppService {
 
 	constructor(
 		private store: Store,
-		private webApi: WebApiService
+		private webApi: WebApiService,
+		private authService: AuthService
 	) {
 		this.isMenuOpened$ = this.store.select(getMenuOpened);
 		this.isShoppingCartOpened$ = this.store.select(getShoppingCartOpened);

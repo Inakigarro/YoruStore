@@ -1,17 +1,29 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
-import { Categoria, CrearCategoria, Item } from "@root/components/models";
+import {
+	Categoria,
+	CrearCategoria,
+	Item,
+	Login,
+	LoginResponse,
+} from "@root/components/models";
 
 @Injectable({
 	providedIn: "root",
 })
 export class WebApiService {
 	private baseUrl = "https://localhost:7014/";
+	private authUrl = `${this.baseUrl}Auth/`;
 	private itemsUrl = `${this.baseUrl}Items/`;
 	private categoriasUrl = `${this.baseUrl}Categorias/`;
 
 	constructor(private http: HttpClient) {}
+
+	// Login.
+	public login(login: Login) {
+		return this.http.post<LoginResponse>(this.authUrl + "Login", login);
+	}
 
 	// Categorias.
 	public crearCategoria(crearCategoria: CrearCategoria): Observable<Categoria> {
