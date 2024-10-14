@@ -8,7 +8,8 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Tienda.Contracts.Auth;
-using Tienda.Contracts.Auth.Usuarios;
+using Tienda.Contracts.Auth.Usuarios.LoginUser;
+using Tienda.Contracts.Auth.Usuarios.RegisterUser;
 
 namespace Tienda.Api.Controllers;
 
@@ -25,15 +26,15 @@ public class AuthController(
 
     [HttpPost]
     [Route("Register")]
-    public async Task<IActionResult> Register([FromBody]CrearUser userDetails)
+    public async Task<IActionResult> Register([FromBody]RegisterUserRequest userDetails)
     {
         // Si se envia una request vacia, BadRequest.
         if (userDetails == null)
         {
-            return BadRequest(new
+            return BadRequest(new RegisterUserError()
             {
                 StatusCode = StatusCodes.Status400BadRequest,
-                Message = "Registro de usuario fallido.",
+                ErrorMessage = "Registro de usuario fallido.",
             });
         }
 
@@ -54,41 +55,46 @@ public class AuthController(
                 dictionary.Add(error.Code, error.Description);
             }
             
-            return BadRequest(new
+            return BadRequest(new RegisterUserError()
             {
                 StatusCode = StatusCodes.Status400BadRequest,
-                Message = "Registro de usuario fallido.",
+                ErrorMessage = "Registro de usuario fallido.",
                 Errors = dictionary 
             });
         }
 
         // Si la creacion es exitosa, Ok.
-        return Ok(new
+        return Ok(new RegisterUserSuccess()
         {
             StatusCode = StatusCodes.Status200OK,
-            Message = "Usuario registrado exitosamente.",
+            Message = "Usuario registrado exitosamente."
         });
     }
 
     [HttpPost]
     [Route("Login")]
-    public async Task<IActionResult> Login([FromBody]CredencialesLogin credenciales)
+    public async Task<IActionResult> Login([FromBody]LoginRequest credenciales)
     {
         IdentityUser identityUser;
 
         // Si las credenciales son nulas o el usuario no es validado correctamente, BadRequest.
         if (credenciales is null || (identityUser = await ValidateUser(credenciales)) is null)
         {
-            return BadRequest(new
+            return BadRequest(new LoginUserError()
             {
                 StatusCode = StatusCodes.Status400BadRequest,
-                Message = "Login Failed."
+                ErrorMessage= "Login Failed."
             });
         }
 
         // Genero el token y devuelvo Ok.
         var token = await GenerateToken(identityUser);
-        return Ok(new { Token = token, Message = "Has iniciado sesion" });
+        return Ok(new LoginUserSuccess()
+        {
+            StatusCode = StatusCodes.Status200OK,
+            Message = "Has iniciado sesion",
+            Token = token,
+        });
     }
 
     [HttpPost]
@@ -142,7 +148,7 @@ public class AuthController(
         });
     }
     
-    private async Task<IdentityUser?> ValidateUser(CredencialesLogin credenciales)
+    private async Task<IdentityUser?> ValidateUser(LoginRequest credenciales)
     {
         // Busco el usuario. Si no es nulo y la contraseña es la correcta, devuelvo el usuario.
         var identityUser = await _userManager.FindByNameAsync(credenciales.UserName);
