@@ -12,14 +12,14 @@ const routes: Routes = [
 				path: "",
 				component: CategoriasListComponent,
 			},
-			{
-				path: ":itemId",
-				loadChildren: () =>
-					import("../item-details/item-details.module").then(
-						(m) => m.ItemDetailsModule
-					),
-			},
 		],
+	},
+	{
+		path: ":itemId",
+		loadChildren: () =>
+			import("../item-details/item-details.module").then(
+				(m) => m.ItemDetailsModule
+			),
 	},
 ];
 

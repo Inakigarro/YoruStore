@@ -5,18 +5,27 @@ import { SecondaryToolbarActions } from "@root/app/state/app.actions";
 
 export const CATEGORIES_FEATURE_KEY = "categorias";
 export interface CategoriesState {
+	categories: Categoria[];
 	currentCategory?: Categoria;
 	items?: Item[];
 	loaded: boolean;
+	error?: any;
 }
 export interface CategoriesPartialState {
 	readonly [CATEGORIES_FEATURE_KEY]: CategoriesState;
 }
 const initialState: CategoriesState = {
+	categories: [],
 	loaded: false,
 };
 export const categoriesReducer = createReducer(
 	initialState,
+	on(CategoriesActions.categoriesObtained, (state, action) => ({
+		...state,
+		categories: action.categories,
+		error: action.error,
+		loaded: true,
+	})),
 	on(SecondaryToolbarActions.categoryButtonClicked, (state) => ({
 		...state,
 		currentCategory: undefined,

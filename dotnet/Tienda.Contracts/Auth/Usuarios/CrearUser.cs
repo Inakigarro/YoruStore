@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Tienda.Contracts.Auth;
+namespace Tienda.Contracts.Auth.Usuarios;
 
 public class CrearUser
 {

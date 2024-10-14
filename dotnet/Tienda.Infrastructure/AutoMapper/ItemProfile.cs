@@ -13,7 +13,7 @@ public class ItemProfile : Profile
             .ForMember(dto => dto.Titulo, s => s.MapFrom(entity => entity.Titulo))
             .ForMember(dto => dto.Descripcion, s => s.MapFrom(entity => entity.Descripcion))
             .ForMember(dto => dto.Precio, s => s.MapFrom(entity => entity.Precio))
-            .ForMember(dto => dto.CategoriaId, s => s.MapFrom(entity => entity.Categoria.Id));
+            .ForMember(dto => dto.CategoriaId, s => s.MapFrom(entity => entity.CategoriaId));
 
         this.CreateMap<ItemDto, Item>()
             .ForMember(entity => entity.Id, s => s.MapFrom(entity => entity.Id))

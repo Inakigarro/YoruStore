@@ -4,8 +4,6 @@ import { RegisterToolbar } from "@root/components/toolbar/state/toolbar.actions"
 import {
 	backdropClicked,
 	InitApp,
-	profileButtonClicked,
-	searchButtonClicked,
 	userProfileObtained,
 	MainToolbarActions,
 } from "./state/app.actions";
@@ -29,17 +27,6 @@ export class AppComponent implements OnInit {
 
 	constructor(private service: AppService) {
 		this.service.dispatch(InitApp());
-		this.service.dispatch(
-			userProfileObtained({
-				userProfile: {
-					id: "1",
-					loginId: "Zaky",
-					nombre: "Iñaki",
-					apellido: "Garro",
-					email: "email@email.com",
-				},
-			})
-		);
 	}
 
 	public ngOnInit(): void {
@@ -70,7 +57,7 @@ export class AppComponent implements OnInit {
 							type: "icon",
 							icon: "account_circle",
 							label: "",
-							action: profileButtonClicked(),
+							action: MainToolbarActions.profileButtonClicked(),
 						},
 					],
 					toolbarConfig: {

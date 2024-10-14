@@ -1,12 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Tienda.Contracts.Auth.Roles;
 using Tienda.Contracts.Categorias;
 using Tienda.Contracts.Services;
 
 namespace Tienda.Api.Controllers;
 
-[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 [ApiController]
 [Route("[controller]")]
 public class CategoriasController(
@@ -18,6 +18,9 @@ public class CategoriasController(
 
     [HttpPost]
     [Route("CrearCategoria")]
+    [Authorize(
+        AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,
+        Roles = AuthRoles.Admin)]
     public async Task<ActionResult> CrearCategoria(CrearCategoriaDto nuevaCategoria, CancellationToken cancellationToken = default)
     {
         try
@@ -36,6 +39,9 @@ public class CategoriasController(
 
     [HttpPut]
     [Route("ActualizarCategoria")]
+    [Authorize(
+        AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,
+        Roles = AuthRoles.Admin)]
     public async Task<ActionResult> ActualizarCategoria(ActualizarCategoriaDto actualizarCategoria, CancellationToken cancellationToken = default)
     {
         try
@@ -90,6 +96,9 @@ public class CategoriasController(
 
     [HttpDelete]
     [Route("BorrarCategoriaPorId")]
+    [Authorize(
+        AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,
+        Roles = AuthRoles.Admin)]
     public async Task<ActionResult> BorrarCategoriaPorId(Guid categoriaId, CancellationToken cancellationToken = default)
     {
         try

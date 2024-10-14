@@ -1,9 +1,33 @@
 <mat-card class="card-container">
-	<mat-card-content class="login-card-content">
+	<mat-card-content class="card-container-content">
 		<mat-card class="login-card">
 			<mat-card-header class="login-card-header">
 				<h4>{{ "Inicia sesion" | uppercase }}</h4>
 			</mat-card-header>
+			<mat-card-content>
+				<form class="login-form">
+					<mat-form-field>
+						<mat-label>Nombre de Usuario</mat-label>
+						<input
+							matInput
+							type="text"
+							autocomplete="username"
+						/>
+					</mat-form-field>
+					<mat-form-field>
+						<mat-label>Contraseña</mat-label>
+						<input
+							matInput
+							type="password"
+							autocomplete="current-password"
+						/>
+					</mat-form-field>
+				</form>
+			</mat-card-content>
+			<mat-card-actions>
+				<button-feature [button]="loginButton" />
+				<button-feature [button]="cancelButton" />
+			</mat-card-actions>
 		</mat-card>
 	</mat-card-content>
 </mat-card>

@@ -2,9 +2,8 @@
     width: 100dvw;
     height: 100%;
     background-color: var(--sys-primary-container);
-    overflow-y: auto;
     overflow-x: hidden;
-    background-image: url(../../../../public/assets/YoruStore.webp);
+    // background-image: url(../../../../public/assets/YoruStore.webp);
     background-position: center;
     background-size: contain;
     background-repeat: repeat;
@@ -19,6 +18,10 @@
     justify-content: start;
     align-items: start;
     width: 75vw;
+}
+
+.categoria-lista {
+    overflow-y:  auto;
 }
 .buscar-form-field {
     width: 75%;

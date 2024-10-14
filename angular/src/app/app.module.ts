@@ -14,19 +14,16 @@ import { appReducer } from "./state/app.reducer";
 import { AppListModule } from "../components/list/list.module";
 import { AppCardModule } from "../components/card/card.module";
 import { HTTP_INTERCEPTORS, provideHttpClient } from "@angular/common/http";
-import { AppEffects } from "./state/app.effects";
 import { MatSidenavModule } from "@angular/material/sidenav";
 import { ShoppingCartModule } from "./shopping-cart/shopping-cart.module";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
-import { MainComponent } from "./main/main.component";
 import { CategoriasModule } from "./categoria/categorias.module";
 import { authReducer } from "./auth/state/auth.reducer";
 import { JwtInterceptor } from "./auth/jwt.interceptor";
-import { LoginComponent } from "./auth/login/login.component";
-import { MatCardModule } from "@angular/material/card";
+import { LoginModule } from "./auth/login/login.module";
 
 @NgModule({
-	declarations: [AppComponent, MainComponent, LoginComponent],
+	declarations: [AppComponent],
 	imports: [
 		CommonModule,
 		BrowserModule,
@@ -39,12 +36,12 @@ import { MatCardModule } from "@angular/material/card";
 		MatSidenavModule,
 		MatProgressSpinnerModule,
 		CategoriasModule,
-		MatCardModule,
+		LoginModule,
 		StoreModule.forRoot(
 			{ routerReducer, "app-state": appReducer, auth: authReducer },
 			{}
 		),
-		EffectsModule.forRoot(AppEffects),
+		EffectsModule.forRoot(),
 		StoreRouterConnectingModule.forRoot({ stateKey: "router-reducer" }),
 		StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
 	],

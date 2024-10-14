@@ -1,47 +1,51 @@
-<mat-card class="categoria-card">
-	<mat-card-header class="categoria-header">
-		<mat-card-title>
-			<h2>{{ listTitle$ | async }}</h2>
-		</mat-card-title>
-		<mat-card-subtitle class="card-subtitle">
-			<mat-form-field class="buscar-form-field">
-				<mat-label>Buscar...</mat-label>
-				<input
-					#filterInput
-					key-up
-					[value]="filterInput.value"
-					matInput
-					type="text"
+@if (loaded$ | async) {
+	<mat-card class="categoria-card">
+		<mat-card-header class="categoria-header">
+			<mat-card-title>
+				<h2>{{ listTitle$ | async }}</h2>
+			</mat-card-title>
+			<mat-card-subtitle class="card-subtitle">
+				<mat-form-field class="buscar-form-field">
+					<mat-label>Buscar...</mat-label>
+					<input
+						#filterInput
+						key-up
+						[value]="filterInput.value"
+						matInput
+						type="text"
+					/>
+					@if (filterInput.value) {
+						<button
+							matSuffix
+							mat-icon-button
+							aria-label="Clear"
+							(click)="onClearButtonClicked(filterInput)"
+						>
+							<mat-icon>close</mat-icon>
+						</button>
+					}
+				</mat-form-field>
+				<button
+					mat-flat-button
+					(click)="onBuscarButtonClicked(filterInput.value)"
+					class="search-button"
+				>
+					<mat-icon>{{ buscarButton.icon }}</mat-icon>
+					<span>{{ buscarButton.label }}</span>
+				</button>
+			</mat-card-subtitle>
+		</mat-card-header>
+		<mat-card-content class="categoria-lista">
+			@if (loaded$ | async) {
+				<list-feature
+					[id]="'app-list'"
+					[data$]="listData$"
 				/>
-				@if (filterInput.value) {
-					<button
-						matSuffix
-						mat-icon-button
-						aria-label="Clear"
-						(click)="onClearButtonClicked(filterInput)"
-					>
-						<mat-icon>close</mat-icon>
-					</button>
-				}
-			</mat-form-field>
-			<button
-				mat-flat-button
-				(click)="onBuscarButtonClicked(filterInput.value)"
-				class="search-button"
-			>
-				<mat-icon>{{ buscarButton.icon }}</mat-icon>
-				<span>{{ buscarButton.label }}</span>
-			</button>
-		</mat-card-subtitle>
-	</mat-card-header>
-	<mat-card-content>
-		@if (loaded$ | async) {
-			<list-feature
-				[id]="'app-list'"
-				[data$]="listData$"
-			/>
-		} @else {
-			<mat-spinner />
-		}
-	</mat-card-content>
-</mat-card>
+			} @else {
+				<mat-spinner />
+			}
+		</mat-card-content>
+	</mat-card>
+} @else {
+	<mat-spinner [mode]="'indeterminate'" />
+}

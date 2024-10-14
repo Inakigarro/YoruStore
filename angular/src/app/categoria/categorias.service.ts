@@ -2,13 +2,13 @@ import { Injectable } from "@angular/core";
 import { Action, Store } from "@ngrx/store";
 import {
 	getCurrentCategory,
-	getCurrentCategoryItems,
 	getCurrentCategoryName,
 	getCurrentItems,
 	getLoaded,
 } from "./state/categorias.selectors";
 import { WebApiService } from "../web-api.service";
 import { NavigationService } from "../navigation.service";
+import { filter } from "rxjs";
 
 @Injectable({
 	providedIn: "root",
@@ -23,6 +23,10 @@ export class CategoriasService {
 		private navigationService: NavigationService,
 		private webApi: WebApiService
 	) {}
+
+	public obtenerCategorias() {
+		return this.webApi.obtenerCategorias().pipe(filter((x) => !!x));
+	}
 
 	public obtenerCategoria(id: string) {
 		return this.webApi.obtenerCategoriaById(id);

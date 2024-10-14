@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -46,7 +45,7 @@ public class Program
             opts.RequireHttpsMetadata = false;
             opts.SaveToken = true;
             opts.TokenValidationParameters = new TokenValidationParameters()
-            { 
+            {
                 ValidateIssuer = true,
                 ValidIssuer = jwtSettings.Issuer,
                 ValidateAudience = true,
@@ -128,6 +127,7 @@ public class Program
         app.UseHttpsRedirection();
         app.UseCors(LocalHostOrigin);
         app.UseAuthentication();
+        app.UseRouting();
         app.UseAuthorization();
 
 
