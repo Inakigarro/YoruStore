@@ -84,6 +84,17 @@ public class CategoriasServices(
         return this._mapper.Map<CategoriaDto>(categoria);
     }
 
+    public async Task<CategoriaDto> GetByNameAsync(string nombre, CancellationToken cancellationToken)
+    {
+        var categoria = await _categoriasRepository.GetByNombreAsync(nombre, cancellationToken);
+        if (categoria is null)
+        {
+            throw new InvalidOperationException($"No existe una categoria con el nombre: {nombre}");
+        }
+
+        return this._mapper.Map<CategoriaDto>(categoria);
+    }
+
     /// <inheritdoc/>
     public async Task<IEnumerable<CategoriaDto>> GetAllAsync(CancellationToken cancellationToken)
     {

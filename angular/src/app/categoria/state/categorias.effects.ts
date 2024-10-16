@@ -1,54 +1,32 @@
 import { Injectable } from "@angular/core";
 import { CategoriasService } from "../categorias.service";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
-import { InitApp, SecondaryToolbarActions } from "@root/app/state/app.actions";
-import { filter, map, tap } from "rxjs";
-import { CategoriesActions } from "./categorias.actions";
-import { fetch } from "@ngrx/router-store/data-persistence";
-import { Button } from "@root/components/models";
-import { RegisterToolbar } from "@root/components/toolbar/state/toolbar.actions";
-import { SECONDARY_TOOLBAR_ID } from "@root/app/app-constants";
+import { filter, map, switchMap, tap } from "rxjs";
 import { DetailsButtonClicked } from "@root/components/card/state/card.actions";
+import { CategoriesActions } from "./categorias.actions";
+import { RouterService } from "@root/app/router/router.service";
+import { fetch } from "@ngrx/router-store/data-persistence";
 
 @Injectable()
 export class CategoriesEffects {
-	public initCategories$ = createEffect(() =>
+	public initCategorias$ = createEffect(() =>
 		this.actions.pipe(
 			ofType(CategoriesActions.initCategorias),
+			switchMap(() => this.routerService.routerParams$),
+			filter((params) => !!params["nombreCategoria"]),
 			fetch({
-				run: () =>
-					this.service.obtenerCategorias().pipe(
-						filter((categories) => !!categories),
-						map((categories) =>
-							CategoriesActions.categoriesObtained({ categories })
-						)
-					),
-				onError: (action, error) =>
-					CategoriesActions.categoriesObtained({
-						categories: [],
-						error: error,
-					}),
-			})
-		)
-	);
-
-	public CategoryButtonClicked$ = createEffect(() =>
-		this.actions.pipe(
-			ofType(SecondaryToolbarActions.categoryButtonClicked),
-			fetch({
-				run: (action) =>
-					this.service.obtenerCategoria(action.categoriaId).pipe(
-						filter((categorie) => !!categorie),
-						tap((categorie) =>
-							this.service.navigate([`${categorie.nombre.toLowerCase()}`])
+				run: (params) =>
+					this.service
+						.obtenerCategoriaPorNombre(params["nombreCategoria"])
+						.pipe(
+							filter((x) => !!x),
+							map((categoria) =>
+								CategoriesActions.categoriaCargada({
+									categoria: categoria,
+								})
+							)
 						),
-						map((categorie) =>
-							CategoriesActions.categoriaCargada({
-								categoria: categorie,
-							})
-						)
-					),
-				onError: (action, error) =>
+				onError: (params, error) =>
 					CategoriesActions.categoriaCargada({
 						categoria: { id: "", nombre: "", items: [] },
 						error: error,
@@ -56,50 +34,6 @@ export class CategoriesEffects {
 			})
 		)
 	);
-
-	public registerCategoriesToolbar$ = createEffect(() =>
-		this.actions.pipe(
-			ofType(CategoriesActions.categoriesObtained),
-			filter(({ categories }) => !!categories),
-			map(({ categories }) => {
-				let secondaryButtons: Button[] = [];
-				categories.forEach((cat) => {
-					let button: Button = {
-						type: "fab",
-						label: cat.nombre,
-						icon: "",
-						action: SecondaryToolbarActions.categoryButtonClicked({
-							categoriaId: cat.id,
-						}),
-					};
-					secondaryButtons.push(button);
-				});
-				return RegisterToolbar({
-					toolbar: {
-						id: SECONDARY_TOOLBAR_ID,
-						secondaryButton: secondaryButtons,
-						toolbarConfig: {
-							isSecondaryToolbar: true,
-							isTitleSeparete: false,
-						},
-					},
-				});
-			})
-		)
-	);
-
-	public setFirstAsCurrent$ = createEffect(() =>
-		this.actions.pipe(
-			ofType(CategoriesActions.categoriesObtained),
-			filter(({ categories }) => !!categories),
-			map(({ categories }) =>
-				SecondaryToolbarActions.categoryButtonClicked({
-					categoriaId: categories[0].id,
-				})
-			)
-		)
-	);
-
 	public itemDetailsButtonClicked$ = createEffect(
 		() =>
 			this.actions.pipe(
@@ -110,6 +44,7 @@ export class CategoriesEffects {
 	);
 	constructor(
 		private readonly actions: Actions,
-		private service: CategoriasService
+		private service: CategoriasService,
+		private routerService: RouterService
 	) {}
 }

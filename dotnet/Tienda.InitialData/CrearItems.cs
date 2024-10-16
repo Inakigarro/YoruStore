@@ -431,7 +431,7 @@ public class CrearItems
         // Vestidos.
         new()
         {
-            CategoriaNombre = Categorias.Remeras,
+            CategoriaNombre = Categorias.Vestidos,
             Item = new()
             {
                 Titulo = "Vestido 1",
@@ -441,7 +441,7 @@ public class CrearItems
         },
         new()
         {
-            CategoriaNombre = Categorias.Remeras,
+            CategoriaNombre = Categorias.Vestidos,
             Item = new()
             {
                 Titulo = "Vestido 2",
@@ -451,7 +451,7 @@ public class CrearItems
         },
         new()
         {
-            CategoriaNombre = Categorias.Remeras,
+            CategoriaNombre = Categorias.Vestidos,
             Item = new()
             {
                 Titulo = "Vestido 3",
@@ -461,7 +461,7 @@ public class CrearItems
         },
         new()
         {
-            CategoriaNombre = Categorias.Remeras,
+            CategoriaNombre = Categorias.Vestidos,
             Item = new()
             {
                 Titulo = "Vestido 4",
@@ -471,7 +471,7 @@ public class CrearItems
         },
         new()
         {
-            CategoriaNombre = Categorias.Remeras,
+            CategoriaNombre = Categorias.Vestidos,
             Item = new()
             {
                 Titulo = "Vestido 5",
@@ -483,7 +483,7 @@ public class CrearItems
         // Zapatos.
         new()
         {
-            CategoriaNombre = Categorias.Remeras,
+            CategoriaNombre = Categorias.Zapatos,
             Item = new()
             {
                 Titulo = "Zapatos 1",
@@ -493,7 +493,7 @@ public class CrearItems
         },
         new()
         {
-            CategoriaNombre = Categorias.Remeras,
+            CategoriaNombre = Categorias.Zapatos,
             Item = new()
             {
                 Titulo = "Zapatos 2",
@@ -503,7 +503,7 @@ public class CrearItems
         },
         new()
         {
-            CategoriaNombre = Categorias.Remeras,
+            CategoriaNombre = Categorias.Zapatos,
             Item = new()
             {
                 Titulo = "Zapatos 3",
@@ -513,7 +513,7 @@ public class CrearItems
         },
         new()
         {
-            CategoriaNombre = Categorias.Remeras,
+            CategoriaNombre = Categorias.Zapatos,
             Item = new()
             {
                 Titulo = "Zapatos 4",
@@ -523,7 +523,7 @@ public class CrearItems
         },
         new()
         {
-            CategoriaNombre = Categorias.Remeras,
+            CategoriaNombre = Categorias.Zapatos,
             Item = new()
             {
                 Titulo = "Zapatos 5",

@@ -5,16 +5,19 @@ import { LoginComponent } from "./auth/login/login.component";
 export const routes: Routes = [
 	{
 		path: "",
-		children: [],
-	},
-	{
-		path: "login",
-		component: LoginComponent,
-	},
-	{
-		path: ":nombreCategoria",
-		loadChildren: () =>
-			import("./categoria/categorias.module").then((m) => m.CategoriasModule),
+		children: [
+			{
+				path: "login",
+				component: LoginComponent,
+			},
+			{
+				path: ":nombreCategoria",
+				loadChildren: () =>
+					import("./categoria/categorias.module").then(
+						(m) => m.CategoriasModule
+					),
+			},
+		],
 	},
 ];
 

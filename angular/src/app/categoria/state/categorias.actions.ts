@@ -6,10 +6,6 @@ export const CategoriesActions = createActionGroup({
 	source: "Categoria",
 	events: {
 		InitCategorias: emptyProps,
-		CategoriesObtained: props<{
-			categories: Categoria[];
-			error?: HttpErrorResponse;
-		}>(),
 		CategoriaCargada: props<{
 			categoria: Categoria;
 			error?: HttpErrorResponse;

@@ -1,14 +1,14 @@
 import { Injectable } from "@angular/core";
 import { Action, Store } from "@ngrx/store";
+import { WebApiService } from "../web-api.service";
+import { NavigationService } from "../navigation.service";
+import { filter } from "rxjs";
+import { getLoading } from "../state/app.selectors";
 import {
 	getCurrentCategory,
 	getCurrentCategoryName,
 	getCurrentItems,
-	getLoaded,
 } from "./state/categorias.selectors";
-import { WebApiService } from "../web-api.service";
-import { NavigationService } from "../navigation.service";
-import { filter } from "rxjs";
 
 @Injectable({
 	providedIn: "root",
@@ -17,7 +17,8 @@ export class CategoriasService {
 	public title$ = this.store.select(getCurrentCategoryName);
 	public data$ = this.store.select(getCurrentItems);
 	public currentCategoria$ = this.store.select(getCurrentCategory);
-	public loaded$ = this.store.select(getLoaded);
+	public loading$ = this.store.select(getLoading);
+
 	constructor(
 		private store: Store,
 		private navigationService: NavigationService,
@@ -30,6 +31,10 @@ export class CategoriasService {
 
 	public obtenerCategoria(id: string) {
 		return this.webApi.obtenerCategoriaById(id);
+	}
+
+	public obtenerCategoriaPorNombre(nombre: string) {
+		return this.webApi.obtenerCategoriaPorNombre(nombre);
 	}
 
 	public obtenerConFiltro(categoriaId: string, filter: string) {

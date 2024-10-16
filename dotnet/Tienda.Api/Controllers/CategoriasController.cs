@@ -77,6 +77,24 @@ public class CategoriasController(
     }
 
     [HttpGet]
+    [Route("ObtenerCategoriaPorNombre")]
+    public async Task<ActionResult> ObtenerCategoriaPorNombre(string nombre, CancellationToken cancellationToken = default)
+    {
+        try
+        {
+            _logger.LogInformation($"Obteniendo la categoria con el nombre: {nombre}");
+            var categoria = await _categoriaService.GetByNameAsync(nombre, cancellationToken);
+            return Ok(categoria);
+        }
+        catch (Exception ex)
+        {
+            string error = $"Ocurrio un error durante la busqueda de la categoria con nombre: {nombre}. {ex.Message} - {ex.StackTrace}";
+            _logger.LogError(error);
+            return BadRequest(error);
+        }
+    }
+
+    [HttpGet]
     [Route("ObtenerCategorias")]
     public async Task<ActionResult> ObtenerCategorias(CancellationToken cancellationToken = default)
     {

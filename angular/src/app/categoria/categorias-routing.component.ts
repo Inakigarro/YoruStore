@@ -8,6 +8,6 @@ import { CategoriesActions } from "./state/categorias.actions";
 })
 export class CategoriasRoutingComponent {
 	constructor(private service: CategoriasService) {
-		this.service.dispatch(CategoriesActions.initCategorias);
+		this.service.dispatch(CategoriesActions.initCategorias());
 	}
 }

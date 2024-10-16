@@ -25,3 +25,8 @@ export const getShoppingCartCount = createSelector(
 	getAppState,
 	(state) => state.shoppingCartCount
 );
+
+export const getCategories = createSelector(
+	getAppState,
+	(state) => state.categories
+);

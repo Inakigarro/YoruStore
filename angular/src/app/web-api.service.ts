@@ -43,6 +43,12 @@ export class WebApiService {
 		);
 	}
 
+	public obtenerCategoriaPorNombre(nombre: string): Observable<Categoria> {
+		return this.http.get<Categoria>(
+			this.categoriasUrl + "ObtenerCategoriaPorNombre?nombre=" + nombre
+		);
+	}
+
 	// Items.
 	public obtenerItemPorId(itemId: string) {
 		return this.http.get<Item>(
