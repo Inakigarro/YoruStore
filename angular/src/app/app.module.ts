@@ -22,6 +22,7 @@ import { authReducer } from "./auth/state/auth.reducer";
 import { JwtInterceptor } from "./auth/jwt.interceptor";
 import { LoginModule } from "./auth/login/login.module";
 import { AppEffects } from "./state/app.effects";
+import { AuthEffects } from "./auth/state/auth.effects";
 
 @NgModule({
 	declarations: [AppComponent],
@@ -36,13 +37,12 @@ import { AppEffects } from "./state/app.effects";
 		ShoppingCartModule,
 		MatSidenavModule,
 		MatProgressSpinnerModule,
-		CategoriasModule,
 		LoginModule,
 		StoreModule.forRoot(
 			{ routerReducer, "app-state": appReducer, auth: authReducer },
 			{}
 		),
-		EffectsModule.forRoot(AppEffects),
+		EffectsModule.forRoot(AppEffects, AuthEffects),
 		StoreRouterConnectingModule.forRoot({ stateKey: "router-reducer" }),
 		StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
 	],

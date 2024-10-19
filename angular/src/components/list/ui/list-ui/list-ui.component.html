@@ -4,7 +4,7 @@
 		gutterSize="5px"
 		rowHeight="465px"
 	>
-		@for (item of data; track item) {
+		@for (item of data; track $index) {
 			<mat-grid-tile>
 				<app-card-feature
 					[side]="false"

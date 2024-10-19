@@ -1,7 +1,6 @@
-import { Component, OnInit } from "@angular/core";
+import { Component } from "@angular/core";
 import { ShoppingCartService } from "../shopping-cart.service";
-import { Observable } from "rxjs";
-import { Button, Item } from "@root/components/models";
+import { Button } from "@root/components/models";
 import {
 	BuyButtonClicked,
 	CloseButtonClicked,

@@ -2,10 +2,25 @@ import { Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { ShoppingCartService } from "../shopping-cart.service";
 import { ShoppingCartButtonClicked } from "@components/card/state/card.actions";
-import { map, withLatestFrom } from "rxjs/operators";
-import { ItemAddedToShoppingCart } from "./shopping-cart.actions";
+import {
+	catchError,
+	filter,
+	map,
+	switchMap,
+	take,
+	withLatestFrom,
+} from "rxjs/operators";
+import {
+	BuyButtonClicked,
+	BuyButtonWithItemsAndTotal,
+	CheckOutItems,
+	ItemAddedToShoppingCart,
+} from "./shopping-cart.actions";
 import { Item } from "@components/models";
 import { ItemDetailsActions } from "@root/app/item-details/state/item-details.actions";
+import { AuthService } from "@root/app/auth/auth.service";
+import { AuthActions } from "@root/app/auth/state/auth.actions";
+import { itemDetailsReducer } from "@root/app/item-details/state/item-details.reducer";
 
 @Injectable()
 export class ShoppingCartEffects {
@@ -37,8 +52,42 @@ export class ShoppingCartEffects {
 			})
 		)
 	);
+
+	public buyButtonClicked$ = createEffect(() =>
+		this.actions.pipe(
+			ofType(BuyButtonClicked),
+			switchMap(() => this.service.items$),
+			withLatestFrom(this.service.montonTotal$),
+			filter(([items, monto]) => !!items),
+			map(([items, monto]) =>
+				BuyButtonWithItemsAndTotal({
+					items: items,
+					montoTotal: monto,
+				})
+			)
+		)
+	);
+
+	public checkOutItems$ = createEffect(() =>
+		this.actions.pipe(
+			ofType(BuyButtonWithItemsAndTotal),
+			withLatestFrom(this.authService.isLoggedIn$),
+			filter(([action, auth]) => action.items.length > 0),
+			map(([action, auth]) => {
+				if (!auth) {
+					return AuthActions.userNotLoggedIn();
+				} else {
+					return CheckOutItems({
+						items: action.items,
+						montoTotal: action.montoTotal,
+					});
+				}
+			})
+		)
+	);
 	constructor(
 		private actions: Actions,
-		private readonly service: ShoppingCartService
+		private readonly service: ShoppingCartService,
+		private readonly authService: AuthService
 	) {}
 }

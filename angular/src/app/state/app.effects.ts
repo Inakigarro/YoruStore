@@ -7,6 +7,7 @@ import { filter, map, switchMap, tap, withLatestFrom } from "rxjs";
 import { Button } from "@root/components/models";
 import { RegisterToolbar } from "@root/components/toolbar/state/toolbar.actions";
 import { SECONDARY_TOOLBAR_ID } from "../app-constants";
+import { RouterService } from "../router/router.service";
 
 @Injectable()
 export class AppEffects {
@@ -65,8 +66,9 @@ export class AppEffects {
 	public setFirstAsCurrent$ = createEffect(() =>
 		this.actions$.pipe(
 			ofType(SecondaryToolbarActions.categoriesObtained),
-			filter(({ categories }) => !!categories),
-			map(({ categories }) =>
+			withLatestFrom(this.routerService.routerParams$),
+			filter(([{ categories }, params]) => !!categories && !!params),
+			map(([{ categories }, _]) =>
 				SecondaryToolbarActions.categoryButtonClicked({
 					categoriaId: categories[0].id,
 				})
@@ -88,6 +90,7 @@ export class AppEffects {
 
 	constructor(
 		private actions$: Actions,
-		private appService: AppService
+		private appService: AppService,
+		private routerService: RouterService
 	) {}
 }
