@@ -1,38 +1,46 @@
 import { Injectable } from "@angular/core";
 import { AppService } from "../app.service";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
-import {
-	categoriesObtained,
-	InitApp,
-	SecondaryToolbarActions,
-} from "./app.actions";
-import { filter, map, switchMap, tap } from "rxjs";
+import { InitApp, SecondaryToolbarActions } from "./app.actions";
+import { fetch } from "@ngrx/router-store/data-persistence";
+import { filter, map, switchMap, tap, withLatestFrom } from "rxjs";
 import { Button } from "@root/components/models";
 import { RegisterToolbar } from "@root/components/toolbar/state/toolbar.actions";
 import { SECONDARY_TOOLBAR_ID } from "../app-constants";
-import { DetailsButtonClicked } from "@root/components/card/state/card.actions";
-import { NavigationService } from "../navigation.service";
 import { RouterService } from "../router/router.service";
 
 @Injectable()
 export class AppEffects {
-	public initCategorias$ = createEffect(() =>
-		this.actions.pipe(
+	public initApp$ = createEffect(() =>
+		this.actions$.pipe(
 			ofType(InitApp),
-			switchMap(() => this.service.ObtenerCategorias()),
-			filter((categorias) => !!categorias),
-			map((categorias) => categoriesObtained({ categorias }))
+			fetch({
+				run: () =>
+					this.appService.obtenerCategorias().pipe(
+						filter((categorias) => categorias.length > 0),
+						map((categories) =>
+							SecondaryToolbarActions.categoriesObtained({
+								categories: categories,
+							})
+						)
+					),
+				onError: (_, error) =>
+					SecondaryToolbarActions.categoriesObtained({
+						categories: [],
+						error: error,
+					}),
+			})
 		)
 	);
 
-	public registerSecondaryToolbar$ = createEffect(() =>
-		this.actions.pipe(
-			ofType(categoriesObtained),
-			filter(({ categorias }) => !!categorias),
-			map(({ categorias }) => {
-				let secondaryButtons: Button[] = [];
-				categorias.forEach((cat) => {
-					let button: Button = {
+	public registerCategoriesToolbar$ = createEffect(() =>
+		this.actions$.pipe(
+			ofType(SecondaryToolbarActions.categoriesObtained),
+			filter(({ categories }) => categories.length > 0),
+			map(({ categories }) => {
+				let categoriesButtons: Button[];
+				categoriesButtons = categories.map((cat) => {
+					return {
 						type: "fab",
 						label: cat.nombre,
 						icon: "",
@@ -40,12 +48,11 @@ export class AppEffects {
 							categoriaId: cat.id,
 						}),
 					};
-					secondaryButtons.push(button);
 				});
 				return RegisterToolbar({
 					toolbar: {
 						id: SECONDARY_TOOLBAR_ID,
-						secondaryButton: secondaryButtons,
+						secondaryButton: categoriesButtons,
 						toolbarConfig: {
 							isSecondaryToolbar: true,
 							isTitleSeparete: false,
@@ -56,33 +63,34 @@ export class AppEffects {
 		)
 	);
 
-	public setFirstCategoryAsCurrent$ = createEffect(() =>
-		this.actions.pipe(
-			ofType(categoriesObtained),
-			filter(({ categorias }) => !!categorias),
-			map(({ categorias }) =>
+	public setFirstAsCurrent$ = createEffect(() =>
+		this.actions$.pipe(
+			ofType(SecondaryToolbarActions.categoriesObtained),
+			withLatestFrom(this.routerService.routerParams$),
+			filter(([{ categories }, params]) => !!categories && !!params),
+			map(([{ categories }, _]) =>
 				SecondaryToolbarActions.categoryButtonClicked({
-					categoriaId: categorias[0].id,
+					categoriaId: categories[0].id,
 				})
 			)
 		)
 	);
 
-	public loadCurrentItem$ = createEffect(
+	public navigateToCategory$ = createEffect(
 		() =>
-			this.actions.pipe(
-				ofType(DetailsButtonClicked),
-				tap((action) =>
-					this.navigationService.navigate([`${action.itemId}`], true)
-				)
+			this.actions$.pipe(
+				ofType(SecondaryToolbarActions.categoryButtonClicked),
+				switchMap(({ categoriaId }) =>
+					this.appService.obtenerCategoriaPorId(categoriaId)
+				),
+				tap((cat) => this.appService.navigate([cat?.nombre!], false))
 			),
 		{ dispatch: false }
 	);
 
 	constructor(
-		private actions: Actions,
-		private readonly service: AppService,
-		private readonly navigationService: NavigationService,
-		private readonly routerService: RouterService
+		private actions$: Actions,
+		private appService: AppService,
+		private routerService: RouterService
 	) {}
 }

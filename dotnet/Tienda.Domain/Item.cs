@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
-namespace Tienda.Domain;
+﻿namespace Tienda.Domain;
 
 public class Item(Guid id)
 {

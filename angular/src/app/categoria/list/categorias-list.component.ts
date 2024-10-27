@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { CategoriasService } from "../categorias.service";
-import { delay, Observable, Subject } from "rxjs";
+import { Observable, Subject } from "rxjs";
 import { Button, Item } from "@root/components/models";
 import { CategoriesActions } from "../state/categorias.actions";
 import { createAction } from "@ngrx/store";
@@ -14,9 +14,9 @@ const dummyAction = createAction("");
 })
 export class CategoriasListComponent implements OnInit, OnDestroy {
 	private destroy$ = new Subject<void>();
-	public listTitle$: Observable<string>;
+	public listTitle$: Observable<string | undefined>;
 	public listData$: Observable<Item[]>;
-	public loaded$: Observable<boolean>;
+	public loading$: Observable<boolean>;
 	public buscarButton: Button = {
 		type: "basic",
 		icon: "search",
@@ -28,7 +28,7 @@ export class CategoriasListComponent implements OnInit, OnDestroy {
 	public ngOnInit(): void {
 		this.listData$ = this.service.data$;
 		this.listTitle$ = this.service.title$;
-		this.loaded$ = this.service.loaded$;
+		this.loading$ = this.service.loading$;
 	}
 
 	public ngOnDestroy(): void {

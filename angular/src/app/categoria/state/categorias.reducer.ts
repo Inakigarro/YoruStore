@@ -8,6 +8,7 @@ export interface CategoriesState {
 	currentCategory?: Categoria;
 	items?: Item[];
 	loaded: boolean;
+	error?: any;
 }
 export interface CategoriesPartialState {
 	readonly [CATEGORIES_FEATURE_KEY]: CategoriesState;

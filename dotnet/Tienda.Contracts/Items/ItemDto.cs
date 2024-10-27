@@ -1,6 +1,4 @@
-﻿using Tienda.Domain;
-
-namespace Tienda.Contracts.Items;
+﻿namespace Tienda.Contracts.Items;
 
 /// <summary>
 /// Dto utilizado para representar un Item.

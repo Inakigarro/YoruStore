@@ -1,5 +1,8 @@
 using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Tienda.Contracts.Auth.Roles;
 using Tienda.Contracts.Items;
 using Tienda.Contracts.Services;
 
@@ -20,7 +23,10 @@ public class ItemsController(
 
     [HttpPost]
     [Route("AgregarItem")]
-    public async Task<IActionResult> AgregarItem(CrearItemDto crearItem, CancellationToken cancellationToken = default, Guid? categoriaId = default, string? categoriaNombre = default)
+    [Authorize(
+        AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,
+        Roles = AuthRoles.Admin)]
+    public async Task<IActionResult> AgregarItem(CrearItemDto crearItem, Guid? categoriaId = default, string? categoriaNombre = default, CancellationToken cancellationToken = default)
     {
         try
         {
@@ -37,6 +43,9 @@ public class ItemsController(
 
     [HttpPut]
     [Route("ModificarItem")]
+    [Authorize(
+        AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,
+        Roles = AuthRoles.Admin)]
     public async Task<ActionResult> ModificarItem(ActualizarItemDto item, CancellationToken cancellationToken = default)
     {
         try

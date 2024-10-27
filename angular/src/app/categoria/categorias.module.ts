@@ -3,7 +3,6 @@ import { CategoriasListComponent } from "./list/categorias-list.component";
 import { CommonModule } from "@angular/common";
 import { CategoriasRoutingModule } from "./categorias-routing.module";
 import { AppListModule } from "@root/components/list/list.module";
-import { CategoriasRoutingComponent } from "./categorias-routing.component";
 import { StoreModule } from "@ngrx/store";
 import {
 	CATEGORIES_FEATURE_KEY,
@@ -18,11 +17,12 @@ import { MatInputModule } from "@angular/material/input";
 import { MatButtonModule } from "@angular/material/button";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { KeyUpDirective } from "./key-up.directive";
+import { CategoriasRoutingComponent } from "./categorias-routing.component";
 
 @NgModule({
 	declarations: [
-		CategoriasRoutingComponent,
 		CategoriasListComponent,
+		CategoriasRoutingComponent,
 		KeyUpDirective,
 	],
 	imports: [

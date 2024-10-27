@@ -34,14 +34,14 @@
 			</button>
 		</mat-card-subtitle>
 	</mat-card-header>
-	<mat-card-content>
-		@if (loaded$ | async) {
+	<mat-card-content class="categoria-lista">
+		@if (loading$ | async) {
+			<mat-spinner />
+		} @else {
 			<list-feature
 				[id]="'app-list'"
 				[data$]="listData$"
 			/>
-		} @else {
-			<mat-spinner />
 		}
 	</mat-card-content>
 </mat-card>

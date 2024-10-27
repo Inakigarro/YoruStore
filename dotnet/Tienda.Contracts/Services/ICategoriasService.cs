@@ -42,6 +42,13 @@ public interface ICategoriasService
     Task<CategoriaDto> GetAsync(Guid categoriaId, CancellationToken cancellationToken);
 
     /// <summary>
+    /// Obtiene la categoria correspondiente al nombre.
+    /// </summary>
+    /// <param name="nombre">El nombre de la categoria.</param>
+    /// <returns>Un dto que representa la categoria encontrada.</returns>
+    Task<CategoriaDto> GetByNameAsync(string nombre, CancellationToken cancellationToken);
+
+    /// <summary>
     /// Obtiene todas las categorias.
     /// </summary>
     /// <returns>Una lista de dtos que representan las categorias actuales.</returns>

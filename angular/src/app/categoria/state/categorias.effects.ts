@@ -1,51 +1,50 @@
 import { Injectable } from "@angular/core";
 import { CategoriasService } from "../categorias.service";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
-import { SecondaryToolbarActions } from "@root/app/state/app.actions";
-import { filter, map, switchMap, tap, withLatestFrom } from "rxjs";
+import { filter, map, switchMap, tap } from "rxjs";
+import { DetailsButtonClicked } from "@root/components/card/state/card.actions";
 import { CategoriesActions } from "./categorias.actions";
+import { RouterService } from "@root/app/router/router.service";
+import { fetch } from "@ngrx/router-store/data-persistence";
 
 @Injectable()
 export class CategoriesEffects {
-	public CategoryButtonClicked$ = createEffect(() =>
+	public initCategorias$ = createEffect(() =>
 		this.actions.pipe(
-			ofType(SecondaryToolbarActions.categoryButtonClicked),
-			switchMap((action) => this.service.obtenerCategoria(action.categoriaId)),
-			filter((x) => !!x),
-			tap((categoria) =>
-				this.service.navigate([`${categoria.nombre.toLowerCase()}`])
-			),
-			map((categoria) => CategoriesActions.categoriaCargada({ categoria }))
+			ofType(CategoriesActions.initCategorias),
+			switchMap(() => this.routerService.routerParams$),
+			filter((params) => !!params["nombreCategoria"]),
+			fetch({
+				run: (params) =>
+					this.service
+						.obtenerCategoriaPorNombre(params["nombreCategoria"])
+						.pipe(
+							filter((x) => !!x),
+							map((categoria) =>
+								CategoriesActions.categoriaCargada({
+									categoria: categoria,
+								})
+							)
+						),
+				onError: (params, error) =>
+					CategoriesActions.categoriaCargada({
+						categoria: { id: "", nombre: "", items: [] },
+						error: error,
+					}),
+			})
 		)
 	);
-
-	public SearchButtonClicked$ = createEffect(() =>
-		this.actions.pipe(
-			ofType(CategoriesActions.searchButtonClicked),
-			filter((action) => action.value.length > 0),
-			withLatestFrom(this.service.currentCategoria$),
-			switchMap(([action, categoria]) =>
-				this.service.obtenerConFiltro(categoria?.id!, action.value)
+	public itemDetailsButtonClicked$ = createEffect(
+		() =>
+			this.actions.pipe(
+				ofType(DetailsButtonClicked),
+				tap(({ itemId }) => this.service.navigate([`${itemId}`], true))
 			),
-			filter((x) => !!x),
-			map((result) => CategoriesActions.itemFiltered({ items: result }))
-		)
+		{ dispatch: false }
 	);
-
-	public ClearSearchButtonClicked$ = createEffect(() =>
-		this.actions.pipe(
-			ofType(CategoriesActions.searchClearButtonClicked),
-			withLatestFrom(this.service.currentCategoria$),
-			switchMap(([_, categoria]) =>
-				this.service.obtenerCategoria(categoria?.id!)
-			),
-			filter((x) => !!x),
-			map((categoria) => CategoriesActions.categoriaCargada({ categoria }))
-		)
-	);
-
 	constructor(
 		private readonly actions: Actions,
-		private service: CategoriasService
+		private service: CategoriasService,
+		private routerService: RouterService
 	) {}
 }
