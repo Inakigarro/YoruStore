@@ -7,10 +7,7 @@ import {
 import { UserProfile } from "../identity/models";
 import { ShoppingCartButtonClicked } from "@components/card/state/card.actions";
 import { ItemDetailsActions } from "../item-details/state/item-details.actions";
-import {
-	CloseButtonClicked,
-	EmptyButtonClicked,
-} from "../shopping-cart/state/shopping-cart.actions";
+import { ShoppingCartActions } from "../shopping-cart/state/shopping-cart.actions";
 import { Categoria } from "@root/components/models";
 
 export const APP_STATE_KEY = "app-state";
@@ -51,7 +48,7 @@ export const appReducer = createReducer(
 		...state,
 		isShoppingCartOpened: !state.isShoppingCartOpened,
 	})),
-	on(backdropClicked, CloseButtonClicked, (state) => ({
+	on(backdropClicked, ShoppingCartActions.closeButtonClicked, (state) => ({
 		...state,
 		isShoppingCartOpened: false,
 	})),
@@ -63,7 +60,7 @@ export const appReducer = createReducer(
 			shoppingCartCount: state.shoppingCartCount + 1,
 		})
 	),
-	on(EmptyButtonClicked, (state) => ({
+	on(ShoppingCartActions.emptyButtonClicked, (state) => ({
 		...state,
 		shoppingCartCount: 0,
 	}))

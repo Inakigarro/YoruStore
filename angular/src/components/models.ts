@@ -43,6 +43,7 @@ export interface Login {
 	password: string;
 }
 export interface LoginResponse {
-	token: string;
+	statusCode: number;
 	message: string;
+	token: string;
 }

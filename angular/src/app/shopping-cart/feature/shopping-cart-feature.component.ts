@@ -1,11 +1,7 @@
 import { Component } from "@angular/core";
 import { ShoppingCartService } from "../shopping-cart.service";
 import { Button } from "@root/components/models";
-import {
-	BuyButtonClicked,
-	CloseButtonClicked,
-	EmptyButtonClicked,
-} from "../state/shopping-cart.actions";
+import { ShoppingCartActions } from "../state/shopping-cart.actions";
 
 @Component({
 	selector: "shopping-cart-feature",
@@ -19,19 +15,19 @@ export class ShoppingCartFeatureComponent {
 		type: "icon",
 		label: "",
 		icon: "close",
-		action: CloseButtonClicked(),
+		action: ShoppingCartActions.closeButtonClicked(),
 	};
 	public pagarButton: Button = {
 		type: "raised",
 		label: "Pagar",
 		icon: "shopping_cart_checkout",
-		action: BuyButtonClicked(),
+		action: ShoppingCartActions.buyButtonClicked(),
 	};
 	public vaciarButton: Button = {
 		type: "flat",
 		label: "Vaciar",
 		icon: "shopping_cart_off",
-		action: EmptyButtonClicked(),
+		action: ShoppingCartActions.emptyButtonClicked(),
 	};
 
 	constructor(private service: ShoppingCartService) {}

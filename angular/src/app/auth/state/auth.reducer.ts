@@ -1,4 +1,5 @@
-import { Action, createReducer } from "@ngrx/store";
+import { createReducer, on } from "@ngrx/store";
+import { AuthActions } from "./auth.actions";
 
 export const AUTH_FEATURE_KEY = "auth";
 
@@ -15,8 +16,11 @@ export const initialState: AuthState = {
 	isLoggedIn: false,
 };
 
-export const authReducer = createReducer(initialState);
-
-export function reducer(state: AuthState, action: Action) {
-	return reducer(state, action);
-}
+export const authReducer = createReducer(
+	initialState,
+	on(AuthActions.userLoggedIn, (state, action) => ({
+		...state,
+		isLoggedIn: true,
+		token: action.response.token,
+	}))
+);

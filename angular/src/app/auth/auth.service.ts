@@ -1,8 +1,8 @@
 import { Injectable, OnDestroy } from "@angular/core";
 import { WebApiService } from "../web-api.service";
 import { Login } from "@root/components/models";
-import { filter, Observable, Subject, takeUntil } from "rxjs";
-import { Store } from "@ngrx/store";
+import { Observable, Subject, takeUntil } from "rxjs";
+import { Action, Store } from "@ngrx/store";
 import { getLoggedIn, getToken } from "./state/auth.selectors";
 import { NavigationService } from "../navigation.service";
 
@@ -16,10 +16,15 @@ export class AuthService implements OnDestroy {
 
 	constructor(
 		private store: Store,
+		private webapi: WebApiService,
 		private navigationService: NavigationService
 	) {
 		this.isLoggedIn$ = this.store.select(getLoggedIn);
 		this.token$ = this.store.select(getToken);
+	}
+
+	public login(login: Login) {
+		return this.webapi.login(login);
 	}
 
 	public isAuthenticated() {
@@ -35,6 +40,9 @@ export class AuthService implements OnDestroy {
 		this.destroy$.complete();
 	}
 
+	public dispatch(action: Action) {
+		this.store.dispatch(action);
+	}
 	public navigate(url: string[], relative: boolean = false) {
 		this.navigationService.navigate(url, relative);
 	}
