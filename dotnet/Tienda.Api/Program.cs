@@ -11,6 +11,7 @@ using Tienda.Infrastructure;
 using Tienda.Infrastructure.AutoMapper;
 using Tienda.Infrastructure.Repositories;
 using Tienda.Infrastructure.Services;
+using Tienda.Utilities.Attributes;
 
 namespace Tienda.Api;
 
@@ -62,16 +63,10 @@ public class Program
             cfg.AddProfile(new CategoriaProfile());
             cfg.AddProfile(new ItemProfile());
         });
-
-        // Categorias.
+        
         builder.Services
-            .AddScoped<ICategoriasRepository, CategoriasRepository>()
-            .AddScoped<ICategoriasService, CategoriasServices>();
-
-        // Items.
-        builder.Services
-            .AddScoped<IItemsRepository, ItemsRepository>()
-            .AddScoped<IItemsService, ItemsService>();
+            .AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>))
+            .AddInfrastructureDependencies();
 
         builder.Services.AddControllers();
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

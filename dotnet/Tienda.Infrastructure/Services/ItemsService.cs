@@ -1,31 +1,32 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Tienda.Contracts.Categorias;
 using Tienda.Contracts.Items;
 using Tienda.Contracts.Repositories;
 using Tienda.Contracts.Services;
+using Tienda.Domain;
+using Tienda.Utilities.Attributes;
 
 namespace Tienda.Infrastructure.Services;
 
+[Scoped]
 public class ItemsService(
     IItemsRepository itemsRepository,
     ICategoriasRepository categoriesRepository,
     ILogger<ItemsService> logger,
     IMapper mapper) : IItemsService
 {
-    private readonly IItemsRepository _itemsRepository = itemsRepository;
-    private readonly ICategoriasRepository _categoriesRepository = categoriesRepository;
-    private readonly ILogger<ItemsService> _logger = logger;
-    private readonly IMapper _mapper = mapper;
-
     /// <inheritdoc/>
     public async Task<ItemDto> CreateAsync(CrearItemDto nuevoItem, CancellationToken cancellationToken, Guid? categoriaId = default, string? categoriaNombre = default)
     {
-        _logger.LogInformation($"Creando un nuevo item con el titulo: {nuevoItem.Titulo}");
+        logger.LogInformation($"Creando un nuevo item con el titulo: {nuevoItem.Titulo}");
+        
+        // Obtengo la categoria a la que se agregara el item.
         var categoria = categoriaId != default && categoriaId != Guid.Empty
-            ? await this._categoriesRepository.GetByIdAsync(categoriaId.Value, cancellationToken)
+            ? await categoriesRepository.GetAsync(categoriaId.Value, cancellationToken)
             : categoriaNombre != default && !string.IsNullOrWhiteSpace(categoriaNombre)
-                ? await this._categoriesRepository.GetByNombreAsync(categoriaNombre, cancellationToken)
+                ? await categoriesRepository.GetByNombreAsync(categoriaNombre, cancellationToken)
                 : throw new ArgumentNullException("Se necesita un Id o un Nombre para buscar la categoria en la que se agregara el item.");
 
         if (categoria is null)
@@ -33,69 +34,74 @@ public class ItemsService(
             throw new InvalidOperationException($"No existe una categoria con el Id: {categoriaId}");
         }
 
-        var item = await this._itemsRepository.AddAsync(nuevoItem, cancellationToken);
+        var item = new Item();
+        item.SetTitulo(nuevoItem.Titulo);
+        item.SetDescripcion(nuevoItem.Descripcion);
+        item.SetPrecio(nuevoItem.Precio);
+        await itemsRepository.AddAsync(item, cancellationToken);
+        
         categoria.AddItem(item);
-        ActualizarCategoriaDto categoriaDto = this._mapper.Map<ActualizarCategoriaDto>(categoria);
-        await this._categoriesRepository.UpdateAsync(categoriaDto, cancellationToken);
-        await this._itemsRepository.SaveChangesAsync(cancellationToken);
-        return this._mapper.Map<ItemDto>(item);
+        ActualizarCategoriaDto categoriaDto = mapper.Map<ActualizarCategoriaDto>(categoria);
+        await categoriesRepository.UpdateAsync(categoriaDto, cancellationToken);
+        await itemsRepository.SaveAsync(cancellationToken);
+        return mapper.Map<ItemDto>(item);
     }
 
     /// <inheritdoc/>
     public async Task<ItemDto> UpdateAsync(ActualizarItemDto item, CancellationToken cancellationToken)
     {
-        var itemExistente = await this._itemsRepository.GetAsync(item.Id, cancellationToken);
-        if (itemExistente is null)
-        {
-            throw new InvalidOperationException($"No existe un item con el Id: {item.Id}");
-        }
+        var itemExistente = await itemsRepository.GetAsync(item.Id, cancellationToken)
+            ?? throw new InvalidOperationException($"No existe un item con el Id: {item.Id}");
 
-        _logger.LogInformation($"Actualizando el item: {itemExistente}, con la informacion: {item}");
-        var itemActualizado = await this._itemsRepository.UpdateAsync(item, cancellationToken);
-        return this._mapper.Map<ItemDto>(itemActualizado);
+        logger.LogInformation($"Actualizando el item: {itemExistente}, con la informacion: {item}");
+        itemExistente.SetTitulo(item.Titulo);
+        itemExistente.SetDescripcion(item.Descripcion);
+        itemExistente.SetPrecio(item.Precio);
+        
+        itemsRepository.Update(itemExistente);
+        await itemsRepository.SaveAsync(cancellationToken);
+        
+        return mapper.Map<ItemDto>(itemExistente);
     }
 
     /// <inheritdoc/>
     public async Task<ItemDto> DeleteAsync(Guid itemId, CancellationToken cancellationToken)
     {
-        var item = await this._itemsRepository.GetAsync(itemId, cancellationToken);
-        if (item is null)
-        {
-            throw new InvalidOperationException($"No existe un item con el Id: {itemId}");
-        }
-        _logger.LogInformation($"Eliminando el item correspondiente al Id: {itemId}");
-        var itemEliminado = await this._itemsRepository.DeleteAsync(itemId, cancellationToken);
-        return this._mapper.Map<ItemDto>(itemEliminado);
+        var item = await itemsRepository.GetAsync(itemId, cancellationToken)
+            ?? throw new InvalidOperationException($"No existe un item con el Id: {itemId}");
+        
+        logger.LogInformation($"Eliminando el item correspondiente al Id: {itemId}");
+        
+        await itemsRepository.Delete(itemId, cancellationToken);
+        return mapper.Map<ItemDto>(item);
     }
 
     /// <inheritdoc/>
     public async Task<ItemDto> GetAsync(Guid itemId, CancellationToken cancellationToken)
     {
-        var item = await this._itemsRepository.GetAsync(itemId, cancellationToken);
-        if (item is null)
-        {
-            throw new InvalidOperationException($"No existe un item con el Id: {itemId}");
-        }
+        var item = await itemsRepository.GetAsync(itemId, cancellationToken)
+            ?? throw new InvalidOperationException($"No existe un item con el Id: {itemId}");
 
-        return this._mapper.Map<ItemDto>(item);
+        return mapper.Map<ItemDto>(item);
     }
 
     /// <inheritdoc/>
     public async Task<IEnumerable<ItemDto>> GetByFilterAsync(Guid categoriaId, string filter, CancellationToken cancellationToken)
     {
-        var items = await this._itemsRepository.GetByFilterAsync(categoriaId, filter, cancellationToken);
-        return this._mapper.Map<IEnumerable<ItemDto>>(items);
+        var items = await itemsRepository.GetByFilterAsync(categoriaId, filter, cancellationToken);
+        return mapper.Map<IEnumerable<ItemDto>>(items);
     }
 
     public async Task<IEnumerable<ItemDto>> GetAllAsync(CancellationToken cancellationToken)
     {
-        var items = await this._itemsRepository.GetAllAsync(cancellationToken);
-        return this._mapper.Map<IEnumerable<ItemDto>>(items);
+        var items = await itemsRepository.GetAll()
+            .ToListAsync(cancellationToken);
+        return mapper.Map<IEnumerable<ItemDto>>(items);
     }
 
     public async Task<IEnumerable<ItemDto>> GetByCategoriaId(Guid categoriaId, int skip, int take, CancellationToken cancellationToken)
     {
-        var items = await this._itemsRepository.GetAllByCategoriaIdAsync(categoriaId, skip, take, cancellationToken);
-        return this._mapper.Map<IEnumerable<ItemDto>>(items);
+        var items = await itemsRepository.GetAllByCategoriaIdAsync(categoriaId, skip, take, cancellationToken);
+        return mapper.Map<IEnumerable<ItemDto>>(items);
     }
 }

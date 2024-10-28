@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Tienda.Contracts\Tienda.Contracts.csproj" />
+    <ProjectReference Include="..\Tienda.Utilities\Tienda.Utilities.csproj" />
   </ItemGroup>
 
 </Project>

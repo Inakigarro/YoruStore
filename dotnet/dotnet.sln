@@ -19,6 +19,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tienda.Infrastructure.UnitT
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tienda.InitialData", "Tienda.InitialData\Tienda.InitialData.csproj", "{FBD17289-6965-49EC-BC30-5AE927E6C163}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tienda.Utilities", "Tienda.Utilities\Tienda.Utilities.csproj", "{C7F11191-3A3C-4D26-A382-CF0C703AEE82}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,6 +55,10 @@ Global
 		{FBD17289-6965-49EC-BC30-5AE927E6C163}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FBD17289-6965-49EC-BC30-5AE927E6C163}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FBD17289-6965-49EC-BC30-5AE927E6C163}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C7F11191-3A3C-4D26-A382-CF0C703AEE82}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C7F11191-3A3C-4D26-A382-CF0C703AEE82}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C7F11191-3A3C-4D26-A382-CF0C703AEE82}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C7F11191-3A3C-4D26-A382-CF0C703AEE82}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

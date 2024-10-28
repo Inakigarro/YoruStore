@@ -1,8 +1,11 @@
-﻿namespace Tienda.Domain;
+﻿using Tienda.Contracts;
+using Tienda.Utilities.Extensions;
 
-public class Categoria(Guid id)
+namespace Tienda.Domain;
+
+public class Categoria : IId
 {
-    public Guid Id { get; private set; } = id;
+    public Guid Id { get; set; } = Guid.NewGuid();
 
     public string Nombre { get; private set; } = string.Empty;
 
@@ -16,11 +19,9 @@ public class Categoria(Guid id)
     /// <exception cref="ArgumentNullException"></exception>
     public void SetNombre(string nombre)
     {
-        if (string.IsNullOrWhiteSpace(nombre))
-        {
-            throw new ArgumentNullException(nameof(nombre), "El nombre de la categoria no puede ser nulo ni estar vacio.");
-        }
-        this.Nombre = nombre;
+        Nombre = !nombre.IsNullOrWhiteSpace()
+            ? nombre
+            : throw new ArgumentNullException(nameof(nombre), "El nombre de la categoria no puede ser nulo ni estar vacio.");
     }
 
     /// <summary>
@@ -36,5 +37,14 @@ public class Categoria(Guid id)
         }
         this.Items.Add(item);
         item.Categoria = this;
+    }
+
+    public void RemoveItem(Item item)
+    {
+        // Si el item no existe en la categoria, termino.
+        if (Items.Any(x => x.Id == item.Id))
+            return;
+        item.Categoria = null;
+        Items.Remove(item);
     }
 }
