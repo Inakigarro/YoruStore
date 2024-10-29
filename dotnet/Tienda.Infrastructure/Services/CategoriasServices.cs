@@ -7,9 +7,11 @@ using Tienda.Contracts.Items;
 using Tienda.Contracts.Repositories;
 using Tienda.Contracts.Services;
 using Tienda.Domain;
+using Tienda.Utilities.Attributes;
 
 namespace Tienda.Infrastructure.Services;
 
+[Scoped]
 public class CategoriasServices(
     ICategoriasRepository categoriasRepository,
     IItemsRepository itemsRepository,
@@ -59,19 +61,6 @@ public class CategoriasServices(
     }
 
     /// <inheritdoc/>
-    public async Task<CategoriaDto> AddItemAsync(Guid categoriaId, ItemDto item, CancellationToken cancellationToken)
-    {
-        var categoria = await categoriasRepository.GetAsync(categoriaId, cancellationToken)
-            ?? throw new InvalidOperationException($"No existe una categoria con el Id: {categoriaId}");
-
-        logger.LogInformation($"Agregando el item: {item.Id} - {item.Titulo}, a la categoria: {categoria.Nombre}");
-        categoria.AddItem(mapper.Map<Item>(item));
-        var categoriaActualizada = categoriasRepository.UpdateAsync(mapper.Map<ActualizarCategoriaDto>(categoria), cancellationToken);
-        await categoriasRepository.SaveAsync(cancellationToken);
-        return mapper.Map<CategoriaDto>(categoriaActualizada);
-    }
-
-    /// <inheritdoc/>
     public async Task<CategoriaDto> DeleteAsync(Guid categoriaId, CancellationToken cancellationToken)
     {
         var categoria = await categoriasRepository.GetAsync(categoriaId, cancellationToken)
@@ -85,32 +74,28 @@ public class CategoriasServices(
     /// <inheritdoc/>
     public async Task<CategoriaDto> GetAsync(Guid categoriaId, CancellationToken cancellationToken)
     {
-        var categoria = await this._categoriasRepository.GetByIdAsync(categoriaId, cancellationToken);
-        if (categoria is null)
-        {
-            throw new InvalidOperationException($"No existe una categoria con el Id: {categoriaId}");
-        }
+        var categoria = await categoriasRepository.GetAsync(categoriaId, cancellationToken)
+            ?? throw new InvalidOperationException($"No existe una categoria con el Id: {categoriaId}");
 
-        return this._mapper.Map<CategoriaDto>(categoria);
+        return mapper.Map<CategoriaDto>(categoria);
     }
 
     public async Task<CategoriaDto> GetByNameAsync(string nombre, CancellationToken cancellationToken)
     {
-        var categoria = await _categoriasRepository.GetByNombreAsync(nombre, cancellationToken);
-        if (categoria is null)
-        {
-            throw new InvalidOperationException($"No existe una categoria con el nombre: {nombre}");
-        }
+        var categoria = await categoriasRepository.GetByNombreAsync(nombre, cancellationToken)
+            ?? throw new InvalidOperationException($"No existe una categoria con el nombre: {nombre}");
 
-        return this._mapper.Map<CategoriaDto>(categoria);
+        return mapper.Map<CategoriaDto>(categoria);
     }
 
     /// <inheritdoc/>
     public async Task<IEnumerable<CategoriaDto>> GetAllAsync(CancellationToken cancellationToken)
     {
-        var categorias = await this._categoriasRepository.GetAllAsync(cancellationToken) ?? new List<Categoria>();
+        var categorias = await categoriasRepository
+            .GetAll()
+            .ToListAsync(cancellationToken);
 
-        return this._mapper.Map<IEnumerable<CategoriaDto>>(categorias);
+        return mapper.Map<IEnumerable<CategoriaDto>>(categorias);
     }
 
     private async Task<IEnumerable<Item>> ObtenerItemsABorrar(IEnumerable<Guid> itemsExistentes,

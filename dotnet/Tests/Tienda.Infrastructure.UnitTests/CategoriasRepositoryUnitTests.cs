@@ -1,9 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Tienda.Contracts.Categorias;
 using Tienda.Contracts.Repositories;
 using Tienda.Domain;
 using Tienda.Infrastructure.Repositories;
+using Tienda.Utilities.Attributes;
 
 namespace Tienda.Infrastructure.UnitTests;
 
@@ -17,7 +17,9 @@ public class CategoriasUnitTests
         var services = new ServiceCollection();
         services.AddDbContext<TiendaDbContext>(opts =>
             opts.UseInMemoryDatabase("TestDb"));
-        services.AddTransient<ICategoriasRepository, CategoriasRepository>();
+        services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>))
+            .AddInfrastructureDependencies();
+        
         this._serviceProvider = services.BuildServiceProvider();
     }
 
@@ -30,7 +32,7 @@ public class CategoriasUnitTests
     }
 
     [Test]
-    public async Task Add_ConDataValida_DebeAgregarYDevolverCategoriaAgregada()
+    public async Task Add_ConDataValida_DebeAgregarCategoria()
     {
         // Arrange.
         using var scope = this._serviceProvider.CreateScope();
@@ -38,18 +40,18 @@ public class CategoriasUnitTests
         var repository = scope.ServiceProvider.GetRequiredService<ICategoriasRepository>();
 
         // Categoria a guardar en db.
-        Guid categoriaId = Guid.NewGuid();
-        CrearCategoriaDto nuevaCategoria = new CrearCategoriaDto()
-        {
-            Nombre = "Medias",
-        };
+        string nombreCategoria = "Nombre";
+        Categoria categoria = new();
+        categoria.SetNombre(nombreCategoria);
 
         // Act.
-        var categoria = await repository.AddAsync(nuevaCategoria, default);
+        await repository.AddAsync(categoria, default);
+        await repository.SaveAsync(default);
 
         // Assert.
-        Assert.That(categoria, Is.Not.Null);
-        Assert.That(categoria.Nombre, Is.EqualTo("Medias"));
+        Categoria categoriaGuardada = await repository.GetAsync(categoria.Id, default);
+        Assert.That(categoriaGuardada, Is.Not.Null);
+        Assert.That(categoria.Nombre, Is.EqualTo(nombreCategoria));
     }
 
     [Test]
@@ -61,37 +63,34 @@ public class CategoriasUnitTests
         var repository = scope.ServiceProvider.GetRequiredService<ICategoriasRepository>();
 
         // Agrego categoria a modificar.
-        CrearCategoriaDto categoria = new CrearCategoriaDto()
-        {
-            Nombre = "Medias",
-        };
+        string nombreCategoria = "Nombre";
+        Categoria categoria = new();
+        categoria.SetNombre(nombreCategoria);
 
-        Categoria nuevaCategoria = await repository.AddAsync(categoria, default);
+        await repository.AddAsync(categoria, default);
+        await repository.SaveAsync(default);
 
         // Me aseguro que la categoria se creo correctamente.
-        Assert.That(nuevaCategoria, Is.Not.Null);
-        Assert.That(nuevaCategoria.Nombre, Is.EqualTo("Medias"));
-
-        ActualizarCategoriaDto categoriaAModificar = new ActualizarCategoriaDto()
-        {
-            Id = nuevaCategoria.Id, 
-            Nombre = "Pantalones",
-        };
-
+        Categoria categoriaGuardada = await repository.GetAsync(categoria.Id, default);
+        Assert.That(categoriaGuardada, Is.Not.Null);
+        Assert.That(categoria.Nombre, Is.EqualTo(nombreCategoria));
+        
         // Act.
-        Categoria categoriaActualizada = await repository.UpdateAsync(categoriaAModificar, default);
-
+        string nuevoNombre = "Nuevo Nombre";
+        categoriaGuardada.SetNombre(nuevoNombre);
+        repository.Update(categoriaGuardada);
+        await repository.SaveAsync(default);
+        
         // Assert.
-        Assert.That(categoriaActualizada, Is.Not.Null);
-        Assert.That(categoriaActualizada.Nombre, Is.EqualTo("Pantalones"));
+        Assert.That(categoriaGuardada, Is.Not.Null);
+        Assert.That(categoriaGuardada.Nombre, Is.EqualTo(nuevoNombre));
     }
 
     [Test]
-    public async Task ActualizarCategoria_AgregandoUnItemALista_DebeDevolverCategoriaConItemAgregado()
+    public async Task ActualizarCategoria_AgregandoUnItemALista_DebeActualizarCategoriaItem()
     {
         // Arrange.
-        Guid itemId = Guid.NewGuid();
-        Item item = new Item(itemId);
+        Item item = new Item();
         item.SetTitulo("Titulo");
         item.SetDescripcion("Descripcion");
         item.SetPrecio(1000);
@@ -99,34 +98,31 @@ public class CategoriasUnitTests
         using var scope = this._serviceProvider.CreateScope();
         var dbContext = scope.ServiceProvider.GetRequiredService<TiendaDbContext>();
         dbContext.Items.Add(item);
-        dbContext.SaveChanges();
+        dbContext.SaveChanges(default);
 
         // Repositorio a probar.
         var repository = scope.ServiceProvider.GetRequiredService<ICategoriasRepository>();
 
         // Agrego categoria a modificar.
-        CrearCategoriaDto categoria = new CrearCategoriaDto()
-        {
-            Nombre = "Medias",
-        };
+        string nombreCategoria = "Nombre";
+        Categoria categoria = new();
+        categoria.SetNombre(nombreCategoria);
 
-        Categoria nuevaCategoria = await repository.AddAsync(categoria, default);
-
+        await repository.AddAsync(categoria, default);
+        await repository.SaveAsync(default);
+        
         // Me aseguro que la categoria se creo correctamente.
-        Assert.That(nuevaCategoria, Is.Not.Null);
-        Assert.That(nuevaCategoria.Nombre, Is.EqualTo("Medias"));
-
-        ActualizarCategoriaDto categoriaAModificar = new ActualizarCategoriaDto()
-        {
-            Id = nuevaCategoria.Id,
-            Nombre = nuevaCategoria.Nombre,
-            Items = new List<Guid>() { itemId }
-        };
+        var categoriaGuardada = await repository.GetAsync(categoria.Id, default);
+        Assert.That(categoriaGuardada, Is.Not.Null);
+        Assert.That(categoriaGuardada.Nombre, Is.EqualTo(nombreCategoria));
 
         // Act.
-        Categoria categoriaActualizada = await repository.UpdateAsync(categoriaAModificar, default);
+        categoriaGuardada.AddItem(item);
+        repository.Update(categoriaGuardada);
+        await repository.SaveAsync(default);
 
         // Assert.
+        Categoria categoriaActualizada = await repository.GetAsync(categoriaGuardada.Id, default);
         Assert.That(categoriaActualizada, Is.Not.Null);
         Assert.That(categoriaActualizada.Items, Has.Count.EqualTo(1));
         Assert.That(categoriaActualizada.Items, Does.Contain(item));

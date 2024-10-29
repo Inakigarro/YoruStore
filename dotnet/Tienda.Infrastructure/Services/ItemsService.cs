@@ -41,8 +41,7 @@ public class ItemsService(
         await itemsRepository.AddAsync(item, cancellationToken);
         
         categoria.AddItem(item);
-        ActualizarCategoriaDto categoriaDto = mapper.Map<ActualizarCategoriaDto>(categoria);
-        await categoriesRepository.UpdateAsync(categoriaDto, cancellationToken);
+        categoriesRepository.Update(categoria);
         await itemsRepository.SaveAsync(cancellationToken);
         return mapper.Map<ItemDto>(item);
     }

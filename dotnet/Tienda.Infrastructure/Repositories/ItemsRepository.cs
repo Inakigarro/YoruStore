@@ -2,9 +2,11 @@
 using Tienda.Contracts.Items;
 using Tienda.Contracts.Repositories;
 using Tienda.Domain;
+using Tienda.Utilities.Attributes;
 
 namespace Tienda.Infrastructure.Repositories;
 
+[Scoped]
 public class ItemsRepository(TiendaDbContext dbContext) : GenericRepository<Item>(dbContext), IItemsRepository
 {
     /// <inheritdoc />

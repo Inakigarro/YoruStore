@@ -6,12 +6,6 @@ namespace Tienda.Contracts.Repositories;
 public interface ICategoriasRepository : IGenericRepository<Categoria>
 {
     /// <summary>
-    /// Actualiza una categoria en la base de datos.
-    /// </summary>
-    /// <param name="categoria">La categoria a actualizar.</param>
-    /// <returns>La categoria actualizada.</returns>
-    Task<Categoria> UpdateAsync(ActualizarCategoriaDto categoria, CancellationToken cancellationToken);
-    /// <summary>
     /// Obtiene una categoria por su nombre.
     /// </summary>
     /// <param name="nombre">El nombre de la categoria a buscar.</param>

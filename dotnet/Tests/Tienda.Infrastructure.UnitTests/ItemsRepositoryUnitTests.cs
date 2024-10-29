@@ -33,58 +33,60 @@ public class ItemsRepositoryUnitTests
     public async Task AgregarUnItem_ConDataValida_DebeAgregarYDevolverItemCompleto()
     {
         // Arrange.
-        using var scope = this._serviceProvider.CreateScope();
+        using var scope = _serviceProvider.CreateScope();
         var repository = scope.ServiceProvider.GetRequiredService<IItemsRepository>();
-        Guid itemId = Guid.NewGuid();
-        CrearItemDto nuevoItem = new CrearItemDto()
-        {
-            Titulo = "Titulo",
-            Descripcion = "Descripcion",
-            Precio = 1000,
-        };
+        string nuevoTitulo = "Titulo";
+        string nuevaDescripcion = "Descripcion";
+        double nuevoPrecio = 1000;
+        Item item = new();
+        item.SetTitulo(nuevoTitulo);
+        item.SetDescripcion(nuevaDescripcion);
+        item.SetPrecio(nuevoPrecio);
 
         // Act.
-        var item = await repository.AddAsync(nuevoItem, default);
+        await repository.AddAsync(item, default);
+        await repository.SaveAsync(default);
 
         // Assert.
-        Assert.That(item, Is.Not.Null);
-        Assert.That(item.Titulo, Is.EqualTo("Titulo"));
-        Assert.That(item.Descripcion, Is.EqualTo("Descripcion"));
-        Assert.That(item.Precio, Is.EqualTo(1000));
+        Item itemGuardado = await repository.GetAsync(item.Id, default);
+        Assert.That(itemGuardado, Is.Not.Null);
+        Assert.That(itemGuardado.Titulo, Is.EqualTo(nuevoTitulo));
+        Assert.That(itemGuardado.Descripcion, Is.EqualTo(nuevaDescripcion));
+        Assert.That(itemGuardado.Precio, Is.EqualTo(nuevoPrecio));
     }
 
     [Test]
     public async Task ActualizarItem_ConDataValida_DebeActualizarYDevolverItemCompletamenteActualizado()
     {
         // Arrange.
-        using var scope = this._serviceProvider.CreateScope();
+        using var scope = _serviceProvider.CreateScope();
         var repository = scope.ServiceProvider.GetRequiredService<IItemsRepository>();
-        Guid itemId = Guid.NewGuid();
-        CrearItemDto item = new CrearItemDto()
-        {
-            Titulo = "Titulo",
-            Descripcion = "Descripcion",
-            Precio = 1000,
-        };
+        string nuevoTitulo = "Titulo";
+        string nuevaDescripcion = "Descripcion";
+        double nuevoPrecio = 1000;
+        Item item = new();
+        item.SetTitulo(nuevoTitulo);
+        item.SetDescripcion(nuevaDescripcion);
+        item.SetPrecio(nuevoPrecio);
 
-        var nuevoItem = await repository.AddAsync(item, default);
+        await repository.AddAsync(item, default);
+        await repository.SaveAsync(default);
 
-        Assert.That(nuevoItem, Is.Not.Null);
-
-        ActualizarItemDto itemAModificar = new ActualizarItemDto()
-        {
-            Id = nuevoItem.Id,
-            Titulo = nuevoItem.Titulo,
-            Descripcion = nuevoItem.Descripcion,
-            Precio = 2000,
-        };
+        Item itemGuardado = await repository.GetAsync(item.Id, default);
+        Assert.That(itemGuardado, Is.Not.Null);
+        Assert.That(itemGuardado.Titulo, Is.EqualTo(nuevoTitulo));
+        Assert.That(itemGuardado.Descripcion, Is.EqualTo(nuevaDescripcion));
+        Assert.That(itemGuardado.Precio, Is.EqualTo(nuevoPrecio));
 
         // Act.
-        Item itemActualizado = await repository.UpdateAsync(itemAModificar, default);
+        double precioActualizado = 1456.2;
+        itemGuardado.SetPrecio(precioActualizado);
+        repository.Update(itemGuardado);
+        await repository.SaveAsync(default);
 
         // Assert.
-        Assert.That(itemActualizado, Is.Not.Null);
-        Assert.That(itemActualizado.Precio, Is.EqualTo(itemAModificar.Precio));
+        Assert.That(itemGuardado, Is.Not.Null);
+        Assert.That(itemGuardado.Precio, Is.EqualTo(precioActualizado));
     }
 
 }
