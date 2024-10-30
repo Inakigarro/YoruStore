@@ -42,7 +42,7 @@ public class Categoria : IId
     public void RemoveItem(Item item)
     {
         // Si el item no existe en la categoria, termino.
-        if (Items.Any(x => x.Id == item.Id))
+        if (Items.All(x => x.Id != item.Id))
             return;
         item.Categoria = null;
         Items.Remove(item);
