@@ -11,7 +11,6 @@ using Tienda.Infrastructure;
 using Tienda.Infrastructure.AutoMapper;
 using Tienda.Infrastructure.Repositories;
 using Tienda.Infrastructure.Services;
-using Tienda.Utilities.Attributes;
 
 namespace Tienda.Api;
 
@@ -66,7 +65,10 @@ public class Program
         
         builder.Services
             .AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>))
-            .AddInfrastructureDependencies();
+            .AddScoped<IItemsRepository, ItemsRepository>()
+            .AddScoped<ICategoriasRepository, CategoriasRepository>()
+            .AddScoped<IItemsService, ItemsService>()
+            .AddScoped<ICategoriasService, CategoriasServices>();
 
         builder.Services.AddControllers();
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

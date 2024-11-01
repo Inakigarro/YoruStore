@@ -25,7 +25,7 @@ public class AuthController(
     public async Task<IActionResult> Register([FromBody]RegisterUserRequest userDetails)
     {
         // Si se envia una request vacia, BadRequest.
-        if (userDetails == null)
+        if (userDetails is null)
         {
             return BadRequest(new RegisterUserError()
             {
