@@ -13,9 +13,6 @@ public class CategoriasController(
     ICategoriasService categoriaService,
     ILogger<CategoriasController> logger) : ControllerBase
 {
-    private readonly ICategoriasService _categoriaService = categoriaService;
-    private readonly ILogger<CategoriasController> _logger = logger;
-
     [HttpPost]
     [Route("CrearCategoria")]
     [Authorize(
@@ -25,14 +22,14 @@ public class CategoriasController(
     {
         try
         {
-            _logger.LogInformation($"Creando una categoria con el nombre: {nuevaCategoria.Nombre}");
-            var categoriaCreada = await this._categoriaService.CreateAsync(nuevaCategoria, cancellationToken);
+            logger.LogInformation($"Creando una categoria con el nombre: {nuevaCategoria.Nombre}");
+            var categoriaCreada = await categoriaService.CreateAsync(nuevaCategoria, cancellationToken);
             return Ok(categoriaCreada);
         }
         catch (Exception ex)
         {
             string error = $"Ocurrio un error durante la creacion. {ex.Message} - {ex.StackTrace}";
-            _logger.LogError(error);
+            logger.LogError(error);
             return BadRequest(error);
         }
     }
@@ -46,14 +43,14 @@ public class CategoriasController(
     {
         try
         {
-            _logger.LogInformation($"Actualizando una categoria con el nombre: {actualizarCategoria.Nombre}");
-            var categoria = await this._categoriaService.UpdateAsync(actualizarCategoria, cancellationToken);
+            logger.LogInformation($"Actualizando una categoria con el nombre: {actualizarCategoria.Nombre}");
+            var categoria = await categoriaService.UpdateAsync(actualizarCategoria, cancellationToken);
             return Ok(categoria);
         }
         catch (Exception ex)
         {
             string error = $"Ocurrio un error durante la actualizacion de la categoria. {ex.Message} - {ex.StackTrace}";
-            _logger.LogError(error);
+            logger.LogError(error);
             return BadRequest(error);
         }
     }
@@ -64,14 +61,14 @@ public class CategoriasController(
     {
         try
         {
-            _logger.LogInformation($"Obteniendo la categoria correspondiente al Id: {categoriaId}");
-            var categoria = await this._categoriaService.GetAsync(categoriaId, cancellationToken);
+            logger.LogInformation($"Obteniendo la categoria correspondiente al Id: {categoriaId}");
+            var categoria = await categoriaService.GetAsync(categoriaId, cancellationToken);
             return Ok(categoria);
         }
         catch (Exception ex)
         {
             string error = $"Ocurrio un error durante la busqueda de la categoria con Id: {categoriaId}. {ex.Message} - {ex.StackTrace}";
-            _logger.LogError(error);
+            logger.LogError(error);
             return BadRequest(error);
         }
     }
@@ -82,14 +79,14 @@ public class CategoriasController(
     {
         try
         {
-            _logger.LogInformation($"Obteniendo la categoria con el nombre: {nombre}");
-            var categoria = await _categoriaService.GetByNameAsync(nombre, cancellationToken);
+            logger.LogInformation($"Obteniendo la categoria con el nombre: {nombre}");
+            var categoria = await categoriaService.GetByNameAsync(nombre, cancellationToken);
             return Ok(categoria);
         }
         catch (Exception ex)
         {
             string error = $"Ocurrio un error durante la busqueda de la categoria con nombre: {nombre}. {ex.Message} - {ex.StackTrace}";
-            _logger.LogError(error);
+            logger.LogError(error);
             return BadRequest(error);
         }
     }
@@ -100,14 +97,14 @@ public class CategoriasController(
     {
         try
         {
-            _logger.LogInformation("Obteniendo todas las categorias");
-            var categorias = await this._categoriaService.GetAllAsync(cancellationToken);
+            logger.LogInformation("Obteniendo todas las categorias");
+            var categorias = await categoriaService.GetAllAsync(cancellationToken);
             return Ok(categorias);
         }
         catch (Exception ex)
         {
             string error = $"Ocurrio un error durante la busqueda de las categorias: {ex.Message} - {ex.StackTrace}";
-            _logger.LogError(error);
+            logger.LogError(error);
             return BadRequest(error);
         }
     }
@@ -121,14 +118,14 @@ public class CategoriasController(
     {
         try
         {
-            _logger.LogWarning($"Borrando categoria correspondiente al Id: {categoriaId}");
-            var categoria = await this._categoriaService.DeleteAsync(categoriaId, cancellationToken);
+            logger.LogWarning($"Borrando categoria correspondiente al Id: {categoriaId}");
+            var categoria = await categoriaService.DeleteAsync(categoriaId, cancellationToken);
             return Ok(categoria);
         }
         catch (Exception ex)
         {
             string error = $"Ocurrio un error durante la eliminacion de la categoria con Id: {categoriaId}. {ex.Message} - {ex.StackTrace}";
-            _logger.LogError(error);
+            logger.LogError(error);
             return BadRequest(error);
         }
     }
