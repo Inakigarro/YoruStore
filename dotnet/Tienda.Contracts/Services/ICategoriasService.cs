@@ -1,5 +1,4 @@
 ﻿using Tienda.Contracts.Categorias;
-using Tienda.Contracts.Items;
 
 namespace Tienda.Contracts.Services;
 

@@ -1,17 +1,13 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Microsoft.VisualBasic.CompilerServices;
 using Tienda.Contracts.Categorias;
-using Tienda.Contracts.Items;
 using Tienda.Contracts.Repositories;
 using Tienda.Contracts.Services;
 using Tienda.Domain;
-using Tienda.Utilities.Attributes;
 
 namespace Tienda.Infrastructure.Services;
 
-[Scoped]
 public class CategoriasServices(
     ICategoriasRepository categoriasRepository,
     IItemsRepository itemsRepository,

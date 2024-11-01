@@ -1,16 +1,13 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Tienda.Contracts.Categorias;
 using Tienda.Contracts.Items;
 using Tienda.Contracts.Repositories;
 using Tienda.Contracts.Services;
 using Tienda.Domain;
-using Tienda.Utilities.Attributes;
 
 namespace Tienda.Infrastructure.Services;
 
-[Scoped]
 public class ItemsService(
     IItemsRepository itemsRepository,
     ICategoriasRepository categoriesRepository,
@@ -27,7 +24,7 @@ public class ItemsService(
             ? await categoriesRepository.GetAsync(categoriaId.Value, cancellationToken)
             : categoriaNombre != default && !string.IsNullOrWhiteSpace(categoriaNombre)
                 ? await categoriesRepository.GetByNombreAsync(categoriaNombre, cancellationToken)
-                : throw new ArgumentNullException("Se necesita un Id o un Nombre para buscar la categoria en la que se agregara el item.");
+                : throw new ArgumentNullException(nameof(categoriaId), "Se necesita un Id o un Nombre para buscar la categoria en la que se agregara el item.");
 
         if (categoria is null)
         {
