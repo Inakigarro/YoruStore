@@ -13,3 +13,5 @@ obj/
 # Archivos generados por Visual Studio
 *.csproj.user
 *.vs/
+*.idea/
+*.DotSettings
