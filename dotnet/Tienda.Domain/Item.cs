@@ -1,8 +1,10 @@
-﻿namespace Tienda.Domain;
+﻿using Tienda.Contracts;
 
-public class Item(Guid id)
+namespace Tienda.Domain;
+
+public class Item : IId
 {
-    public Guid Id { get; private set; } = id;
+    public Guid Id { get; set; } = Guid.NewGuid();
 
     public string Titulo { get; private set; } = string.Empty;
 

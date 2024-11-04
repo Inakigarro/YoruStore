@@ -1,5 +1,4 @@
 ﻿using Tienda.Contracts.Categorias;
-using Tienda.Contracts.Items;
 
 namespace Tienda.Contracts.Services;
 
@@ -18,15 +17,7 @@ public interface ICategoriasService
     /// <param name="categoria">La categoria a actualizar.</param>
     /// <returns>Un dto que representa la categoria actualizada.</returns>
     Task<CategoriaDto> UpdateAsync(ActualizarCategoriaDto categoria, CancellationToken cancellationToken);
-
-    /// <summary>
-    /// Agrega un item a la categoria correspondiente al Id proveido.
-    /// </summary>
-    /// <param name="categoriaId">El Id de la categoria.</param>
-    /// <param name="item">El item a agregar.</param>
-    /// <returns>Un dto que representa la categoria actualizada.</returns>
-    Task<CategoriaDto> AddItemAsync(Guid categoriaId, ItemDto item, CancellationToken cancellationToken);
-
+    
     /// <summary>
     /// Elimina la categoria correspondiente al Id.
     /// </summary>

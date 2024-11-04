@@ -3,36 +3,8 @@ using Tienda.Domain;
 
 namespace Tienda.Contracts.Repositories;
 
-public interface IItemsRepository
+public interface IItemsRepository : IGenericRepository<Item>
 {
-    /// <summary>
-    /// Agrega un Item a la base de datos.
-    /// </summary>
-    /// <param name="nuevoItem">El item a agregar.</param>
-    /// <returns>El item completamente creado.</returns>
-    Task<Item> AddAsync(CrearItemDto nuevoItem, CancellationToken cancellationToken);
-
-    /// <summary>
-    /// Actualiza un Item en la base de datos.
-    /// </summary>
-    /// <param name="item">El item a actualizar.</param>
-    /// <returns>El item completamente actualizado.</returns>
-    Task<Item> UpdateAsync(ActualizarItemDto item, CancellationToken cancellationToken);
-
-    /// <summary>
-    /// Elimina un Item de la base de datos.
-    /// </summary>
-    /// <param name="id">El Id del Item a eliminar.</param>
-    /// <returns>El Item eliminado.</returns>
-    Task<Item> DeleteAsync(Guid id, CancellationToken cancellationToken);
-
-    /// <summary>
-    /// Obtiene un Item por su Id.
-    /// </summary>
-    /// <param name="id">El Id del Item a obtener.</param>
-    /// <returns>El Item correspondiente con el Id proveido.</returns>
-    Task<Item> GetAsync(Guid id, CancellationToken cancellationToken);
-
     /// <summary>
     /// Obtiene todos los items que cumplan con filtro especificado.
     /// </summary>
@@ -45,12 +17,6 @@ public interface IItemsRepository
     Task<IEnumerable<Item>> GetByFilterAsync(Guid categoriaId, string filter, CancellationToken cancellationToken);
 
     /// <summary>
-    /// Obtiene todos los Items de la base de datos.
-    /// </summary>
-    /// <returns>Una lista de Items</returns>
-    Task<IEnumerable<Item>> GetAllAsync(CancellationToken cancellationToken);
-
-    /// <summary>
     /// Obtiene todos los items de una categoria.
     /// </summary>
     /// <param name="categoriaId">El id de la categoria.</param>
@@ -58,10 +24,4 @@ public interface IItemsRepository
     /// <param name="skip">Cantidad de objetos a saltar.</param>
     /// <returns>Una lista de items filtrados por una categoria.</returns>
     Task<IEnumerable<Item>> GetAllByCategoriaIdAsync(Guid categoriaId, int take, int skip, CancellationToken cancellationToken);
-
-    /// <summary>
-    /// Guarda todos los cambios realizados en la base de datos.
-    /// </summary>
-    /// <returns></returns>
-    Task SaveChangesAsync(CancellationToken cancellationToken);
 }

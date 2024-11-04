@@ -62,16 +62,13 @@ public class Program
             cfg.AddProfile(new CategoriaProfile());
             cfg.AddProfile(new ItemProfile());
         });
-
-        // Categorias.
+        
         builder.Services
-            .AddScoped<ICategoriasRepository, CategoriasRepository>()
-            .AddScoped<ICategoriasService, CategoriasServices>();
-
-        // Items.
-        builder.Services
+            .AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>))
             .AddScoped<IItemsRepository, ItemsRepository>()
-            .AddScoped<IItemsService, ItemsService>();
+            .AddScoped<ICategoriasRepository, CategoriasRepository>()
+            .AddScoped<IItemsService, ItemsService>()
+            .AddScoped<ICategoriasService, CategoriasServices>();
 
         builder.Services.AddControllers();
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

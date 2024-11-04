@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Tienda.Contracts.Categorias;
-using Tienda.Contracts.Items;
 using Tienda.Contracts.Repositories;
 using Tienda.Contracts.Services;
 using Tienda.Domain;
@@ -10,96 +10,107 @@ namespace Tienda.Infrastructure.Services;
 
 public class CategoriasServices(
     ICategoriasRepository categoriasRepository,
+    IItemsRepository itemsRepository,
     ILogger<CategoriasServices> logger,
     IMapper mapper) : ICategoriasService
 {
-    private readonly ICategoriasRepository _categoriasRepository = categoriasRepository;
-    private readonly ILogger<CategoriasServices> _logger = logger;
-    private readonly IMapper _mapper = mapper;
-
     /// <inheritdoc/>
     public async Task<CategoriaDto> CreateAsync(CrearCategoriaDto nuevaCategoria, CancellationToken cancellationToken)
     {
-        _logger.LogInformation($"Creando una nueva categoria con el nombre: {nuevaCategoria.Nombre}");
-        var categoria = await this._categoriasRepository.AddAsync(nuevaCategoria, cancellationToken);
-        await _categoriasRepository.SaveChangesAsync(cancellationToken);
-        return this._mapper.Map<CategoriaDto>(categoria);
+        logger.LogInformation($"Creando una nueva categoria con el nombre: {nuevaCategoria.Nombre}");
+        Categoria categoria = new();
+        categoria.SetNombre(nuevaCategoria.Nombre);
+        await categoriasRepository.AddAsync(categoria, cancellationToken);
+        await categoriasRepository.SaveAsync(cancellationToken);
+        return mapper.Map<CategoriaDto>(categoria);
     }
 
     /// <inheritdoc/>
     public async Task<CategoriaDto> UpdateAsync(ActualizarCategoriaDto categoria, CancellationToken cancellationToken)
     {
-        var categoriaExistente = await this._categoriasRepository.GetByIdAsync(categoria.Id, cancellationToken);
-        if (categoriaExistente is null)
+        // Obtengo la categoria.
+        var categoriaExistente = await categoriasRepository.GetAsync(categoria.Id, cancellationToken)
+            ?? throw new InvalidOperationException($"No existe una categoria con el Id: {categoria.Id}");
+
+        logger.LogInformation($"Actualizando la categoria: {categoriaExistente}, con la informacion: {categoria}");
+        
+        // Actualizo los datos de la categoria.
+        categoriaExistente.SetNombre(categoria.Nombre);
+        var itemsBorrados = await ObtenerItemsABorrar(categoriaExistente.Items.Select(x => x.Id), categoria.Items,
+            cancellationToken);
+        foreach (var item in itemsBorrados)
         {
-            throw new InvalidOperationException($"No existe una categoria con el Id: {categoria.Id}");
+            categoriaExistente.RemoveItem(item);
         }
 
-        _logger.LogInformation($"Actualizando la categoria: {categoriaExistente}, con la informacion: {categoria}");
-        var categoriaActualizada = await this._categoriasRepository.UpdateAsync(categoria, cancellationToken);
-        await _categoriasRepository.SaveChangesAsync(cancellationToken);
-        return this._mapper.Map<CategoriaDto>(categoriaActualizada);
-    }
-
-    /// <inheritdoc/>
-    public async Task<CategoriaDto> AddItemAsync(Guid categoriaId, ItemDto item, CancellationToken cancellationToken)
-    {
-        var categoria = await this._categoriasRepository.GetByIdAsync(categoriaId, cancellationToken);
-        if (categoria is null)
+        var itemsNuevos = await ObtenerItemsAGuardar(categoriaExistente.Items.Select(x => x.Id), categoria.Items,
+            cancellationToken);
+        foreach (var item in itemsNuevos)
         {
-            throw new InvalidOperationException($"No existe una categoria con el Id: {categoriaId}");
+            categoriaExistente.AddItem(item);
         }
-
-        _logger.LogInformation($"Agregando el item: {item.Id} - {item.Titulo}, a la categoria: {categoria.Nombre}");
-        categoria.AddItem(this._mapper.Map<Item>(item));
-        var categoriaActualizada = await _categoriasRepository.UpdateAsync(this._mapper.Map <ActualizarCategoriaDto>(categoria), cancellationToken);
-        await _categoriasRepository.SaveChangesAsync(cancellationToken);
-        return this._mapper.Map<CategoriaDto>(categoriaActualizada);
+        
+        // Guardo cambios.
+        categoriasRepository.Update(categoriaExistente);
+        await categoriasRepository.SaveAsync(cancellationToken);
+        return mapper.Map<CategoriaDto>(categoriaExistente);
     }
 
     /// <inheritdoc/>
     public async Task<CategoriaDto> DeleteAsync(Guid categoriaId, CancellationToken cancellationToken)
     {
-        var categoria = await this._categoriasRepository.GetByIdAsync(categoriaId, cancellationToken);
-        if (categoria is null)
-        {
-            throw new InvalidOperationException($"No existe una categoria con el Id: {categoriaId}");
-        }
-
-        _logger.LogInformation($"Eliminando la categoria correspondiente al Id: {categoriaId}");
-        var categoriaEliminada = await this._categoriasRepository.DeleteAsync(categoriaId, cancellationToken);
-        await _categoriasRepository.SaveChangesAsync(cancellationToken);
-        return this._mapper.Map<CategoriaDto>(categoriaEliminada);
+        var categoria = await categoriasRepository.GetAsync(categoriaId, cancellationToken)
+            ?? throw new InvalidOperationException($"No existe una categoria con el Id: {categoriaId}");
+        logger.LogInformation($"Eliminando la categoria correspondiente al Id: {categoriaId}");
+        await categoriasRepository.Delete(categoriaId, cancellationToken);
+        await categoriasRepository.SaveAsync(cancellationToken);
+        return mapper.Map<CategoriaDto>(categoria);
     }
 
     /// <inheritdoc/>
     public async Task<CategoriaDto> GetAsync(Guid categoriaId, CancellationToken cancellationToken)
     {
-        var categoria = await this._categoriasRepository.GetByIdAsync(categoriaId, cancellationToken);
-        if (categoria is null)
-        {
-            throw new InvalidOperationException($"No existe una categoria con el Id: {categoriaId}");
-        }
+        var categoria = await categoriasRepository.GetAsync(categoriaId, cancellationToken)
+            ?? throw new InvalidOperationException($"No existe una categoria con el Id: {categoriaId}");
 
-        return this._mapper.Map<CategoriaDto>(categoria);
+        return mapper.Map<CategoriaDto>(categoria);
     }
 
     public async Task<CategoriaDto> GetByNameAsync(string nombre, CancellationToken cancellationToken)
     {
-        var categoria = await _categoriasRepository.GetByNombreAsync(nombre, cancellationToken);
-        if (categoria is null)
-        {
-            throw new InvalidOperationException($"No existe una categoria con el nombre: {nombre}");
-        }
+        var categoria = await categoriasRepository.GetByNombreAsync(nombre, cancellationToken)
+            ?? throw new InvalidOperationException($"No existe una categoria con el nombre: {nombre}");
 
-        return this._mapper.Map<CategoriaDto>(categoria);
+        return mapper.Map<CategoriaDto>(categoria);
     }
 
     /// <inheritdoc/>
     public async Task<IEnumerable<CategoriaDto>> GetAllAsync(CancellationToken cancellationToken)
     {
-        var categorias = await this._categoriasRepository.GetAllAsync(cancellationToken) ?? new List<Categoria>();
+        var categorias = await categoriasRepository
+            .GetAll()
+            .ToListAsync(cancellationToken);
 
-        return this._mapper.Map<IEnumerable<CategoriaDto>>(categorias);
+        return mapper.Map<IEnumerable<CategoriaDto>>(categorias);
+    }
+
+    private async Task<IEnumerable<Item>> ObtenerItemsABorrar(IEnumerable<Guid> itemsExistentes,
+        IEnumerable<Guid> itemsActualizados, CancellationToken cancellationToken)
+    {
+        var itemIdsBorrados = itemsExistentes.Where(item => !itemsActualizados.Contains(item));
+        var itemsBorrados = await itemsRepository.GetAll()
+            .Where(item => itemIdsBorrados.Contains(item.Id))
+            .ToListAsync(cancellationToken);
+        return itemsBorrados;
+    }
+
+    private async Task<IEnumerable<Item>> ObtenerItemsAGuardar(IEnumerable<Guid> itemsExistentes,
+        IEnumerable<Guid> itemsActualizados, CancellationToken cancellationToken)
+    {
+        var itemIdsNuevos = itemsActualizados.Where(item => !itemsExistentes.Contains(item));
+        var itemsNuevos = await itemsRepository.GetAll()
+            .Where(item => itemIdsNuevos.Contains(item.Id))
+            .ToListAsync(cancellationToken);
+        return itemsNuevos;
     }
 }
